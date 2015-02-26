@@ -9,7 +9,7 @@ using namespace std;
 class Object{
 public:
 	Color color;
-	
+	Matrix vM;
 	Object(void);
 	Object(Color c);
 	~Object(void);

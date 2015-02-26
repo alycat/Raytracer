@@ -12,6 +12,8 @@ TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 Camera* cam;
 World* wrld;
+Point position;
+
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
@@ -31,14 +33,17 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	cam = new Camera();
 	wrld = new World();
-	Sphere *s1 = new Sphere({1.9, 0, 4.0}, 3.9, green);
-	Sphere *s2 = new Sphere({0, 0.2, 4.02}, 4, blue);
-	Triangle * t1 = new Triangle({-50, 20, 7}, {61, 20, 7}, {-50, -50, 1});
-	Triangle * t2 = new Triangle({60, -50, 1}, {60, 20, 7}, {-51, -50, 1});
-	wrld->add(s1);
-	wrld->add(s2);
+	//Sphere *s1 = new Sphere({0, 0, 0}, 0.001, green);
+	//Sphere *s2 = new Sphere({0, 0, 0}, 1, blue);
+	Triangle * t1 = new Triangle({-50, -5, 7}, {51, -5, 7}, {-50, -5, -7});
+	Triangle * t2 = new Triangle({50, -5, -7}, {50, -5, 7}, {-51, -5, -7});
+	//Triangle* test = new Triangle();
+	//wrld->add(s1);
+	//wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);
+	//wrld->add(test);
+	position = origin;
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -56,11 +61,17 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	// Main message loop:
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
+		/*if ((GetKeyState(VK_LEFT) & 0x8000) != 0){
+			position.x--;
+			cam->update(position);
+			InitInstance(hInstance, nCmdShow);
+		}*/
 		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		
 	}
 
 	return (int) msg.wParam;
@@ -119,6 +130,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
+  
+
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -141,6 +154,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hdc;
 
+	if ((GetKeyState(VK_LEFT) & 0x8000) != 0)
+	{
+		position.x--;
+	}
 	switch (message)
 	{
 	case WM_COMMAND:

@@ -21,5 +21,6 @@ public:
 	Camera(void);
 	~Camera(void);
 	void render(World world, HDC hdc);
+	void update(Point np);
 };
 #endif

@@ -2,6 +2,8 @@
 
 Sphere::Sphere(void){
 	Sphere(origin, 1);
+	vM = Matrix(4, 4);
+	vM.unit();
 }
 
 Sphere::~Sphere(void){
@@ -10,16 +12,22 @@ Sphere::~Sphere(void){
 
 Sphere::Sphere(Color c) :Object(c){
 	Sphere();
+	vM = Matrix(4, 4);
+	vM.unit();
 }
 
 Sphere::Sphere(Point cen, float r){
 	center = cen;
 	radius = r;
+	vM = Matrix(4, 4);
+	vM.unit();
 }
 
 Sphere::Sphere(Point cen, float r, Color c) :Object(c){
 	center = cen;
 	radius = r;
+	vM = Matrix(4, 4);
+	vM.unit();
 }
 
 Point Sphere::intersect(Ray ray){
@@ -40,5 +48,7 @@ Point Sphere::intersect(Ray ray){
 }
 
 void Sphere::transform(Matrix matrix){
-
+	vM = Translate(center) * vM;
+	vM = matrix * vM;
+	center = { vM[0][3], vM[1][3], vM[2][3] };
 }

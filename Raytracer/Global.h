@@ -6,7 +6,7 @@
 #include <limits>
 #include "cmatrix"
 
-#define M_PI 3.141592653589793238462643383279502884 /*PI*/
+#define M_PI 3.1415 /*PI*/
 
 typedef techsoft::matrix<float> Matrix;
 typedef std::complex<float> fComplex;
@@ -15,11 +15,7 @@ typedef std::valarray<float> Vector;
 
 const float myMax= (std::numeric_limits<float>::max)();
 
-/*Matrix Scale(Point s){
-	Matrix scale = Matrix(4, 4);
-	scale[0][0] = s.x, scale[1][1] = s.y, scale[2][2] = s.z, scale[3][3] = 1.0;
-	return scale;
-}*/
+
 
 struct Point{
 	float x;
@@ -34,6 +30,14 @@ struct Point{
 		x += p.x;
 		y += p.y;
 		z += p.z;
+	}
+
+	Point operator+(const Point& in){
+		return{ x + in.x, y + in.y, z + in.z };
+	}
+
+	Point operator-(const Point& in){
+		return{ x - in.x, y - in.y, z - in.z };
 	}
 };
 
@@ -59,6 +63,10 @@ struct pVector{
 
 	pVector operator+(const pVector& in){
 		return{ { v.x + in.v.x, v.y + in.v.y, v.z + in.v.z } };
+	}
+
+	pVector getCross(pVector pv){
+		return{ { (v.y * pv.v.z) - (v.z * pv.v.y), (v.z * pv.v.x) - (v.x * pv.v.z), (v.x * pv.v.y) - (v.y * pv.v.x) } };
 	}
 
 	void cross(pVector pv){
@@ -123,5 +131,46 @@ static Color black = { 0, 0, 0 };
 static Color red = { 255, 0, 0 };
 static Color green = { 0, 255, 0 };
 static Color blue = { 0, 0, 255 };
+
+
+static Matrix Scale(Point s){
+	Matrix scale = Matrix(4, 4);
+	scale[0][0] = s.x, scale[0][1] = 0.0, scale[0][2] = 0.0, scale[0][3] = 0.0;
+	scale[1][0] = 0.0, scale[1][1] = s.y, scale[1][2] = 0.0, scale[1][3] = 0.0;
+	scale[2][0] = 0.0, scale[2][1] = 0.0, scale[2][2] = s.z, scale[2][3] = 0.0;
+	scale[3][0] = 0.0, scale[3][1] = 0.0, scale[3][2] = 0.0, scale[3][3] = 1.0;
+	return scale;
+}
+
+static Matrix Translate(Point p){
+	Matrix trans = Matrix(4, 4);
+	trans.unit();
+	trans[3][0] = p.x, trans[3][1] = p.y, trans[3][2] = p.z;
+	return trans;
+}
+
+static Matrix RotateX(float angle){
+	Matrix rot = Matrix(4, 4);
+	rot.unit();
+	rot[1][1] = cos(angle), rot[1][2] = sin(angle);
+	rot[2][1] = -sin(angle), rot[2][2] = cos(angle);
+	return rot;
+}
+
+static Matrix RotateY(float angle){
+	Matrix rot = Matrix(4, 4);
+	rot.unit();
+	rot[0][0] = cos(angle), rot[0][2] = -sin(angle);
+	rot[0][1] = sin(angle), rot[2][2] = cos(angle);
+	return rot;
+}
+
+static Matrix RotateZ(float angle){
+	Matrix rot = Matrix(4, 4);
+	rot.unit();
+	rot[0][0] = cos(angle), rot[0][1] = sin(angle);
+	rot[1][0] = -sin(angle), rot[1][1] = cos(angle);
+	return rot;
+}
 
 #endif

@@ -3,6 +3,8 @@
 
 Object::Object(void){
 	color = black;
+	vM = Matrix(4, 4);
+	vM.unit();
 }
 
 Object::~Object(void){
