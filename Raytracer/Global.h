@@ -7,6 +7,7 @@
 #include "cmatrix"
 
 #define M_PI 3.1415 /*PI*/
+#define EPSILON 0.000001
 
 typedef techsoft::matrix<float> Matrix;
 typedef std::complex<float> fComplex;
@@ -74,7 +75,11 @@ struct pVector{
 	}
 
 	float dot(pVector pv){
-		return (v.x * pv.v.x) + (v.y * pv.v.y) + (v.z * pv.v.z);
+		return ((v.x * pv.v.x) + (v.y * pv.v.y) + (v.z * pv.v.z));
+	}
+
+	float operator*(const pVector& in){
+		return ((v.x * in.v.x) + (v.y * in.v.y) + (v.z * in.v.z));
 	}
 
 	float length(){

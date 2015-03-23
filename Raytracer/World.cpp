@@ -32,10 +32,11 @@ void World::spawn(Ray ray){
 
 COLORREF World::trace(Ray ray){
 	Color c = background;
-	float closest = myMax;
+	float closest = sqrt(myMax)/3;
+	Point pClosest = maxPoint;
 	for (int i = 0; i < objectList.size(); ++i){
 		Point temp = objectList[i]->intersect(ray);
-		float distance = temp.distance(origin);
+		float distance = temp.distance(ray.start);
 		cout << "Distance: " << distance << endl;
 		if (distance < closest){
 			c = objectList[i]->color;
@@ -44,3 +45,4 @@ COLORREF World::trace(Ray ray){
 	}
 	return c.getColor;
 }
+ 

@@ -31,24 +31,26 @@ Sphere::Sphere(Point cen, float r, Color c) :Object(c){
 }
 
 Point Sphere::intersect(Ray ray){
-	Point p = maxPoint;
-	float C = pow((ray.start.x - center.x), 2) + pow((ray.start.y - center.y), 2) + pow((ray.start.z - center.z), 2) - pow(radius, 2);
-	float B = 2 * ((ray.direction.v.x * (ray.start.x - center.x)) + (ray.direction.v.y * (ray.start.y - center.y)) + (ray.direction.v.z * (ray.start.z - center.z)));
-	float discriminant = pow(B, 2) - (4 * C);
-	if (discriminant >= 0){
-		float omega = (-B + sqrt(discriminant)) / 2 < (-B - sqrt(discriminant)) / 2 ? (-B + sqrt(discriminant)) / 2 : (-B - sqrt(discriminant)) / 2;
-		pVector temp = ray.direction;
-		temp.scalar(omega);
-		temp.transform(ray.start);
-		p = temp.v;
+	pVector v = { ray.start - center };
+	float b = 2 * (ray.direction * v);
+	float c = (v*v) - (radius * radius);
+	float disc = (b*b) - (4 * c);
+	if (disc < 0){
+		return maxPoint;
 	}
 
-	cout << "discriminant: " << discriminant << endl;
-	return p;
+	float t_1 = (-b + sqrt(disc))/2;
+	float t_2 = (-b - sqrt(disc))/2;
+	float t = (t_1 < t_2) && t_1 > 0 ? t_1 : t_2;
+	if (t >= 0){
+		return (ray.direction * t).v + ray.start;
+	}
+	return maxPoint;
+
 }
 
 void Sphere::transform(Matrix matrix){
 	vM = Translate(center) * vM;
 	vM = matrix * vM;
-	center = { vM[0][3], vM[1][3], vM[2][3] };
+	center = { origin.x + vM[0][3], origin.y + vM[1][3], origin.z + vM[2][3] };
 }

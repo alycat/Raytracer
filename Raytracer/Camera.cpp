@@ -1,11 +1,11 @@
 #include "Camera.h"
 
 Camera::Camera(){
-	filmplane = { 500, 500, 150000, 150000, 15 };
+	filmplane = { 500, 500, 150000, 150000, 5 };
 	//lookat = { {0.0, -1, 1.0} };
 	//position = {1, 1, -1.5};
 	position = { 0, 0, 0 };
-	lookat = { { 0, 1.0, 1.0 } };
+	lookat = { { 0, 0.0, 1.0 } };
 	up = { { 0.0, 1.0, 0.0 } };
 
 	pVector n = lookat - position;
@@ -23,9 +23,9 @@ Camera::Camera(){
 	viewMatrix[0][0] = u.v.x, viewMatrix[0][1] = v.v.x, viewMatrix[0][2] = n.v.x, viewMatrix[0][3] = 0;
 	viewMatrix[1][0] = u.v.y, viewMatrix[1][1] = v.v.y, viewMatrix[1][2] = n.v.y, viewMatrix[1][3] = 0;
 	viewMatrix[2][0] = u.v.z, viewMatrix[2][1] = v.v.z, viewMatrix[2][2] = n.v.z, viewMatrix[2][3] = 0;
-	viewMatrix[3][0] = u.dot(eyeP), viewMatrix[3][1] = v.dot(eyeP), viewMatrix[3][2] = n.dot(eyeP), viewMatrix[3][3] = 1;
+	viewMatrix[3][0] = u.dot(eyeP), viewMatrix[3][1] = v.dot(eyeP), viewMatrix[3][2] = n.dot(eyeP), viewMatrix[3][3] = 1;/*
 	
-/*	viewMatrix[0][0] = u.v.x, viewMatrix[0][1] = u.v.y, viewMatrix[0][2] = u.v.z, viewMatrix[0][3] = u.dot(eyeP);
+	viewMatrix[0][0] = u.v.x, viewMatrix[0][1] = u.v.y, viewMatrix[0][2] = u.v.z, viewMatrix[0][3] = u.dot(eyeP);
 	viewMatrix[1][0] = v.v.x, viewMatrix[1][1] = v.v.y, viewMatrix[1][2] = v.v.z, viewMatrix[1][3] = v.dot(eyeP);
 	viewMatrix[2][0] = n.v.x, viewMatrix[2][1] = n.v.y, viewMatrix[2][2] = n.v.z, viewMatrix[2][3] = n.dot(eyeP);
 	viewMatrix[3][0] = 0, viewMatrix[3][1] = 0, viewMatrix[3][2] = 0, viewMatrix[3][3] = 1;*/
@@ -45,6 +45,7 @@ void Camera::render(World world, HDC hdc){
 	float pixelW = w/W;
 	float pixelH = h/H;
 	Point top_left = {(-filmplane.w + pixelW)/2, (filmplane.h - pixelH)/2, filmplane.f};
+	//top_left = {(filmplane.h - pixelW)/2, (-filmplane.h + pixelH)/2, filmplane.f};
 	float sx = top_left.x;
 	float px = sx;
 	float py = top_left.y;

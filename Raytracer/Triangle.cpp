@@ -1,7 +1,7 @@
 #include "Triangle.h"
 
 Triangle::Triangle(void){
-	p1 = { 0, 1, 1.5 }, p2 = {-1, -1, 1.5}, p3 = {1, -1, 1.5};
+	p1 = { 0, 1, 15 }, p2 = {-1, -1, 15}, p3 = {1, -1, 15};
 	vM = Matrix(4, 4);
 	vM.unit();
 }
@@ -17,37 +17,45 @@ Triangle::Triangle(Point a, Point b, Point c){
 }
 
 Point Triangle::intersect(Ray ray){
-	ray.direction.normalize();
-	Point p = maxPoint;
-	Point ab = p2 - p1;
-	Point ac = p3 - p1;
-	pVector AB = { ab };
-	pVector AC = { ac };
-	pVector N = AB.getCross(AC);
-	N.normalize();
-	float denominator = (ray.direction.v.x * N.v.x) + (ray.direction.v.y * N.v.y) + (ray.direction.v.z * N.v.z);
-	if (denominator != 0){
-		float F = (N.v.x*p1.x) + (N.v.y*p1.y) + (N.v.z*p1.z);
-		float numerator = -((N.v.x* ray.start.x) + (N.v.y * ray.start.y) + (N.v.z * ray.start.z) - F);
-		float omega = numerator / denominator;
-		if (omega > 0){
-			Point temp = { ray.start.x + (ray.direction.v.x * omega), ray.start.y + (ray.direction.v.y * omega), ray.start.z + (ray.direction.v.z * omega) };
-			Point ta = temp - p1, tb = temp - p2, tc = temp - p3;
-			pVector TA = { ta }, TB = { tb }, TC = { tc };
-			TA.normalize(), TB.normalize(), TC.normalize();
-			float sum = acos(TA.dot(TB) / (TA.mag * TB.mag)) + acos(TB.dot(TC) / (TB.mag * TC.mag)) + acos(TC.dot(TA) / (TC.mag * TA.mag));
-			if (sum >= 2 * M_PI){
-				p = temp;
-			}
-		}
+	pVector e_1 = { p2 - p1 };
+	pVector e_2 = { p3 - p1 };
+	pVector P = ray.direction.getCross(e_2);
+	float det = e_1*P;
+
+	if (det > -EPSILON && det < EPSILON){
+		return maxPoint;
 	}
-	return p;
+
+	float f = 1.0f / det;
+
+	pVector T = { ray.start - p1};
+	float u = (T*P) * f;
+	if (u < 0.0f || u > 1.0f){
+		return maxPoint;
+	}
+
+	pVector Q = T.getCross(e_1);
+
+	float v = (Q*ray.direction) * f;
+	if (v < 0 || u + v > 1){
+		return maxPoint;
+	}
+
+	float t = (Q*e_2)* f;
+
+	if (t <= EPSILON){
+		return maxPoint;
+	}
+	return{ u, v, t };
 }
 
 void Triangle::transform(Matrix matrix){
-	vM = matrix * vM;
+	/*vM = matrix * vM;
+	//vM = vM * matrix;
 	Point trans = {vM[0][3], vM[1][3], vM[2][3]};
+	//trans = {vM[3][0], vM[3][1], vM[3][2]};
+	trans = origin;
 	p1 + trans;
 	p2 + trans;
-	p3 + trans;
+	p3 + trans;*/
 }
