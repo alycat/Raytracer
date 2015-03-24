@@ -89,11 +89,19 @@ struct pVector{
 	_declspec(property(get = length)) float mag;
 
 	void normalize(){
-		float u = length();
+		float u = sqrt((v.x*v.x) + (v.y * v.y) + (v.z*v.z));
 		v.x /= u;
 		v.y /= u;
 		v.z /= u;
 	}
+
+	pVector normalVector(){
+		pVector p = {v};
+		float u = p*p;
+		return{ { p.v.x / u, p.v.y / u, p.v.z / u } };
+	}
+
+	_declspec(property(get = normalVector)) pVector normal;
 
 	void transform(pVector pv){
 		v.x += pv.v.x;

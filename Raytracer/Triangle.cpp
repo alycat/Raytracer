@@ -1,7 +1,7 @@
 #include "Triangle.h"
 
 Triangle::Triangle(void){
-	p1 = { 0, 1, 15 }, p2 = {-1, -1, 15}, p3 = {1, -1, 15};
+	p1 = { 0, 10000, 1000 }, p2 = { -10000, 0, 1000 }, p3 = { 10000, 0, 1000 };
 	vM = Matrix(4, 4);
 	vM.unit();
 }

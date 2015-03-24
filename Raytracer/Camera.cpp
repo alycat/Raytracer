@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera(){
-	filmplane = { 500, 500, 150000, 150000, 5 };
+	filmplane = { 500, 500, 150000, 150000, 10000 };
 	//lookat = { {0.0, -1, 1.0} };
 	//position = {1, 1, -1.5};
 	position = { 0, 0, 0 };

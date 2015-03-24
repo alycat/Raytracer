@@ -33,7 +33,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	cam = new Camera();
 	wrld = new World();
-	Sphere *s1 = new Sphere({0, 0, 5}, 1, red);
+	Sphere *s1 = new Sphere({0, 0, 2000}, 900 , red);
 	//Sphere *s2 = new Sphere({1, -1, -7}, 1, blue);
 	Triangle * t1 = new Triangle({ 30000, 0, 5 }, { -30000, 0, 5 }, { 0, 30000, 5 } );
 	Triangle * t2 = new Triangle({50, -5, -7}, {50, -5, 7}, {-51, -5, -7});
