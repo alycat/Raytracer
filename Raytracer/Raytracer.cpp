@@ -33,16 +33,16 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	cam = new Camera();
 	wrld = new World();
-	Sphere *s1 = new Sphere({0, 0, 2000}, 900 , red);
-	//Sphere *s2 = new Sphere({1, -1, -7}, 1, blue);
-	Triangle * t1 = new Triangle({ 30000, 0, 5 }, { -30000, 0, 5 }, { 0, 30000, 5 } );
-	Triangle * t2 = new Triangle({50, -5, -7}, {50, -5, 7}, {-51, -5, -7});
+	Sphere *s1 = new Sphere({ 0.0, 0.2, 8}, 0.85, purple);
+	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, blue);
+	Triangle * t1 = new Triangle({ 4.0, 1.5, 22 }, { -4.0, 1.5, 22 }, { 4.0, -3, 0 });
+	Triangle * t2 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 1.5, 22 });
 	Triangle* test = new Triangle();
 	wrld->add(s1);
-	//wrld->add(s2);
-	//wrld->add(t1);
-	//wrld->add(t2);
-	wrld->add(test);
+	wrld->add(s2);
+	wrld->add(t1);
+	wrld->add(t2);
+	//wrld->add(test);
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);

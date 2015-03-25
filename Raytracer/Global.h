@@ -40,6 +40,11 @@ struct Point{
 	Point operator-(const Point& in){
 		return{ x - in.x, y - in.y, z - in.z };
 	}
+
+	Point operator*(const float& in){
+		return{ x*in, y*in, z*in };
+	}
+
 };
 
 
@@ -97,7 +102,7 @@ struct pVector{
 
 	pVector normalVector(){
 		pVector p = {v};
-		float u = p*p;
+		float u = sqrt(p*p);
 		return{ { p.v.x / u, p.v.y / u, p.v.z / u } };
 	}
 
@@ -144,8 +149,10 @@ static Color black = { 0, 0, 0 };
 static Color red = { 255, 0, 0 };
 static Color green = { 0, 255, 0 };
 static Color blue = { 0, 0, 255 };
+static Color fuchsia = { 255, 0, 255 };
+static Color purple = {128, 0, 128};
 
-
+//both row & column major scale matrix
 static Matrix Scale(Point s){
 	Matrix scale = Matrix(4, 4);
 	scale[0][0] = s.x, scale[0][1] = 0.0, scale[0][2] = 0.0, scale[0][3] = 0.0;
@@ -155,6 +162,7 @@ static Matrix Scale(Point s){
 	return scale;
 }
 
+//row-major translation matrix
 static Matrix Translate(Point p){
 	Matrix trans = Matrix(4, 4);
 	trans.unit();
@@ -162,6 +170,7 @@ static Matrix Translate(Point p){
 	return trans;
 }
 
+//row-major rotation around x-axis matrix
 static Matrix RotateX(float angle){
 	Matrix rot = Matrix(4, 4);
 	rot.unit();
@@ -170,6 +179,7 @@ static Matrix RotateX(float angle){
 	return rot;
 }
 
+//row-major rotation around y-axis matrix
 static Matrix RotateY(float angle){
 	Matrix rot = Matrix(4, 4);
 	rot.unit();
@@ -178,6 +188,7 @@ static Matrix RotateY(float angle){
 	return rot;
 }
 
+//row=major rotation around z-axis matrix
 static Matrix RotateZ(float angle){
 	Matrix rot = Matrix(4, 4);
 	rot.unit();

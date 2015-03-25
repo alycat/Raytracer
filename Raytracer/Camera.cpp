@@ -1,34 +1,22 @@
 #include "Camera.h"
 
 Camera::Camera(){
-	filmplane = { 500, 500, 150000, 150000, 10000 };
-	//lookat = { {0.0, -1, 1.0} };
-	//position = {1, 1, -1.5};
-	position = { 0, 0, 0 };
-	lookat = { { 0, 0.0, 1.0 } };
+	filmplane = { 400, 300, 40000, 30000, 50000 };
+	position = { -1.2, 0.0, 0.0 };
+	lookat = { { 0.0, 0.0, 1.0 } };
 	up = { { 0.0, 1.0, 0.0 } };
 
-	pVector n = lookat - position;
-	n.scalar(-1);
-	n.normalize();
-	pVector u = up.getCross(n);
-	u.normalize();
-	pVector v = n.getCross(u);
-	v.normalize();
+	n = { position - lookat.v };
+	n = n.normal;
+	u = up.getCross(n).normal;
+	v = n.getCross(u);
+
 	viewMatrix = Matrix(4, 4);
 	pVector eyeP = { position };
-	eyeP.scalar(-1);
-	eyeP.normalize();
-
-	viewMatrix[0][0] = u.v.x, viewMatrix[0][1] = v.v.x, viewMatrix[0][2] = n.v.x, viewMatrix[0][3] = 0;
-	viewMatrix[1][0] = u.v.y, viewMatrix[1][1] = v.v.y, viewMatrix[1][2] = n.v.y, viewMatrix[1][3] = 0;
-	viewMatrix[2][0] = u.v.z, viewMatrix[2][1] = v.v.z, viewMatrix[2][2] = n.v.z, viewMatrix[2][3] = 0;
-	viewMatrix[3][0] = u.dot(eyeP), viewMatrix[3][1] = v.dot(eyeP), viewMatrix[3][2] = n.dot(eyeP), viewMatrix[3][3] = 1;/*
-	
-	viewMatrix[0][0] = u.v.x, viewMatrix[0][1] = u.v.y, viewMatrix[0][2] = u.v.z, viewMatrix[0][3] = u.dot(eyeP);
-	viewMatrix[1][0] = v.v.x, viewMatrix[1][1] = v.v.y, viewMatrix[1][2] = v.v.z, viewMatrix[1][3] = v.dot(eyeP);
-	viewMatrix[2][0] = n.v.x, viewMatrix[2][1] = n.v.y, viewMatrix[2][2] = n.v.z, viewMatrix[2][3] = n.dot(eyeP);
-	viewMatrix[3][0] = 0, viewMatrix[3][1] = 0, viewMatrix[3][2] = 0, viewMatrix[3][3] = 1;*/
+	viewMatrix[0][0] = u.v.x, viewMatrix[0][1] = u.v.y, viewMatrix[0][2] = u.v.z, viewMatrix[0][3] = u.dot(eyeP * -1);
+	viewMatrix[1][0] = v.v.x, viewMatrix[1][1] = v.v.y, viewMatrix[1][2] = v.v.z, viewMatrix[1][3] = v.dot(eyeP * -1);
+	viewMatrix[2][0] = n.v.x, viewMatrix[2][1] = n.v.y, viewMatrix[2][2] = n.v.z, viewMatrix[2][3] = n.dot(eyeP * -1);
+	viewMatrix[3][0] = 0, viewMatrix[3][1] = 0, viewMatrix[3][2] = 0, viewMatrix[3][3] = 1;
 	
 }
 
@@ -37,24 +25,24 @@ Camera::~Camera(){
 }
 
 void Camera::render(World world, HDC hdc){
-	world.transformAllObjects(viewMatrix);
-	float w = filmplane.w;
-	float h = filmplane.h;
-	int H = filmplane.H;
-	int W = filmplane.W;
-	float pixelW = w/W;
-	float pixelH = h/H;
+	//world.transformAllObjects(viewMatrix);
+
+	float pixelW = filmplane.w / filmplane.W;
+	float pixelH = filmplane.h / filmplane.H;
 	Point top_left = {(-filmplane.w + pixelW)/2, (filmplane.h - pixelH)/2, filmplane.f};
 	//top_left = {(filmplane.h - pixelW)/2, (-filmplane.h + pixelH)/2, filmplane.f};
 	float sx = top_left.x;
 	float px = sx;
 	float py = top_left.y;
-
+	pVector middleScreen = {filmplane.W/2, filmplane.H/2, filmplane.f};
+	middleScreen = middleScreen.normal;
 	for (int y = 0; y < filmplane.H; ++y){
 		px = sx;
 		for (int x = 0; x < filmplane.W; ++x){
-			Ray ray = { origin, { px, py, filmplane.f } };
-			ray.direction.normalize();
+			Ray ray = { position, { px - position.x, py - position.y, filmplane.f - position.z } };
+			ray.direction = ray.direction.normal;
+			float angle = acosf(ray.direction * middleScreen);
+			//ray.direction = ray.direction * angle; 
 			COLORREF color = world.trace(ray);
 			SetPixel(hdc, x, y, color);
 			px += pixelW;

@@ -16,6 +16,11 @@ Triangle::Triangle(Point a, Point b, Point c){
 	vM.unit();
 }
 
+/*
+ Moller-Trumbore intersection algorithm
+ Param: Ray, 
+ Returns closest point of intersection
+*/
 Point Triangle::intersect(Ray ray){
 	pVector e_1 = { p2 - p1 };
 	pVector e_2 = { p3 - p1 };
@@ -50,12 +55,24 @@ Point Triangle::intersect(Ray ray){
 }
 
 void Triangle::transform(Matrix matrix){
-	/*vM = matrix * vM;
+	vM = matrix * vM;
 	//vM = vM * matrix;
 	Point trans = {vM[0][3], vM[1][3], vM[2][3]};
-	//trans = {vM[3][0], vM[3][1], vM[3][2]};
-	trans = origin;
+	trans = {vM[3][0], vM[3][1], vM[3][2]};
+	//trans = origin;
 	p1 + trans;
 	p2 + trans;
-	p3 + trans;*/
+	p3 + trans;
+	/*Matrix posM1 = Matrix(1, 4);
+	Matrix posM2 = Matrix(1, 4);
+	Matrix posM3 = Matrix(1, 4);
+	posM1[0][0] = p1.x, posM1[0][1] = p1.y, posM1[0][2] = p1.z, posM1[0][3] = 1.0;
+	posM2[0][0] = p2.x, posM2[0][1] = p2.y, posM2[0][2] = p2.z, posM2[0][3] = 1.0;
+	posM3[0][0] = p3.x, posM3[0][1] = p3.y, posM3[0][2] = p3.z, posM3[0][3] = 1.0;
+	posM1 = posM1 * matrix * vM;
+	posM2 = posM2 * matrix * vM;
+	posM3 = posM3 * matrix * vM;
+	p1 = { posM1[0][0], posM1[0][1], posM1[0][2] };
+	p2 = { posM2[0][0], posM2[0][1], posM2[0][2] };
+	p3 = { posM3[0][0], posM3[0][1], posM3[0][2] };*/
 }

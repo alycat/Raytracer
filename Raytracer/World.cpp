@@ -19,6 +19,7 @@ void World::transform(Object obj){
 
 }
 
+//Go through all objects in world and transform them
 void World::transformAllObjects(Matrix matrix){
 	for (int i = 0; i < objectList.size(); ++i){
 		objectList[i]->transform(matrix);

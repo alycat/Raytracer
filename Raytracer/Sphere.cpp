@@ -40,12 +40,12 @@ Point Sphere::intersect(Ray ray){
 	float a = ray.direction * ray.direction;
 	float b = (ray.direction * v) * 2;
 	float c = (v*v) - (radius * radius);
-	float disc = (b*b) - (4 * a* c);
+	float disc = (b*b) - (4*c);
 	if (disc < 0){
 		return maxPoint;
 	}
-	float t_1 = (-b + sqrt(disc))/(2*a);
-	float t_2 = (-b - sqrt(disc))/(2*a);
+	float t_1 = (-b + sqrt(disc))/(2);
+	float t_2 = (-b - sqrt(disc))/(2);
 	float t = (t_1 < t_2) ? t_1 : t_2;
 	if (t > 0){
 		return (ray.direction * t).v + ray.start;
@@ -55,7 +55,8 @@ Point Sphere::intersect(Ray ray){
 }
 
 void Sphere::transform(Matrix matrix){
-	/*vM = Translate(center) * vM;
-	vM = matrix * vM;
-	center = { origin.x + vM[0][3], origin.y + vM[1][3], origin.z + vM[2][3] };*/
+	Matrix posM = Matrix(1, 4);
+	posM[0][0] = center.x, posM[0][1] = center.y, posM[0][2] = center.z, posM[0][3] = 1.0;
+	posM = posM * (matrix * vM);
+	//center = {posM[0][0], posM[0][1], posM[0][2]};
 }
