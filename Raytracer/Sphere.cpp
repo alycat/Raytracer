@@ -6,10 +6,14 @@ Sphere::Sphere(void){
 	color = black;
 	vM = Matrix(4, 4);
 	vM.unit();
+	material = new Phong();
 }
 
 Sphere::~Sphere(void){
-
+	if (material){
+		delete material;
+	}
+	material = nullptr;
 }
 
 Sphere::Sphere(Color c){
@@ -17,6 +21,7 @@ Sphere::Sphere(Color c){
 	color = c;
 	vM = Matrix(4, 4);
 	vM.unit();
+	material = new Phong();
 }
 
 Sphere::Sphere(Point cen, float r){
@@ -25,6 +30,7 @@ Sphere::Sphere(Point cen, float r){
 	color = black;
 	vM = Matrix(4, 4);
 	vM.unit();
+	material = new Phong();
 }
 
 Sphere::Sphere(Point cen, float r, Color c){
@@ -33,6 +39,7 @@ Sphere::Sphere(Point cen, float r, Color c){
 	color = c;
 	vM = Matrix(4, 4);
 	vM.unit();
+	material = new Phong();
 }
 
 Point Sphere::intersect(Ray ray){
@@ -59,4 +66,9 @@ void Sphere::transform(Matrix matrix){
 	posM[0][0] = center.x, posM[0][1] = center.y, posM[0][2] = center.z, posM[0][3] = 1.0;
 	posM = posM * (matrix * vM);
 	//center = {posM[0][0], posM[0][1], posM[0][2]};
+}
+
+pVector Sphere::normal(Point intersection){
+	pVector n = { intersection - center };
+	return n.normal;
 }

@@ -89,7 +89,9 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="IlluminationModel.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Phong.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sphere.h" />
@@ -101,6 +103,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Phong.cpp" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="stdafx.cpp">

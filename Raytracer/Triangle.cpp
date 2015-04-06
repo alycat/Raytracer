@@ -4,6 +4,11 @@ Triangle::Triangle(void){
 	p1 = { 0, 10000, 1000 }, p2 = { -10000, 0, 1000 }, p3 = { 10000, 0, 1000 };
 	vM = Matrix(4, 4);
 	vM.unit();
+	pVector v1 = { p2 - p1 };
+	pVector v2 = { p3 - p1 };
+	vn = v1.getCross(v2);
+	vn = vn.normal;
+	material = new Phong();
 }
 
 Triangle::~Triangle(void){
@@ -14,6 +19,11 @@ Triangle::Triangle(Point a, Point b, Point c){
 	p1 = a, p2 = b, p3 = c;
 	vM = Matrix(4, 4);
 	vM.unit();
+	pVector v1 = { p2 - p1 };
+	pVector v2 = { p3 - p1 };
+	vn = v1.getCross(v2);
+	vn = vn.normal;
+	material = new Phong();
 }
 
 /*
@@ -75,4 +85,8 @@ void Triangle::transform(Matrix matrix){
 	p1 = { posM1[0][0], posM1[0][1], posM1[0][2] };
 	p2 = { posM2[0][0], posM2[0][1], posM2[0][2] };
 	p3 = { posM3[0][0], posM3[0][1], posM3[0][2] };*/
+}
+
+pVector Triangle::normal(Point intersect){
+	return vn;
 }

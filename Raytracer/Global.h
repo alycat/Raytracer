@@ -5,9 +5,12 @@
 #include <Windows.h>
 #include <limits>
 #include "cmatrix"
+#include <vector>
 
 #define M_PI 3.1415 /*PI*/
 #define EPSILON 0.000001
+
+using namespace std;
 
 typedef techsoft::matrix<float> Matrix;
 typedef std::complex<float> fComplex;
@@ -196,5 +199,26 @@ static Matrix RotateZ(float angle){
 	rot[1][0] = -sin(angle), rot[1][1] = cos(angle);
 	return rot;
 }
+
+struct Light{
+	float irradiance;
+};
+
+//Light Source information struct
+struct LightSource{
+	Point position;
+	Color color;
+	Light light;
+};
+
+//struct for intersection of object with ray
+struct IntersectData{
+	Point point;
+	pVector normal;
+	pVector incoming;
+	pVector reflective;
+	pVector outgoing;
+	vector<LightSource*> lights;
+};
 
 #endif

@@ -44,6 +44,11 @@ void Camera::render(World world, HDC hdc){
 			float angle = acosf(ray.direction * middleScreen);
 			//ray.direction = ray.direction * angle; 
 			COLORREF color = world.trace(ray);
+			Light light = world.spawn(ray);
+			Color c;
+			c.r = 0;
+			c.b = 0;
+			c.g = 0;
 			SetPixel(hdc, x, y, color);
 			px += pixelW;
 		}
