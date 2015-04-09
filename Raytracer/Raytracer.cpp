@@ -34,7 +34,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	cam = new Camera();
 	wrld = new World();
 	Sphere *s1 = new Sphere({ 0.0, 0.2, 8}, 0.85, purple);
-	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, blue);
+	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, green);
 	Triangle * t1 = new Triangle({ 4.0, 1.5, 22 }, { -4.0, 1.5, 22 }, { 4.0, -3, 0 });
 	Triangle * t2 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 1.5, 22 });
 	wrld->add(s1);
@@ -42,7 +42,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	wrld->add(t1);
 	wrld->add(t2);
 
-	LightSource* l1 = new LightSource({ { 0, 0, 0 }, black, { 1400.0f } }); //position, color, light
+	LightSource* l1 = new LightSource({ { -5, 0.5, 2 }, yellow, { 14000.0f } }); //position, color, light
 	wrld->add(l1);
 
 	// Initialize global strings

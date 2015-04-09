@@ -1,26 +1,67 @@
-﻿Build started 3/30/2015 5:38:15 PM.
-     1>Project "\\banner.main.ad.rit.edu\students\ala3497\IGMProfile\Documents\Raytracer\Raytracer\Raytracer.vcxproj" on node 2 (Build target(s)).
+﻿Build started 4/9/2015 1:01:09 PM.
+     1>Project "C:\Users\Owner\Documents\Raytracer\Raytracer\Raytracer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Object.cpp Raytracer.cpp Sphere.cpp Triangle.cpp World.cpp
-         World.cpp
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\world.cpp(8): warning C4018: '<' : signed/unsigned mismatch
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\world.cpp(13): warning C4018: '<' : signed/unsigned mismatch
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\world.cpp(33): warning C4018: '<' : signed/unsigned mismatch
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\world.cpp(58): warning C4018: '<' : signed/unsigned mismatch
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\world.cpp(76): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Object.cpp Phong.cpp Raytracer.cpp Sphere.cpp Triangle.cpp World.cpp
          Raytracer.cpp
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\raytracer.cpp(36): warning C4305: 'argument' : truncation from 'double' to 'float'
-         Object.cpp
-         Camera.cpp
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\camera.cpp(37): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>\\banner.main.ad.rit.edu\students\ala3497\igmprofile\documents\raytracer\raytracer\camera.cpp(48): warning C4244: '=' : conversion from 'float' to 'COLORREF', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(36): warning C4305: 'argument' : truncation from 'double' to 'float'
          Generating Code...
          Compiling...
+         World.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(8): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(13): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(33): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(58): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(76): warning C4018: '<' : signed/unsigned mismatch
          Triangle.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
          Sphere.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
+         Phong.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\phong.cpp(5): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\phong.cpp(43): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\phong.cpp(40): warning C4101: 'ambient' : unreferenced local variable
+         Object.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
+         Camera.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(157): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(161): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(244): warning C4101: 'b' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(243): warning C4101: 'g' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(242): warning C4101: 'r' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(37): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(48): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(49): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(50): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\banner.main.ad.rit.edu\students\ala3497\IGMProfile\Documents\Raytracer\Debug\Raytracer.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\banner.main.ad.rit.edu\students\ala3497\IGMProfile\Documents\Raytracer\Debug\Raytracer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\banner.main.ad.rit.edu\students\ala3497\IGMProfile\Documents\Raytracer\Debug\Raytracer.lib" /MACHINE:X86 Debug\Raytracer.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.lib" /MACHINE:X86 Debug\Raytracer.res
          Debug\Camera.obj
          Debug\Object.obj
          Debug\Phong.obj
@@ -29,9 +70,9 @@
          Debug\stdafx.obj
          Debug\Triangle.obj
          Debug\World.obj
-         Raytracer.vcxproj -> \\banner.main.ad.rit.edu\students\ala3497\IGMProfile\Documents\Raytracer\Debug\Raytracer.exe
-     1>Done Building Project "\\banner.main.ad.rit.edu\students\ala3497\IGMProfile\Documents\Raytracer\Raytracer\Raytracer.vcxproj" (Build target(s)).
+         Raytracer.vcxproj -> C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.exe
+     1>Done Building Project "C:\Users\Owner\Documents\Raytracer\Raytracer\Raytracer.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:10.85
+Time Elapsed 00:00:14.59

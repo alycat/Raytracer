@@ -51,8 +51,8 @@ void World::intersection(IntersectData &id, Point point, pVector normal, pVector
 	id.lights = lights;
 }
 
-Light World::spawn(Ray ray){
-	Light light = { 0 };
+Color World::spawn(Ray ray){
+	Color color = background;
 	float closest = sqrt(myMax) / 3;
 	Point pClosest = maxPoint;
 	for (int i = 0; i < objectList.size(); ++i){
@@ -61,12 +61,12 @@ Light World::spawn(Ray ray){
 		cout << "Distance: " << distance << endl;
 		if (distance < closest){
 			IntersectData id;
-			this->intersection(id, temp, objectList[i]->normal(temp), ray.direction, {ray.start - temp}, lightList);
-			light = objectList[i]->material->illuminate(id);
+			this->intersection(id, temp, objectList[i]->normal(temp), {ray.start - temp}, { temp - ray.start }, lightList);
+			color = objectList[i]->material->illuminate(id);
 			closest = distance;
 		}
 	}
-	return light;
+	return color;
 }
 
 COLORREF World::trace(Ray ray){

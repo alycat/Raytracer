@@ -21,7 +21,7 @@ Sphere::Sphere(Color c){
 	color = c;
 	vM = Matrix(4, 4);
 	vM.unit();
-	material = new Phong();
+	material = new Phong(c);
 }
 
 Sphere::Sphere(Point cen, float r){
@@ -39,7 +39,7 @@ Sphere::Sphere(Point cen, float r, Color c){
 	color = c;
 	vM = Matrix(4, 4);
 	vM.unit();
-	material = new Phong();
+	material = new Phong(c);
 }
 
 Point Sphere::intersect(Ray ray){

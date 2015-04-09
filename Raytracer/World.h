@@ -19,6 +19,6 @@ public:
 	void add(LightSource* light);
 	void transform(Object obj);
 	void transformAllObjects(Matrix matrix);
-	Light spawn(Ray ray);
+	Color spawn(Ray ray);
 };
 #endif

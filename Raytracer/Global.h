@@ -144,6 +144,22 @@ struct Color{
 	}
 
 	_declspec(property(get = getColorRef)) COLORREF getColor;
+
+	Color operator+(const Color& in){
+		return{r + in.r, g + in.g, b + in.b};
+	}
+
+	Color operator*(const Color& in){
+		return{r* in.r, g *in.g, b * in.b};
+	}
+
+	Color operator*(const float& in){
+		return{r* in, g* in, b * in};
+	}
+
+	Color power(float e){
+		return{ pow(r, e), pow(g, e), pow(b, e) };
+	}
 };
 
 static Color background = {100, 149, 237}; //cornflower blue
@@ -154,6 +170,7 @@ static Color green = { 0, 255, 0 };
 static Color blue = { 0, 0, 255 };
 static Color fuchsia = { 255, 0, 255 };
 static Color purple = {128, 0, 128};
+static Color yellow = {255, 25, 224};
 
 //both row & column major scale matrix
 static Matrix Scale(Point s){
@@ -220,5 +237,17 @@ struct IntersectData{
 	pVector outgoing;
 	vector<LightSource*> lights;
 };
+
+static Color toneReproduction(Light light){
+	float r;
+	float g;
+	float b;
+	return black;
+}
+
+static pVector reflect(pVector L, pVector N){
+	pVector R = N - L * ((L*N) * 2);
+	return R.normal;
+}
 
 #endif
