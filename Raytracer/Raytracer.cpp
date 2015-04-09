@@ -35,15 +35,17 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	wrld = new World();
 	Sphere *s1 = new Sphere({ 0.0, 0.2, 8}, 0.85, purple);
 	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, green);
-	Triangle * t1 = new Triangle({ 4.0, 1.5, 22 }, { -4.0, 1.5, 22 }, { 4.0, -3, 0 });
-	Triangle * t2 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 1.5, 22 });
+	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 });
+	Triangle * t2 = new Triangle({ -4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, -3, 0 });
 	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);
 
-	LightSource* l1 = new LightSource({ { -5, 0.5, 2 }, yellow, { 14000.0f } }); //position, color, light
+	LightSource* l1 = new LightSource({ { -5, 10.0f, -5 }, grey, { 1.0f } }); //position, color, light
 	wrld->add(l1);
+	LightSource* l2 = new LightSource({ { -5, 1.0f, -10 }, grey, { 1.0f } });
+	wrld->add(l2);
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);

@@ -153,6 +153,10 @@ struct Color{
 		return{r* in.r, g *in.g, b * in.b};
 	}
 
+	Color operator/(const float& in){
+		return{ r / in, g / in, b / in };
+	}
+
 	Color operator*(const float& in){
 		return{r* in, g* in, b * in};
 	}
@@ -171,6 +175,8 @@ static Color blue = { 0, 0, 255 };
 static Color fuchsia = { 255, 0, 255 };
 static Color purple = {128, 0, 128};
 static Color yellow = {255, 25, 224};
+static Color grey = {127, 127, 127};
+static float m_irr = 1400.0f;
 
 //both row & column major scale matrix
 static Matrix Scale(Point s){
@@ -232,10 +238,10 @@ struct LightSource{
 struct IntersectData{
 	Point point;
 	pVector normal;
-	pVector incoming;
-	pVector reflective;
+	pVector source;
 	pVector outgoing;
-	vector<LightSource*> lights;
+	pVector reflect;
+	LightSource* light;
 };
 
 static Color toneReproduction(Light light){

@@ -8,7 +8,7 @@ Triangle::Triangle(void){
 	pVector v2 = { p3 - p1 };
 	vn = v1.getCross(v2);
 	vn = vn.normal;
-	material = new Phong();
+	material = new Phong(red);
 }
 
 Triangle::~Triangle(void){
@@ -19,11 +19,11 @@ Triangle::Triangle(Point a, Point b, Point c){
 	p1 = a, p2 = b, p3 = c;
 	vM = Matrix(4, 4);
 	vM.unit();
-	pVector v1 = { p2 - p1 };
-	pVector v2 = { p3 - p1 };
+	pVector v1 = { p1 - p2 };
+	pVector v2 = { p1 - p3 };
 	vn = v1.getCross(v2);
 	vn = vn.normal;
-	material = new Phong();
+	material = new Phong(red);
 }
 
 /*

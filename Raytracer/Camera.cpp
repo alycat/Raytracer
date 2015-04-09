@@ -43,12 +43,12 @@ void Camera::render(World world, HDC hdc){
 			ray.direction = ray.direction.normal;
 			float angle = acosf(ray.direction * middleScreen);
 			//ray.direction = ray.direction * angle; 
-			COLORREF color = world.trace(ray);
+			//COLORREF color = world.trace(ray);
 			Color light = world.spawn(ray);
 			light.r = (std::max(0.0f, std::min((float)light.r, 1400.0f))/1400.0f)* 255;
 			light.g = (std::max(0.0f, std::min((float)light.g, 1400.0f))/1400.0f)* 255;
 			light.b = (std::max(0.0f, std::min((float)light.b, 1400.0f))/1400.0f)* 255;
-			color = light.getColorRef();
+			COLORREF color = light.getColorRef();
 			SetPixel(hdc, x, y, color);
 			px += pixelW;
 		}

@@ -7,8 +7,7 @@
 
 class World{
 protected:
-	void intersection(IntersectData &id, Point point, pVector normal, pVector incoming, pVector outgoing, vector<LightSource*> lights);
-	pVector reflect(pVector L, pVector N);
+	void intersection(IntersectData &id, Point point, pVector normal, LightSource* light);
 public:
 	vector<Object*> objectList;
 	vector<LightSource*> lightList;
@@ -19,6 +18,7 @@ public:
 	void add(LightSource* light);
 	void transform(Object obj);
 	void transformAllObjects(Matrix matrix);
+	bool intersection(Ray ray);
 	Color spawn(Ray ray);
 };
 #endif

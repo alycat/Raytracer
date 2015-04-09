@@ -37,18 +37,16 @@ void World::transformAllObjects(Matrix matrix){
 	
 }
 
-pVector World::reflect(pVector L, pVector N){
-	pVector R = N - L * ((L*N) * 2);
-	return R.normal;
-}
 
-void World::intersection(IntersectData &id, Point point, pVector normal, pVector incoming, pVector outgoing, vector<LightSource*> lights){
+void World::intersection(IntersectData &id, Point point, pVector normal, LightSource* light){
 	id.point = point;
 	id.normal = normal.normal;
-	id.incoming = incoming.normal;
-	id.reflective = reflect(id.incoming, id.normal);
-	id.outgoing = outgoing.normal;
-	id.lights = lights;
+	id.source = {light->position - point};
+	id.source = id.source.normal;
+	id.outgoing = { point - light->position };
+	id.outgoing = id.outgoing.normal;
+	id.reflect = reflect(id.source, id.normal);
+	id.light = light;
 }
 
 Color World::spawn(Ray ray){
@@ -61,9 +59,16 @@ Color World::spawn(Ray ray){
 		cout << "Distance: " << distance << endl;
 		if (distance < closest){
 			IntersectData id;
-			this->intersection(id, temp, objectList[i]->normal(temp), {ray.start - temp}, { temp - ray.start }, lightList);
-			color = objectList[i]->material->illuminate(id);
-			closest = distance;
+			color = black;
+			for (int l = 0; l < lightList.size(); ++l){
+				this->intersection(id, temp, objectList[i]->normal(temp), lightList[l]);
+				Ray shadow = { temp, { lightList[l]->position -temp} };
+				shadow.direction = shadow.direction.normal;
+				if (!intersection(shadow)){
+					color = color + objectList[i]->material->illuminate(id);
+				}
+				closest = distance;
+			}
 		}
 	}
 	return color;
@@ -84,4 +89,16 @@ COLORREF World::trace(Ray ray){
 	}
 	return c.getColor;
 }
- 
+
+bool World:: intersection(Ray ray){
+	float closest = sqrt(myMax) / 3;
+	Point pClosest = maxPoint;
+	for (int i = 0; i < objectList.size(); ++i){
+		Point temp = objectList[i]->intersect(ray);
+		float distance = temp.distance(ray.start);
+		if (distance < closest){
+			return true;
+		}
+	}
+	return false;
+}
