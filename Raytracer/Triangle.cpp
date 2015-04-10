@@ -1,5 +1,4 @@
 #include "Triangle.h"
-
 Triangle::Triangle(void){
 	p1 = { 0, 10000, 1000 }, p2 = { -10000, 0, 1000 }, p3 = { 10000, 0, 1000 };
 	vM = Matrix(4, 4);
@@ -8,22 +7,23 @@ Triangle::Triangle(void){
 	pVector v2 = { p3 - p1 };
 	vn = v1.getCross(v2);
 	vn = vn.normal;
-	material = new Phong(red);
+	UV uv = {-10000, 10000, 10000, 0};
+	material = new Checker(uv, red, yellow);
 }
 
 Triangle::~Triangle(void){
 
 }
 
-Triangle::Triangle(Point a, Point b, Point c){
+Triangle::Triangle(Point a, Point b, Point c, UV uv){
 	p1 = a, p2 = b, p3 = c;
 	vM = Matrix(4, 4);
 	vM.unit();
-	pVector v1 = { p1 - p2 };
-	pVector v2 = { p1 - p3 };
+	pVector v1 = { p2 - p1 };
+	pVector v2 = { p3 - p1 };
 	vn = v1.getCross(v2);
 	vn = vn.normal;
-	material = new Phong(red);
+	material = new Checker(uv);
 }
 
 /*

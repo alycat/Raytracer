@@ -2,6 +2,7 @@
 #define _CAMERA_H
 
 #include "World.h"
+#include <thread>
 
 class Camera{
 private:

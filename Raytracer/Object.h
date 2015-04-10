@@ -4,6 +4,7 @@
 #include "Global.h"
 #include <iostream>
 #include "Phong.h"
+#include "Checker.h"
 
 using namespace std;
 

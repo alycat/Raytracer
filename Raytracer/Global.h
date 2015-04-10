@@ -149,6 +149,10 @@ struct Color{
 		return{r + in.r, g + in.g, b + in.b};
 	}
 
+	Color operator-(const Color& in){
+		return{ r - in.r, g - in.g, b - in.b };
+	}
+
 	Color operator*(const Color& in){
 		return{r* in.r, g *in.g, b * in.b};
 	}
@@ -174,7 +178,7 @@ static Color green = { 0, 255, 0 };
 static Color blue = { 0, 0, 255 };
 static Color fuchsia = { 255, 0, 255 };
 static Color purple = {128, 0, 128};
-static Color yellow = {255, 25, 224};
+static Color yellow = {255, 255, 0};
 static Color grey = {127, 127, 127};
 static float m_irr = 1400.0f;
 
@@ -244,16 +248,15 @@ struct IntersectData{
 	LightSource* light;
 };
 
-static Color toneReproduction(Light light){
-	float r;
-	float g;
-	float b;
-	return black;
-}
-
 static pVector reflect(pVector L, pVector N){
 	pVector R = N - L * ((L*N) * 2);
 	return R.normal;
 }
 
+struct UV{
+	float left;
+	float right;
+	float down;
+	float up;
+};
 #endif

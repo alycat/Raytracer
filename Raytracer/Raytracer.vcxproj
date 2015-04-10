@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Checker.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="IlluminationModel.h" />
     <ClInclude Include="Object.h" />
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Checker.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Phong.cpp" />
     <ClCompile Include="Raytracer.cpp" />

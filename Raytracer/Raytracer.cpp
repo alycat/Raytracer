@@ -33,19 +33,21 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	cam = new Camera();
 	wrld = new World();
-	Sphere *s1 = new Sphere({ 0.0, 0.2, 8}, 0.85, purple);
-	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, green);
-	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 });
-	Triangle * t2 = new Triangle({ -4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, -3, 0 });
+	Sphere *s1 = new Sphere({ 0.0, 0.2, 8}, 0.85, grey);
+	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, grey);
+	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, {-4.0, 4.0, 0, 22});
+	Triangle * t2 = new Triangle({ -4.0, 1.5, 22 }, { 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 4.0, 0, 22 });
 	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);
 
-	LightSource* l1 = new LightSource({ { -5, 10.0f, -5 }, grey, { 1.0f } }); //position, color, light
+	LightSource* l1 = new LightSource({ { -1, 5.0f, -5 }, green, { 2.0f } }); //position, color, light
 	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { -5, 1.0f, -10 }, grey, { 1.0f } });
+	LightSource* l2 = new LightSource({ { 0, 300.0f, 0 }, white, { 1.0f } });
 	wrld->add(l2);
+	LightSource* l3 = new LightSource({ { 0, 0, 11 }, white, { 100.0f } });
+	wrld->add(l3);
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
