@@ -180,7 +180,7 @@ static Color fuchsia = { 255, 0, 255 };
 static Color purple = {128, 0, 128};
 static Color yellow = {255, 255, 0};
 static Color grey = {127, 127, 127};
-static float m_irr = 1400.0f;
+static float m_irr = 1.0f;
 
 //both row & column major scale matrix
 static Matrix Scale(Point s){
@@ -229,6 +229,10 @@ static Matrix RotateZ(float angle){
 
 struct Light{
 	float irradiance;
+
+	Light operator+(const Light& in){
+		return{irradiance + in.irradiance};
+	}
 };
 
 //Light Source information struct

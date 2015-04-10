@@ -18,7 +18,7 @@ public:
 	void add(LightSource* light);
 	void transform(Object obj);
 	void transformAllObjects(Matrix matrix);
-	bool intersection(Ray ray);
-	Color spawn(Ray ray);
+	bool intersection(Ray ray, int index);
+	Light spawn(Ray ray);
 };
 #endif

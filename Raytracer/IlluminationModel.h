@@ -9,7 +9,7 @@ public:
 	Color c;
 	IlluminationModel(void){};
 	~IlluminationModel(void){};
-	virtual Color illuminate(IntersectData id)=0;
+	virtual Light illuminate(IntersectData id)=0;
 };
 
 #endif

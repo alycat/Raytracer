@@ -30,7 +30,7 @@ Phong::~Phong(){
 
 }
 
-Color Phong::illuminate(IntersectData id){
+Light Phong::illuminate(IntersectData id){
 	Color cdiff = {0,0,0}, cspec = { 0, 0, 0 };
 	Light L = {0.0};
 	
@@ -42,10 +42,11 @@ Color Phong::illuminate(IntersectData id){
 	pVector R = id.reflect;
 	pVector N = id.normal;
 	Color s = (white * id.light->color) * (R*V);
-	cdiff = cdiff + ((c * id.light->color * (id.light->light.irradiance / m_irr)) *  (S*N) * kd);
-	cspec = cspec + (s.power(ke) * ks * (id.light->light.irradiance / m_irr));
+	cdiff = cdiff + ((c * id.light->color) *  (S*N) * kd);
+	cspec = cspec + (s.power(ke) * ks);
 	diffuse += id.light->light.irradiance * (S * N) * kd;
 	specular += pow(id.light->light.irradiance * (R*V), ke) * ks;
 	L.irradiance = diffuse + specular;
-	return (cdiff + cspec);
+	//return (cdiff + cspec) * (id.light->light.irradiance / m_irr);
+	return L;
 }

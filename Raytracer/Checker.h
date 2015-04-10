@@ -9,7 +9,7 @@ public:
 	Checker(UV uv, Color c);
 	Checker(UV uv, Color c1, Color c2);
 	~Checker(void);
-	Color illuminate(IntersectData id) override;
+	Light illuminate(IntersectData id) override;
 protected:
 	Color a, b;
 	int hor, vert;

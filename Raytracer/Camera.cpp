@@ -2,7 +2,7 @@
 
 Camera::Camera(){
 	filmplane = { 400, 300, 40000, 30000, 50000 };
-	position = { -1.2, 0.0, 0.0 };
+	position = { -1.2, -1.0, -10.0 };
 	lookat = { { 0.0, 0.0, 1.0 } };
 	up = { { 0.0, 1.0, 0.0 } };
 
@@ -44,12 +44,14 @@ void Camera::render(World world, HDC hdc){
 			float angle = acosf(ray.direction * middleScreen);
 			//ray.direction = ray.direction * angle; 
 			//COLORREF color = world.trace(ray);
-			Color light = world.spawn(ray);
-			light.r = (std::max(0.0f, std::min((float)light.r, 1400.0f))/1400.0f)* 255;
-			light.g = (std::max(0.0f, std::min((float)light.g, 1400.0f))/1400.0f)* 255;
-			light.b = (std::max(0.0f, std::min((float)light.b, 1400.0f))/1400.0f)* 255;
-			COLORREF color = light.getColorRef();
-			SetPixel(hdc, x, y, color);
+			Light light = world.spawn(ray);
+			//light.r = (std::max(0.0f, std::min((float)light.r, m_irr))/1400.0f)* 255;
+			//light.g = (std::max(0.0f, std::min((float)light.g, m_irr))/1400.0f)* 255;
+			//light.b = (std::max(0.0f, std::min((float)light.b, m_irr))/1400.0f)* 255;
+			//COLORREF color = light.getColorRef();
+			float tone = (std::max(0.0f, std::min(light.irradiance, m_irr))/m_irr) * 255;
+			Color color = { tone, tone, tone };
+			SetPixel(hdc, x, y, color.getColorRef());
 			px += pixelW;
 		}
 		py -= pixelH;
