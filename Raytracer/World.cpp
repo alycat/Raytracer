@@ -50,7 +50,7 @@ void World::intersection(IntersectData &id, Point point, pVector normal, LightSo
 }
 
 Light World::spawn(Ray ray){
-	Light light = {m_irr/2};
+	Light light = {background};
 	float closest = sqrt(myMax) / 3;
 	Point pClosest = maxPoint;
 	for (int i = 0; i < objectList.size(); ++i){
@@ -59,7 +59,7 @@ Light World::spawn(Ray ray){
 		cout << "Distance: " << distance << endl;
 		if (distance < closest){
 			IntersectData id;
-			light = {0.0};
+			light = {black};
 			for (int l = 0; l < lightList.size(); ++l){
 				this->intersection(id, temp, objectList[i]->normal(temp), lightList[l]);
 				Ray shadow = { lightList[l]->position, {temp - lightList[l]->position} };

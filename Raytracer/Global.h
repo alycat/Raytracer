@@ -140,6 +140,9 @@ struct Color{
 	int b;
 
 	COLORREF getColorRef(){
+		r = std::max(0, std::min(r, 255));
+		g = std::max(0, std::min(g, 255));
+		b = std::max(0, std::min(b, 255));
 		return RGB(r, g, b);
 	}
 
@@ -180,6 +183,7 @@ static Color fuchsia = { 255, 0, 255 };
 static Color purple = {128, 0, 128};
 static Color yellow = {255, 255, 0};
 static Color grey = {127, 127, 127};
+static Color orange = {255, 127, 0};
 static float m_irr = 1.0f;
 
 //both row & column major scale matrix
@@ -228,7 +232,7 @@ static Matrix RotateZ(float angle){
 }
 
 struct Light{
-	float irradiance;
+	Color irradiance;
 
 	Light operator+(const Light& in){
 		return{irradiance + in.irradiance};
