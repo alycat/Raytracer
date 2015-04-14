@@ -23,6 +23,7 @@ Triangle::Triangle(Point a, Point b, Point c, UV uv){
 	pVector v2 = { p3 - p1 };
 	vn = v1.getCross(v2);
 	vn = vn.normal;
+	vn.v.y = abs(vn.v.y);
 	material = new Checker(uv);
 }
 
@@ -45,7 +46,7 @@ Point Triangle::intersect(Ray ray){
 
 	pVector T = { ray.start - p1};
 	float u = (T*P) * f;
-	if (u < 0.0f || u > 1.0f){
+	if (u < 0.0f || u > 1){
 		return maxPoint;
 	}
 
@@ -61,18 +62,19 @@ Point Triangle::intersect(Ray ray){
 	if (t <= EPSILON){
 		return maxPoint;
 	}
-	return{ u, v, t };
+	Point intersection = p1*(1 - u - v) + p2*u + p3*v;
+	return intersection;
 }
 
 void Triangle::transform(Matrix matrix){
-	vM = matrix * vM;
+	/*vM = matrix * vM;
 	//vM = vM * matrix;
 	Point trans = {vM[0][3], vM[1][3], vM[2][3]};
 	trans = {vM[3][0], vM[3][1], vM[3][2]};
 	//trans = origin;
 	p1 + trans;
 	p2 + trans;
-	p3 + trans;
+	p3 + trans;*/
 	/*Matrix posM1 = Matrix(1, 4);
 	Matrix posM2 = Matrix(1, 4);
 	Matrix posM3 = Matrix(1, 4);

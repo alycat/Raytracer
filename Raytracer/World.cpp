@@ -62,11 +62,11 @@ Light World::spawn(Ray ray){
 			light = {0.0};
 			for (int l = 0; l < lightList.size(); ++l){
 				this->intersection(id, temp, objectList[i]->normal(temp), lightList[l]);
-				Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
+				Ray shadow = { lightList[l]->position, {temp - lightList[l]->position} };
 				shadow.direction = shadow.direction.normal;
-				//if (!intersection(shadow, i)){
+				if (intersection(shadow, i)){
 					light = light + objectList[i]->material->illuminate(id);
-				//}
+			}
 				closest = distance;
 			}
 		}
@@ -92,18 +92,20 @@ COLORREF World::trace(Ray ray){
 
 bool World:: intersection(Ray ray, int index){
 	float closest = sqrt(myMax) / 3;
-	Point pClosest = maxPoint;
-	pClosest = objectList[index]->intersect(ray);
-	closest = pClosest.distance(ray.start);
-	//closest = ray.start.distance(pClosest);
+	Point pClosest = objectList[index]->intersect(ray);
+	float original = pClosest.distance(ray.start);
 	for (int i = 0; i < objectList.size(); ++i){
-		if (index != i){
+	if (index != i){
 			Point temp = objectList[i]->intersect(ray);
 			float distance = temp.distance(ray.start);
-			if (distance < closest){
-				return true;
+			if (distance < original){
+				closest = distance;
+				original = distance;
 			}
 		}
 	}
-	return false;
+	if (closest < sqrt(myMax) / 3){
+		return false; 
+	}
+	return true;
 }

@@ -4,8 +4,8 @@ Checker::Checker(UV uv){
 	a = yellow;
 	b = red;
 	u_v = uv;
-	hor = 80;
-	vert = 40;
+	hor = 20;
+	vert = 20;
 }
 
 Checker::~Checker(void){
@@ -16,7 +16,7 @@ Checker::Checker(UV uv, Color c){
 	a = c;
 	b = white - a;
 	u_v = uv;
-	hor = 40;
+	hor = 20;
 	vert = 20;
 }
 
@@ -24,8 +24,8 @@ Checker::Checker(UV uv, Color c1, Color c2){
 	a = c1;
 	b = c2;
 	u_v = uv;
-	hor = 40;
-	vert = 40;
+	hor = 20;
+	vert = 20;
 }
 
 Light Checker::illuminate(IntersectData id){
