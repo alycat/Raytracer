@@ -16,34 +16,30 @@ KDNode::~KDNode(){
 		delete right;
 	}
 	right = nullptr;
-
-	for (int i = 0; i < triangles.size(); ++i){
-		delete triangles[i];
-	}
-	triangles.clear();
+	/*
+	for (int i = 0; i < objects.size(); ++i){
+		delete objects[i];
+	}*/
+	objects.clear();
 }
 
-bool KDNode::hit(KDNode* node, const Ray& ray, float& t, float& tmin) const{
+bool KDNode::hit(KDNode* node, const Ray& ray) const{
 	if (node->box.hit(ray)){
-		pVector normal;
-		bool hit_t = false;
-		Point hit_p = origin;
-		if (node->left->triangles.size() > 0 || node->right->triangles.size() > 0){
-			bool hit_l = hit(node->left, ray, t, tmin);
-			bool hit_r = hit(node->right, ray, t, tmin);
-			return hit_l || hit_r;
+		if (node->left){
+			if (node->left->objects.size() > 0){
+				return hit(node->left, ray);
+			}
+		}
+		if (node->right){
+			if (node->right->objects.size() > 0){
+				return hit(node->right, ray);
+			}
 		}
 		else{
-			for (int i = 0; i < node->triangles.size(); ++i){
-				if (node->triangles[i]->intersect(ray) < maxPoint){
-					hit_t = true;
-					tmin = t;
-					hit_p = node->triangles[i]->intersect(ray);
-					normal = node->triangles[i]->normal(hit_p);
+			for (int i = 0; i < node->objects.size(); ++i){
+				if (node->objects[i]->getBBox().hit(ray)){
+					return true;
 				}
-			}
-			if (hit_t){
-				return true;
 			}
 			return false;
 		}
@@ -51,9 +47,9 @@ bool KDNode::hit(KDNode* node, const Ray& ray, float& t, float& tmin) const{
 	return false;
 }
 
-KDNode* KDNode::build(vector<Triangle*>&t, int d) const{
+KDNode* KDNode::build(vector<Object*>&t, int d) const{
 	KDNode* node = new KDNode();
-	node->triangles = t;
+	node->objects = t;
 	node->left = nullptr;
 	node->right = nullptr;
 	node->box = BoundingBox();
@@ -66,8 +62,8 @@ KDNode* KDNode::build(vector<Triangle*>&t, int d) const{
 		node->box = t[0]->getBBox();
 		node->left = new KDNode();
 		node->right = new KDNode();
-		node->left->triangles = vector<Triangle*>();
-		node->right->triangles = vector<Triangle*>();
+		node->left->objects = vector<Object*>();
+		node->right->objects = vector<Object*>();
 		return node;
 	}
 
@@ -78,8 +74,8 @@ KDNode* KDNode::build(vector<Triangle*>&t, int d) const{
 		mid = mid + (t[i]->getMidPoint() * (1.0/t.size()));
 	}
 
-	vector<Triangle*> l_t;
-	vector<Triangle*> r_t;
+	vector<Object*> l_t;
+	vector<Object*> r_t;
 
 	int axis = node->box.longestAxis();
 
@@ -118,8 +114,8 @@ KDNode* KDNode::build(vector<Triangle*>&t, int d) const{
 	else{
 		node->left = new KDNode();
 		node->right = new KDNode();
-		node->left->triangles = vector<Triangle*>();
-		node->right->triangles = vector<Triangle*>();
+		node->left->objects = vector<Object*>();
+		node->right->objects = vector<Object*>();
 	}
 
 	return node;

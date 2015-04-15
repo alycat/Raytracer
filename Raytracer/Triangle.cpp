@@ -75,8 +75,8 @@ BoundingBox Triangle::getBBox(){
 	bottom = (p1.y < p2.y) ? ((p1.y < p3.y) ? p1.y : p3.y) : ((p2.y < p3.y) ? p2.y : p3.y);
 	top = (p1.y > p2.y) ? ((p1.y > p3.y) ? p1.y : p3.y) : ((p2.y > p3.y) ? p2.y : p3.y);
 
-	back = (p1.z < p2.z) ? ((p1.z < p3.z) ? p1.z : p3.z) : ((p2.z < p3.z) ? p2.z : p3.z);
-	front = (p1.z > p2.z) ? ((p1.z > p3.z) ? p1.z : p3.z) : ((p2.z > p3.z) ? p2.z : p3.z);
+	front = (p1.z < p2.z) ? ((p1.z < p3.z) ? p1.z : p3.z) : ((p2.z < p3.z) ? p2.z : p3.z);
+	back = (p1.z > p2.z) ? ((p1.z > p3.z) ? p1.z : p3.z) : ((p2.z > p3.z) ? p2.z : p3.z);
 
 	box.box = { left, right, top, bottom, back, front };
 	return box;

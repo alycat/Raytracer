@@ -1,7 +1,7 @@
 #include "World.h"
 
 World::World(void){
-
+	tree = new KDNode();
 }
 
 World::~World(void){
@@ -14,6 +14,10 @@ World::~World(void){
 		delete lightList[l];
 	}
 	lightList.clear();
+	if (tree){
+		delete tree;
+	}
+	tree = nullptr;
 }
 
 void World::add(Object* obj){
@@ -37,6 +41,13 @@ void World::transformAllObjects(Matrix matrix){
 	
 }
 
+void World::initTree(){
+	BoundingBox box = BoundingBox();
+	box.box = { -5, 5, 5, -5, 30, -30 };
+	tree->box = box;
+	tree->objects = objectList;
+	tree->build(objectList, 0);
+}
 
 void World::intersection(IntersectData &id, Point point, pVector normal, LightSource* light){
 	id.point = point;
@@ -51,25 +62,27 @@ void World::intersection(IntersectData &id, Point point, pVector normal, LightSo
 
 Light World::spawn(Ray ray){
 	Light light = {background};
-	float closest = sqrt(myMax) / 3;
-	Point pClosest = maxPoint;
-	for (int i = 0; i < objectList.size(); ++i){
-		Point temp = objectList[i]->intersect(ray);
-		float distance = temp.distance(ray.start);
-		cout << "Distance: " << distance << endl;
-		if (distance < closest){
-			IntersectData id;
-			light = {black};
-			for (int l = 0; l < lightList.size(); ++l){
-				this->intersection(id, temp, objectList[i]->normal(temp), lightList[l]);
-				Ray shadow = { lightList[l]->position, {temp - lightList[l]->position} };
-				shadow.direction = shadow.direction.normal;
-				if (intersection(shadow, i)){
-					light = light + objectList[i]->material->illuminate(id);
+	//if (tree->hit(tree, ray)){
+		float closest = sqrt(myMax) / 3;
+		Point pClosest = maxPoint;
+		for (int i = 0; i < objectList.size(); ++i){
+			Point temp = objectList[i]->intersect(ray);
+			float distance = temp.distance(ray.start);
+			cout << "Distance: " << distance << endl;
+			if (distance < closest){
+				IntersectData id;
+				light = { black };
+				for (int l = 0; l < lightList.size(); ++l){
+					this->intersection(id, temp, objectList[i]->normal(temp), lightList[l]);
+					Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
+					shadow.direction = shadow.direction.normal;
+					if (intersection(shadow, i)){
+						light = light + objectList[i]->material->illuminate(id);
+					}
+					closest = distance;
+				}
 			}
-				closest = distance;
-			}
-		}
+		//}
 	}
 	return light;
 }

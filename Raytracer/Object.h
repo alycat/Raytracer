@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Phong.h"
 #include "Checker.h"
+#include "BoundingBox.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ public:
 	virtual Point intersect(Ray ray);
 	virtual void transform(Matrix matrix);
 	virtual pVector normal(Point intersection);
+	virtual Point getMidPoint();
+	virtual BoundingBox getBBox();
 };
 
 #endif

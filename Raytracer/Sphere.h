@@ -16,5 +16,7 @@ public:
 	Sphere(Point cen, float r, Light l);
 	Point intersect(Ray ray);
 	void transform(Matrix matrix);
+	Point getMidPoint() override;
+	BoundingBox getBBox() override;
 };
 #endif

@@ -72,3 +72,13 @@ pVector Sphere::normal(Point intersection){
 	pVector n = { intersection - center };
 	return n.normal;
 }
+
+Point Sphere::getMidPoint(){
+	return center;
+}
+
+BoundingBox Sphere::getBBox(){
+	BoundingBox box = BoundingBox();
+	box.box	= {center.x - radius, center.x + radius, center.y + radius, center.y - radius, center.z + radius, center.z - radius};
+	return box;
+}

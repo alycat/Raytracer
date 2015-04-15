@@ -2,6 +2,7 @@
 
 
 BoundingBox::BoundingBox(){
+	box = {-100, 100, 100, -100, -100, 100};
 }
 
 BoundingBox::~BoundingBox(){

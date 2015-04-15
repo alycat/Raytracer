@@ -32,3 +32,12 @@ pVector Object::normal(Point p)
 {
 	return{ origin };
 }
+
+Point Object::getMidPoint(){
+	return origin;
+}
+
+BoundingBox Object::getBBox(){
+	BoundingBox b = BoundingBox();
+	return b;
+}

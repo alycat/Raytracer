@@ -1,7 +1,7 @@
 #ifndef _KDNODE_H
 #define _KDNODE_H
 
-#include "Triangle.h"
+#include "Object.h"
 
 class KDNode{
 public:
@@ -10,8 +10,8 @@ public:
 	~KDNode();
 	KDNode *left;
 	KDNode *right;
-	vector<Triangle*> triangles;
-	KDNode* build(vector<Triangle*> &t, int d) const;
-	bool hit(KDNode* node, const Ray& ray, float& t, float& tmin) const;
+	vector<Object*> objects;
+	KDNode* build(vector<Object*> &t, int d) const;
+	bool hit(KDNode* node, const Ray& ray) const;
 };
 #endif

@@ -4,6 +4,7 @@
 
 #include "Sphere.h"
 #include "Triangle.h"
+#include "KDNode.h"
 
 class World{
 protected:
@@ -11,9 +12,11 @@ protected:
 public:
 	vector<Object*> objectList;
 	vector<LightSource*> lightList;
+	KDNode* tree;
 	World(void);
 	~World(void);
 	COLORREF trace(Ray ray);
+	void initTree();
 	void add(Object* obj);
 	void add(LightSource* light);
 	void transform(Object obj);

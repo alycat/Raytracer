@@ -39,6 +39,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, {-4.0, 4.0, 0, 22});
 	Triangle * t2 = new Triangle({ 4.0, -3, 0 },{ -4.0, -3, 0 },{ -4.0, 1.5, 22 },   { -4.0, 4.0, 0, 22 });
 	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
+	/*vector<Sphere*> spheres;
+	for (int i = 0; i < 100; ++i){
+		spheres.push_back(new Sphere({i, 0, 10}, 0.1, white));
+		wrld->add(spheres[i]);
+	}*/
 	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
@@ -53,6 +58,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	//wrld->add(l3);
 	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white, { white } });
 	//wrld->add(l4);
+
+	wrld->initTree();
+
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_RAYTRACER, szWindowClass, MAX_LOADSTRING);
