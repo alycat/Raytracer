@@ -20,6 +20,7 @@ public:
 	pVector lookat;
 	pVector up;
 	pVector u, v, n;
+	pVector middleScreen;
 	Camera(void);
 	~Camera(void);
 	void render(World world, HDC hdc);

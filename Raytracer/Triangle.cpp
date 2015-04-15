@@ -66,6 +66,34 @@ Point Triangle::intersect(Ray ray){
 	return intersection;
 }
 
+BoundingBox Triangle::getBBox(){
+	BoundingBox box = BoundingBox();
+	float left, right, top, bottom, front, back;
+	left = (p1.x < p2.x) ? ((p1.x < p3.x) ? p1.x : p3.x) : ((p2.x < p3.x) ? p2.x : p3.x);
+	right = (p1.x > p2.x) ? ((p1.x > p3.x) ? p1.x : p3.x) : ((p2.x > p3.x) ? p2.x : p3.x);
+
+	bottom = (p1.y < p2.y) ? ((p1.y < p3.y) ? p1.y : p3.y) : ((p2.y < p3.y) ? p2.y : p3.y);
+	top = (p1.y > p2.y) ? ((p1.y > p3.y) ? p1.y : p3.y) : ((p2.y > p3.y) ? p2.y : p3.y);
+
+	back = (p1.z < p2.z) ? ((p1.z < p3.z) ? p1.z : p3.z) : ((p2.z < p3.z) ? p2.z : p3.z);
+	front = (p1.z > p2.z) ? ((p1.z > p3.z) ? p1.z : p3.z) : ((p2.z > p3.z) ? p2.z : p3.z);
+
+	box.corners[0] = { left, top, back };
+	box.corners[1] = { left, top, front };
+	box.corners[2] = { left, bottom, back };
+	box.corners[3] = { left, bottom, front };
+	box.corners[4] = { right, top, back };
+	box.corners[5] = { right, top, front };
+	box.corners[6] = { right, bottom, back };
+	box.corners[7] = { right, bottom, front };
+	return box;
+}
+
+//return MidPoint of Triangle
+Point Triangle::getMidPoint(){
+	return ((p1 + p2 + p3)/3);
+}
+
 void Triangle::transform(Matrix matrix){
 	/*vM = matrix * vM;
 	//vM = vM * matrix;

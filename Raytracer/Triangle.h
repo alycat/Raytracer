@@ -2,6 +2,7 @@
 #define _TRIANGLE_H
 
 #include "Object.h"
+#include "BoundingBox.h"
 
 class Triangle : public Object{
 public:
@@ -14,6 +15,8 @@ public:
 	Triangle(Point a, Point b, Point c, Light l, UV uv);
 	Point intersect(Ray ray);
 	void transform(Matrix matrix);
+	Point getMidPoint();
+	BoundingBox getBBox();
 };
 
 #endif

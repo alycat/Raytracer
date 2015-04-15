@@ -45,10 +45,10 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	wrld->add(t2);
 	//wrld->add(s3);
 
-	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, {200, 500, 500}, { grey } }); //position, color, light
+	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, { 255, 255, 255 }, { grey } }); //position, color, light
 	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { -1.5, -10, 0 }, {50, 50, 50}, { black } });
-	wrld->add(l2);
+	LightSource* l2 = new LightSource({ { -2, 1, 0 }, { 100, 100, 100 }, { black } });
+	//wrld->add(l2);
 	LightSource* l3 = new LightSource({ { -1.3, 2.6, 6 }, white, { white } });
 	//wrld->add(l3);
 	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white, { white } });

@@ -48,6 +48,14 @@ struct Point{
 		return{ x*in, y*in, z*in };
 	}
 
+	Point operator/(const float& in){
+		return{ x / in, y / in, z / in };
+	}
+
+	bool operator<(const Point& in){
+		return ((x < in.x) && (y < in.y) && (z < in.z));
+	}
+
 };
 
 
@@ -266,5 +274,10 @@ struct UV{
 	float right;
 	float down;
 	float up;
+};
+
+struct ShadeRect{
+	pVector Normal;
+	Point intersection;
 };
 #endif

@@ -87,10 +87,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Checker.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="IlluminationModel.h" />
+    <ClInclude Include="KDNode.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Phong.h" />
     <ClInclude Include="Raytracer.h" />
@@ -102,8 +104,10 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Checker.cpp" />
+    <ClCompile Include="KDNode.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Phong.cpp" />
     <ClCompile Include="Raytracer.cpp" />
