@@ -52,6 +52,10 @@ struct Point{
 		return{ x / in, y / in, z / in };
 	}
 
+	Point operator/(const Point& in){
+		return{x/in.x, y/in.y, z/in.z};
+	}
+
 	bool operator<(const Point& in){
 		return ((x < in.x) && (y < in.y) && (z < in.z));
 	}

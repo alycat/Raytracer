@@ -78,14 +78,7 @@ BoundingBox Triangle::getBBox(){
 	back = (p1.z < p2.z) ? ((p1.z < p3.z) ? p1.z : p3.z) : ((p2.z < p3.z) ? p2.z : p3.z);
 	front = (p1.z > p2.z) ? ((p1.z > p3.z) ? p1.z : p3.z) : ((p2.z > p3.z) ? p2.z : p3.z);
 
-	box.corners[0] = { left, top, back };
-	box.corners[1] = { left, top, front };
-	box.corners[2] = { left, bottom, back };
-	box.corners[3] = { left, bottom, front };
-	box.corners[4] = { right, top, back };
-	box.corners[5] = { right, top, front };
-	box.corners[6] = { right, bottom, back };
-	box.corners[7] = { right, bottom, front };
+	box.box = { left, right, top, bottom, back, front };
 	return box;
 }
 

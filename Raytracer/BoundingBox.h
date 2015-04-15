@@ -4,9 +4,16 @@
 #include "Global.h"
 class BoundingBox{
 public:
-	struct{
-		Point corners[8];
+	struct BBox{
+		float left;
+		float right;
+		float top;
+		float bottom;
+		float back;
+		float front;
 	};
+
+	BBox box;
 	BoundingBox();
 	~BoundingBox();
 	int longestAxis();
