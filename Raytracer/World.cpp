@@ -60,7 +60,7 @@ void World::intersection(IntersectData &id, Point point, pVector normal, LightSo
 	id.light = light;
 }
 
-Light World::spawn(Ray ray){
+Light World::spawn(Ray ray, int depth){
 	Light light = {background};
 	//if (tree->hit(tree, ray)){
 		float closest = sqrt(myMax) / 3;
@@ -78,8 +78,33 @@ Light World::spawn(Ray ray){
 					shadow.direction = shadow.direction.normal;
 					if (intersection(shadow, i)){
 						light = light + objectList[i]->material->illuminate(id);
+						if (depth < max_depth){
+							if (objectList[i]->k_r > 0){
+								pVector L = ray.direction;
+								L = L.normal;
+								pVector N = objectList[i]->normal(temp);
+								Ray reflection = { temp, reflect(L, N ) };
+								reflection.direction.v.z = reflection.direction.v.z * -1;
+								Light r = spawn(reflection, depth + 1);
+								r.irradiance = r.irradiance * objectList[i]->k_r;
+								light = light + r;
+							}
+							
+						}
+						if (depth < max_depth){
+							if (objectList[i]->k_t > 0){
+								pVector I = { lightList[i]->position - temp };
+								pVector N = objectList[i]->normal(temp);
+								Point p = { 0, 0, 1 };
+								Ray transray = { temp + p, transmit(N, I) };
+								Light t = spawn(transray, depth + 1);
+								t.irradiance = t.irradiance * objectList[i]->k_t;
+								light = light + t;
+							}
+						}
 					}
 					closest = distance;
+					
 				}
 			}
 		//}

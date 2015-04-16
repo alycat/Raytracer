@@ -42,7 +42,7 @@ void Camera::render(World world, HDC hdc){
 			Ray ray = { position, { px - position.x, py - position.y, filmplane.f - position.z } };
 			ray.direction = ray.direction.normal;
 			float angle = acosf(ray.direction * middleScreen);
-			Light light = world.spawn(ray);
+			Light light = world.spawn(ray, 0);
 			Color color = light.irradiance;
 			SetPixel(hdc, x, y, color.getColorRef());
 			px += pixelW;

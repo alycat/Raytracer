@@ -9,6 +9,7 @@ Triangle::Triangle(void){
 	vn = vn.normal;
 	UV uv = {-10000, 10000, 10000, 0};
 	material = new Checker(uv, red, yellow);
+	k_r = k_t = 0;
 }
 
 Triangle::~Triangle(void){
@@ -25,6 +26,7 @@ Triangle::Triangle(Point a, Point b, Point c, UV uv){
 	vn = vn.normal;
 	vn.v.y = abs(vn.v.y);
 	material = new Checker(uv);
+	k_r = k_t = 0;
 }
 
 /*

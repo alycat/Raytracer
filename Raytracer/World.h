@@ -22,6 +22,6 @@ public:
 	void transform(Object obj);
 	void transformAllObjects(Matrix matrix);
 	bool intersection(Ray ray, int index);
-	Light spawn(Ray ray);
+	Light spawn(Ray ray, int depth);
 };
 #endif

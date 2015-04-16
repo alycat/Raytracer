@@ -19,7 +19,7 @@ typedef std::valarray<float> Vector;
 
 const float myMax= (std::numeric_limits<float>::max)();
 
-
+const float max_depth = 100;
 
 struct Point{
 	float x;
@@ -271,6 +271,11 @@ struct IntersectData{
 static pVector reflect(pVector L, pVector N){
 	pVector R = N - L * ((L*N) * 2);
 	return R.normal;
+}
+
+static pVector transmit(pVector I, pVector N){
+	pVector T = I - (N * 2.0) * (N * I);
+	return T.normal;
 }
 
 struct UV{

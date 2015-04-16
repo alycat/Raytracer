@@ -16,6 +16,7 @@ public:
 	Color color;
 	Light light;
 	Matrix vM;
+	float k_r, k_t;
 	Object(void);
 	Object(Color c);
 	~Object(void);

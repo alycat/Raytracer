@@ -5,6 +5,7 @@ Object::Object(void){
 	vM = Matrix(4, 4);
 	vM.unit();
 	material = new Phong();
+	k_r = k_t = 0;
 }
 
 Object::~Object(void){
