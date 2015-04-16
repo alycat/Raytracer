@@ -19,7 +19,7 @@ typedef std::valarray<float> Vector;
 
 const float myMax= (std::numeric_limits<float>::max)();
 
-const float max_depth = 100;
+const float max_depth = 5;
 
 struct Point{
 	float x;
@@ -151,10 +151,19 @@ struct Color{
 	int g;
 	int b;
 
+	void forcePositive(){
+		r = std::max(r, 0);
+		g = std::max(g, 0);
+		b = std::max(b, 0);
+	}
+
 	COLORREF getColorRef(){
-		r = std::max(0, std::min(r, 255));
-		g = std::max(0, std::min(g, 255));
-		b = std::max(0, std::min(b, 255));
+		if (r < 0){
+			r = 0;
+		}
+		r = std::min(r, 255);
+		g = std::min(g, 255);
+		b = std::min(b, 255);
 		return RGB(r, g, b);
 	}
 
@@ -266,6 +275,7 @@ struct IntersectData{
 	pVector outgoing;
 	pVector reflect;
 	LightSource* light;
+	pVector camera;
 };
 
 static pVector reflect(pVector L, pVector N){

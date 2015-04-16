@@ -8,7 +8,7 @@
 
 class World{
 protected:
-	void intersection(IntersectData &id, Point point, pVector normal, LightSource* light);
+	void intersection(IntersectData &id, Point point, pVector normal, LightSource* light, pVector camera);
 public:
 	vector<Object*> objectList;
 	vector<LightSource*> lightList;

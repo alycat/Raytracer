@@ -34,30 +34,31 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	cam = new Camera();
 	wrld = new World();
 	Color p = { 1, 0, 1 };
-	Sphere *s1 = new Sphere({ 0.0, 0.2, 8 }, 0.85, white);
+	Sphere *s1 = new Sphere({ 0.0, 0.2, 8 }, 0.85, black);
 	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, black);
 	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, {-4.0, 4.0, 0, 22});
 	Triangle * t2 = new Triangle({ 4.0, -3, 0 },{ -4.0, -3, 0 },{ -4.0, 1.5, 22 },   { -4.0, 4.0, 0, 22 });
 	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
-	s1->k_r = 0.7;
-//	s2->k_r = 0.7;
+	s1->k_r = 0.3;
+	//s2->k_r = 0.01;
 	/*vector<Sphere*> spheres;
 	for (int i = 0; i < 100; ++i){
 		spheres.push_back(new Sphere({i, 0, 10}, 0.1, white));
 		wrld->add(spheres[i]);
 	}*/
+	
 	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);
 	//wrld->add(s3);
 
-	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, { 255, 255, 255 }, { grey } }); //position, color, light
+	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
 	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { 0, 10, 7 }, { 10, 10, 10 }, { black } });
-	//wrld->add(l2);
-	LightSource* l3 = new LightSource({ { -1.3, 2.6, 6 }, white, { white } });
-	//wrld->add(l3);
+	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white/5, { black } });
+	wrld->add(l2);
+	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white/10, { white } });
+	wrld->add(l3);
 	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white, { white } });
 	//wrld->add(l4);
 
