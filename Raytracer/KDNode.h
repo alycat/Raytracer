@@ -11,7 +11,7 @@ public:
 	KDNode *left;
 	KDNode *right;
 	vector<Object*> objects;
-	KDNode* build(vector<Object*> &t, int d) const;
+	KDNode* build(vector<Object*> &t, BoundingBox b) const;
 	bool hit(KDNode* node, const Ray& ray) const;
 };
 #endif

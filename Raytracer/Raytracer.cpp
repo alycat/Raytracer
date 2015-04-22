@@ -40,7 +40,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Triangle * t2 = new Triangle({ 4.0, -3, 0 },{ -4.0, -3, 0 },{ -4.0, 1.5, 22 },   { -4.0, 4.0, 0, 22 });
 	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
 	s1->k_r = 0.3;
-	//s2->k_r = 0.01;
+	s2->k_t = 0.15;
 	/*vector<Sphere*> spheres;
 	for (int i = 0; i < 100; ++i){
 		spheres.push_back(new Sphere({i, 0, 10}, 0.1, white));

@@ -16,6 +16,7 @@ public:
 	void transform(Matrix matrix);
 	Point getMidPoint() override;
 	BoundingBox getBBox() override;
+	bool hit(Ray ray) override;
 };
 
 #endif

@@ -115,3 +115,7 @@ void Triangle::transform(Matrix matrix){
 pVector Triangle::normal(Point intersect){
 	return vn;
 }
+
+bool Triangle::hit(Ray ray){
+	return false;
+}

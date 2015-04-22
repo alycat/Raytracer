@@ -25,6 +25,7 @@ public:
 	virtual pVector normal(Point intersection);
 	virtual Point getMidPoint();
 	virtual BoundingBox getBBox();
+	virtual bool hit(Ray ray);
 };
 
 #endif

@@ -42,3 +42,7 @@ BoundingBox Object::getBBox(){
 	BoundingBox b = BoundingBox();
 	return b;
 }
+
+bool Object::hit(Ray ray){
+	return false;
+}

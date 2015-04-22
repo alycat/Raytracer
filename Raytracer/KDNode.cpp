@@ -47,7 +47,7 @@ bool KDNode::hit(KDNode* node, const Ray& ray) const{
 	return false;
 }
 
-KDNode* KDNode::build(vector<Object*>&t, int d) const{
+KDNode* KDNode::build(vector<Object*>&t, BoundingBox b) const{
 	KDNode* node = new KDNode();
 	node->objects = t;
 	node->left = nullptr;
@@ -108,8 +108,8 @@ KDNode* KDNode::build(vector<Object*>&t, int d) const{
 
 
 	if ((float)matches / l_t.size() < 0.5 && (float)matches / r_t.size() < 0.5){
-		node->left = build(l_t, d + 1);
-		node->right = build(r_t, d + 1);
+	//	node->left = build(l_t, d + 1);
+		//node->right = build(r_t, d + 1);
 	}
 	else{
 		node->left = new KDNode();

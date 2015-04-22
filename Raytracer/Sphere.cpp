@@ -82,3 +82,7 @@ BoundingBox Sphere::getBBox(){
 	box.box	= {center.x - radius, center.x + radius, center.y + radius, center.y - radius, center.z + radius, center.z - radius};
 	return box;
 }
+
+bool Sphere::hit(Ray ray){
+	return false;
+}

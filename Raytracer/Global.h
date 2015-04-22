@@ -284,7 +284,15 @@ static pVector reflect(pVector L, pVector N){
 }
 
 static pVector transmit(pVector I, pVector N){
-	pVector T = I - (N * 2.0) * (N * I);
+	float inc = 0.99;
+	if ((N*I) < 0){
+		N = N*-1;
+		inc = 1 / inc;
+	}
+	
+	float value = (1 - (1 - (N*I)*(N*I))) ? sqrt(1 - ((inc*inc)*(1 - (I*N)*(I*N)))) : 1.0;
+	pVector T = I*inc - (N * ((I*N)*inc - value));
+	//T.v.z = T.v.z * -1;
 	return T.normal;
 }
 
