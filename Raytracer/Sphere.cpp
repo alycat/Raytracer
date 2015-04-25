@@ -44,7 +44,6 @@ Sphere::Sphere(Point cen, float r, Color c){
 
 Point Sphere::intersect(Ray ray){
 	pVector v = { ray.start - center };
-	float a = ray.direction * ray.direction;
 	float b = (ray.direction * v) * 2;
 	float c = (v*v) - (radius * radius);
 	float disc = (b*b) - (4*c);
@@ -84,5 +83,19 @@ BoundingBox Sphere::getBBox(){
 }
 
 bool Sphere::hit(Ray ray){
+	pVector v = { ray.start - center };
+	float b = (ray.direction * v) * 2;
+	float c = (v*v) - (radius * radius);
+	float disc = (b*b) - (4 * c);
+	if (disc < 0){
+		return false;
+	}
+	float t_1 = (-b + sqrt(disc)) / (2);
+	float t_2 = (-b - sqrt(disc)) / (2);
+	float t = (t_1 < t_2) ? t_1 : t_2;
+	if (t > 0){
+		return true;
+	}
 	return false;
+
 }

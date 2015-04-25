@@ -117,5 +117,34 @@ pVector Triangle::normal(Point intersect){
 }
 
 bool Triangle::hit(Ray ray){
-	return false;
+	pVector e_1 = { p2 - p1 };
+	pVector e_2 = { p3 - p1 };
+	pVector P = ray.direction.getCross(e_2);
+	float det = e_1*P;
+
+	if (det > -EPSILON && det < EPSILON){
+		return false;
+	}
+
+	float f = 1.0f / det;
+
+	pVector T = { ray.start - p1 };
+	float u = (T*P) * f;
+	if (u < 0.0f || u > 1){
+		return false;
+	}
+
+	pVector Q = T.getCross(e_1);
+
+	float v = (Q*ray.direction) * f;
+	if (v < 0 || u + v > 1){
+		return false;
+	}
+
+	float t = (Q*e_2)* f;
+
+	if (t <= EPSILON){
+		return false;
+	}
+	return true;
 }

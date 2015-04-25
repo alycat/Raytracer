@@ -2,8 +2,8 @@
 
 Phong::Phong(Color color){
 	ka = 0.0;
-	kd = 0.01;
-	ks = 0.6;
+	kd = 0.0009;
+	ks = 0.5;
 	ke = 0.9;
 	c = color;
 	specular = { 500, 500, 500 };

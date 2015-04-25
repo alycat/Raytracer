@@ -8,7 +8,7 @@ class IlluminationModel{
 public:
 	Color c;
 	IlluminationModel(void){};
-	~IlluminationModel(void){};
+	virtual ~IlluminationModel(void){};
 	virtual Light illuminate(IntersectData id)=0;
 };
 

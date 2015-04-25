@@ -19,7 +19,7 @@ typedef std::valarray<float> Vector;
 
 const float myMax= (std::numeric_limits<float>::max)();
 
-const float max_depth = 5;
+const float max_depth = 2;
 
 struct Point{
 	float x;
@@ -284,15 +284,19 @@ static pVector reflect(pVector L, pVector N){
 }
 
 static pVector transmit(pVector I, pVector N){
-	float inc = 0.99;
-	if ((N*I) < 0){
+	float inc = 1.03;
+	float dot = I*N;
+	if (dot <= 0){
 		N = N*-1;
-		inc = 1 / inc;
+		dot = N*I;
+		//inc = 1 / inc;
 	}
 	
-	float value = (1 - (1 - (N*I)*(N*I))) ? sqrt(1 - ((inc*inc)*(1 - (I*N)*(I*N)))) : 1.0;
-	pVector T = I*inc - (N * ((I*N)*inc - value));
-	//T.v.z = T.v.z * -1;
+	float value = 1 - ((inc*inc)*(1 - (dot)*(dot)));
+	value = value >= 0.0 ? sqrt(value) : 0.0;
+	//value = value ? sqrt(1 - ((inc*inc)*(1 - (I*N)*(I*N)))) : 1.0;
+	pVector T = value > 0 ? (I - N *(dot))*inc + N*value : reflect(I, N);
+	
 	return T.normal;
 }
 

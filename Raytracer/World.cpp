@@ -6,7 +6,7 @@ World::World(void){
 
 World::~World(void){
 	for (int i = 0; i < objectList.size(); ++i){
-		delete objectList[i];
+	//	delete objectList[i];
 	}
 	objectList.clear();
 
@@ -46,7 +46,7 @@ void World::initTree(){
 	box.box = { -5, 5, 5, -5, 30, -30 };
 	tree->box = box;
 	tree->objects = objectList;
-//	tree->build(objectList, 0);
+	tree->build(objectList, 0);
 }
 
 void World::intersection(IntersectData &id, Point point, pVector normal, LightSource* light, pVector camera){
@@ -70,35 +70,30 @@ Light World::spawn(Ray ray, int depth){
 			Point temp = objectList[i]->intersect(ray);
 			float distance = temp.distance(ray.start);
 			cout << "Distance: " << distance << endl;
-			if (distance < closest){
+			if (distance < closest && distance > 0.1){
 				IntersectData id;
 				light = { black };
 				for (int l = 0; l < lightList.size(); ++l){
-					this->intersection(id, temp, objectList[i]->normal(temp), lightList[l], ray.direction);
+					pVector N = objectList[i]->normal(temp);
+					this->intersection(id, temp, N, lightList[l], ray.direction);
 					Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
 					shadow.direction = shadow.direction.normal;
 					if (intersection(shadow, i)){
 						light = light + objectList[i]->material->illuminate(id);
+						pVector I = ray.direction.normal;
 						if (depth < max_depth){
 							if (objectList[i]->k_r > 0){
-								pVector L = ray.direction;
-								L = L.normal;
-								pVector N = objectList[i]->normal(temp);
-								Ray reflection = { temp, reflect(L, N ) };
+								Ray reflection = { temp, reflect(I, N ) };
 								reflection.direction.v.z = reflection.direction.v.z * -1;
 								Light r = spawn(reflection, depth + 1);
 								r.irradiance = r.irradiance * objectList[i]->k_r;
 								light = light + r;
 							}
 							if (objectList[i]->k_t > 0){
-								pVector I = ray.direction;
-								I = I.normal;
-								pVector N = objectList[i]->normal(temp);
 								Point c = dynamic_cast<Sphere*>(objectList[i])->center;
 								c = { 0, 0, c.z };
 								Point p = temp - c;
 								Ray transray = { temp, transmit(I, N) };
-								//transray.direction.v.z = transray.direction.v.z * -1;
 								Light t = spawn(transray, depth + 1);
 								t.irradiance = t.irradiance * objectList[i]->k_t;
 								light = light + t;
@@ -111,7 +106,7 @@ Light World::spawn(Ray ray, int depth){
 					
 				}
 			}
-		//}
+	//	}
 	}
 	return light;
 }
@@ -137,7 +132,7 @@ bool World:: intersection(Ray ray, int index){
 	Point pClosest = objectList[index]->intersect(ray);
 	float original = pClosest.distance(ray.start);
 	for (int i = 0; i < objectList.size(); ++i){
-	if (index != i){
+	if (index != i && objectList[i]->k_t <= 0){
 			Point temp = objectList[i]->intersect(ray);
 			float distance = temp.distance(ray.start);
 			if (distance < original){
@@ -146,7 +141,7 @@ bool World:: intersection(Ray ray, int index){
 			}
 		}
 	}
-	if (closest < sqrt(myMax) / 3){
+	if ((closest < sqrt(myMax) / 3)){
 		return false; 
 	}
 	return true;
