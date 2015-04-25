@@ -3,6 +3,7 @@
 
 #include "World.h"
 #include <thread>
+#include <process.h>
 
 class Camera{
 private:
@@ -13,6 +14,10 @@ private:
 		float h;
 		float f;
 	};
+	float pixelH;
+	float pixelW;
+	World wrld;
+	HDC hDC;
 public:
 	Matrix viewMatrix;
 	FilmPlane filmplane;
@@ -23,6 +28,7 @@ public:
 	pVector middleScreen;
 	Camera(void);
 	~Camera(void);
+	void castRay(int y, float& px, float py);
 	void render(World world, HDC hdc);
 	void update(Point np);
 };

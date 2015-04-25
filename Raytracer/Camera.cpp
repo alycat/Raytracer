@@ -26,9 +26,10 @@ Camera::~Camera(){
 
 void Camera::render(World world, HDC hdc){
 	//world.transformAllObjects(viewMatrix);
-
-	float pixelW = filmplane.w / filmplane.W;
-	float pixelH = filmplane.h / filmplane.H;
+	wrld = world;
+	hDC = hdc;
+	pixelW = filmplane.w / filmplane.W;
+	pixelH = filmplane.h / filmplane.H;
 	Point top_left = {(-filmplane.w + pixelW)/2, (filmplane.h - pixelH)/2, filmplane.f};
 	//top_left = {(filmplane.h - pixelW)/2, (-filmplane.h + pixelH)/2, filmplane.f};
 	float sx = top_left.x;
@@ -38,16 +39,23 @@ void Camera::render(World world, HDC hdc){
 	middleScreen = middleScreen.normal;
 	for (int y = 0; y < filmplane.H; ++y){
 		px = sx;
-		for (int x = 0; x < filmplane.W; ++x){
-			Ray ray = { position, { px - position.x, py - position.y, filmplane.f - position.z } };
-			ray.direction = ray.direction.normal;
-			float angle = acosf(ray.direction * middleScreen);
-			Light light = world.spawn(ray, 0);
-			Color color = light.irradiance;
-			SetPixel(hdc, x, y, color.getColorRef());
-			px += pixelW;
-		}
+		thread t1(&Camera::castRay, this, y, px, py);
+		t1.join();
+		
+		
 		py -= pixelH;
+	}
+}
+
+void Camera::castRay(int y,float &px, float py){
+	for (int x = 0; x < filmplane.W; ++x){
+		Ray ray = { position, { px - position.x, py - position.y, filmplane.f - position.z } };
+		ray.direction = ray.direction.normal;
+		float angle = acosf(ray.direction * middleScreen);
+		Light light = wrld.spawn(ray, 0);
+		Color color = light.irradiance;
+		SetPixel(hDC, x, y, color.getColorRef());
+		px += pixelW;
 	}
 }
 
