@@ -44,3 +44,24 @@ int BoundingBox::longestAxis(){
 	int value = (x > y) ? (x > z? 0 : 2) : (y > z? 1 : 2);
 	return value;
 }
+
+void BoundingBox::expand(BoundingBox b){
+	if (box.back < b.box.back){
+		box.back = b.box.back;
+	}
+	if (box.front > b.box.front){
+		box.front = b.box.front;
+	}
+	if (box.left > b.box.left){
+		box.left = b.box.left;
+	}
+	if (box.right < b.box.right){
+		box.right = b.box.right;
+	}
+	if (box.top < b.box.top){
+		box.top = b.box.top;
+	}
+	if (box.bottom > b.box.bottom){
+		box.bottom = b.box.bottom;
+	}
+}

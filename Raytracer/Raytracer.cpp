@@ -17,6 +17,7 @@ Camera* cam;
 World* wrld;
 Point position;
 vector<Triangle*> bunny;
+KDNode* node;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -140,12 +141,16 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
 	s1->k_r = 0.3;
 	s2->k_t = 0.2;
-	/*
+	node = new KDNode();
+	
 	ReadPlyFile("bunny");
-	for (int i = 0; i < 100; ++i){
+	for (int i = 0; i < 6000; ++i){
 		wrld->add(bunny[i]);
-	}*/
-
+	}
+	node->box.box = { -10, 10, 10, -10, 30, -1 };
+	node->objects = wrld->objectList;
+	node->build(wrld->objectList, 0);
+	
 	/*
 	vector<Sphere*> spheres;
 	for (int j = 0; j < 3; ++j){
@@ -161,11 +166,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			wrld->add(spheres2[i + (j * 5)]);
 		}
 	}*/
-	
+	/*
 	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
-	wrld->add(t2);
+	wrld->add(t2);*/
 	//wrld->add(s3);
 
 	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
@@ -313,7 +318,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...
-		cam->render(*wrld, hdc);
+		cam->render(*wrld, hdc, node);
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:

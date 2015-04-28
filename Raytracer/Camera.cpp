@@ -28,7 +28,7 @@ Camera::~Camera(){
 
 }
 
-void Camera::render(World world, HDC hdc){
+void Camera::render(World world, HDC hdc, KDNode* tree){
 	pixelW = filmplane.w / filmplane.W;
 	pixelH = filmplane.h / filmplane.H;
 	Point top_left = {(-filmplane.w + pixelW)/2, (filmplane.h - pixelH)/2, filmplane.f};
@@ -46,12 +46,15 @@ void Camera::render(World world, HDC hdc){
 		pixels[y] = new Point[filmplane.W];
 		colors[y] = new Color[filmplane.W];
 		parallel_for(int(0), (int)filmplane.W, [&](int x){
+			Color color = background;
 			int p_x = px + pixelW*x;
 			Ray ray = { position, { p_x - position.x, p_y - position.y, filmplane.f - position.z } };
 			ray.direction = ray.direction.normal;
-			float angle = acosf(ray.direction * middleScreen);
-			Light light = world.spawn(ray, 0);
-			Color color = light.irradiance;
+			if (tree->hit(tree, ray)){
+				float angle = acosf(ray.direction * middleScreen);
+				Light light = world.spawn(ray, 0);
+				color = light.irradiance;
+			}
 		//	SetPixel(hdc, x, y, color.getColorRef());
 			pixels[y][x] = { x, y, 0 };
 			colors[y][x] = color;

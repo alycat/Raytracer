@@ -1,4 +1,4 @@
-﻿Build started 4/28/2015 8:45:30 AM.
+﻿Build started 4/28/2015 1:16:17 PM.
      1>Project "C:\Users\Owner\Documents\Raytracer\Raytracer\Raytracer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /IC:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Raytracer.cpp
@@ -8,16 +8,16 @@
      1>c:\users\owner\documents\raytracer\raytracer\global.h(194): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
      1>c:\users\owner\documents\raytracer\raytracer\global.h(288): warning C4305: 'initializing' : truncation from 'double' to 'float'
      1>c:\users\owner\documents\raytracer\raytracer\global.h(297): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(38): warning C4091: 'typedef ' : ignored on left of 'Vertex' when no variable is declared
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(43): warning C4091: 'typedef ' : ignored on left of 'Face' when no variable is declared
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(76): warning C4101: 'comments' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(63): warning C4101: 'i' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(78): warning C4101: 'obj_info' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(77): warning C4101: 'num_obj_info' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(75): warning C4101: 'num_comments' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(136): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(141): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(39): warning C4091: 'typedef ' : ignored on left of 'Vertex' when no variable is declared
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(44): warning C4091: 'typedef ' : ignored on left of 'Face' when no variable is declared
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(77): warning C4101: 'comments' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(64): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(79): warning C4101: 'obj_info' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(78): warning C4101: 'num_obj_info' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(76): warning C4101: 'num_comments' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(137): warning C4305: 'argument' : truncation from 'double' to 'float'
      1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(142): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(143): warning C4305: '=' : truncation from 'double' to 'float'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /LIBPATH:C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.lib" /MACHINE:X86 Debug\Raytracer.res
          Debug\BoundingBox.obj
@@ -37,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:07.00
+Time Elapsed 00:00:04.09

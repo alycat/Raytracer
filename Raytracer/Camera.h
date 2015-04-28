@@ -26,7 +26,7 @@ public:
 	pVector middleScreen;
 	Camera(void);
 	~Camera(void);
-	void render(World world, HDC hdc);
+	void render(World world, HDC hdc, KDNode* tree);
 	void update(Point np);
 };
 #endif

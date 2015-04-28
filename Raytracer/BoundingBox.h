@@ -15,6 +15,7 @@ public:
 
 	BBox box;
 	BoundingBox();
+	void expand(BoundingBox b);
 	~BoundingBox();
 	int longestAxis();
 	bool hit(Ray ray);

@@ -67,60 +67,57 @@ void World::intersection(IntersectData &id, Point point, pVector normal, LightSo
 Light World::spawn(Ray ray, int depth)
 {
 	Light light = { background };
+	float closest = sqrt(myMax) / 3;
+	Point pClosest = maxPoint;
+	parallel_for(int(0), (int)objectList.size(), [&](int i)
+	{
+		Point temp = objectList[i]->intersect(ray);
+		float distance = temp.distance(ray.start);
+		cout << "Distance: " << distance << endl;
+		if (distance < closest && distance > 0.1){
+			IntersectData id;
+			light = { black };
+			parallel_for(int(0), (int)lightList.size(), [&](int l)
+			{
+				pVector N = objectList[i]->normal(temp);
+				this->intersection(id, temp, N, lightList[l], ray.direction);
+				Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
+				shadow.direction = shadow.direction.normal;
 
-	if (tree->hit(tree, ray)){
-		float closest = sqrt(myMax) / 3;
-		Point pClosest = maxPoint;
-		parallel_for(int(0), (int)objectList.size(), [&](int i)
-		{
-			Point temp = objectList[i]->intersect(ray);
-			float distance = temp.distance(ray.start);
-			cout << "Distance: " << distance << endl;
-			if (distance < closest && distance > 0.1){
-				IntersectData id;
-				light = { black };
-				parallel_for(int(0), (int)lightList.size(), [&](int l)
+				if (intersection(shadow, i))
 				{
-					pVector N = objectList[i]->normal(temp);
-					this->intersection(id, temp, N, lightList[l], ray.direction);
-					Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
-					shadow.direction = shadow.direction.normal;
+					light = light + objectList[i]->material->illuminate(id);
+					pVector I = ray.direction.normal;
 
-					if (intersection(shadow, i))
+					if (depth < max_depth)
 					{
-						light = light + objectList[i]->material->illuminate(id);
-						pVector I = ray.direction.normal;
-
-						if (depth < max_depth)
+						if (objectList[i]->k_r > 0){
+							Ray reflection = { temp, reflect(I, N) };
+							reflection.direction.v.z = reflection.direction.v.z * -1;
+							Light r = spawn(reflection, depth + 1);
+							r.irradiance = r.irradiance * objectList[i]->k_r;
+							light = light + r;
+						}
+						if (objectList[i]->k_t > 0)
 						{
-							if (objectList[i]->k_r > 0){
-								Ray reflection = { temp, reflect(I, N) };
-								reflection.direction.v.z = reflection.direction.v.z * -1;
-								Light r = spawn(reflection, depth + 1);
-								r.irradiance = r.irradiance * objectList[i]->k_r;
-								light = light + r;
-							}
-							if (objectList[i]->k_t > 0)
-							{
-								Point c = dynamic_cast<Sphere*>(objectList[i])->center;
-								c = { 0, 0, c.z };
-								Point p = temp - c;
-								Ray transray = { temp, transmit(I, N) };
-								Light t = spawn(transray, depth + 1);
-								t.irradiance = t.irradiance * objectList[i]->k_t;
-								light = light + t;
-							}
+							Point c = dynamic_cast<Sphere*>(objectList[i])->center;
+							c = { 0, 0, c.z };
+							Point p = temp - c;
+							Ray transray = { temp, transmit(I, N) };
+							Light t = spawn(transray, depth + 1);
+							t.irradiance = t.irradiance * objectList[i]->k_t;
+							light = light + t;
 						}
 					}
+				}
 
 
 
-				});
-				closest = distance;
-			}
+			});
+			closest = distance;
+		}
 
-		});
-	}
+	});
 	return light;
 }
 
