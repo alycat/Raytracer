@@ -50,8 +50,9 @@ Point Sphere::intersect(Ray ray){
 	if (disc < 0){
 		return maxPoint;
 	}
-	float t_1 = (-b + sqrt(disc))/(2);
-	float t_2 = (-b - sqrt(disc))/(2);
+	disc = sqrt(disc);
+	float t_1 = (-b + disc)/(2);
+	float t_2 = (-b - disc)/(2);
 	float t = (t_1 < t_2) ? t_1 : t_2;
 	if (t > 0){
 		return (ray.direction * t).v + ray.start;

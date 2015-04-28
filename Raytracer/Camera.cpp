@@ -1,8 +1,12 @@
 #include "Camera.h"
+#include <ppl.h>
+
+using namespace Concurrency;
 
 Camera::Camera(){
 	filmplane = { 400, 300, 40000, 30000, 50000 };
 	position = { -1.2, 0.0, 0 };
+	//position = { -1.2, 0.0, -5 };
 	lookat = { { 0.0, 0.0, 1.0 } };
 	up = { { 0.0, 1.0, 0.0 } };
 
@@ -25,9 +29,6 @@ Camera::~Camera(){
 }
 
 void Camera::render(World world, HDC hdc){
-	//world.transformAllObjects(viewMatrix);
-	wrld = world;
-	hDC = hdc;
 	pixelW = filmplane.w / filmplane.W;
 	pixelH = filmplane.h / filmplane.H;
 	Point top_left = {(-filmplane.w + pixelW)/2, (filmplane.h - pixelH)/2, filmplane.f};
@@ -37,26 +38,40 @@ void Camera::render(World world, HDC hdc){
 	float py = top_left.y;
 	pVector middleScreen = {filmplane.W/2, filmplane.H/2, filmplane.f};
 	middleScreen = middleScreen.normal;
-	for (int y = 0; y < filmplane.H; ++y){
-		px = sx;
-		thread t1(&Camera::castRay, this, y, px, py);
-		t1.join();
-		
-		
-		py -= pixelH;
-	}
-}
+	//Point **pixels = Point[filmplane.H][filmplane.W];
+	Point **pixels = new Point*[filmplane.H];
+	Color **colors = new Color*[filmplane.H];
+	parallel_for(int(0), (int)filmplane.H, [&](int y){
+		int p_y = py - (pixelH*y);
+		pixels[y] = new Point[filmplane.W];
+		colors[y] = new Color[filmplane.W];
+		parallel_for(int(0), (int)filmplane.W, [&](int x){
+			int p_x = px + pixelW*x;
+			Ray ray = { position, { p_x - position.x, p_y - position.y, filmplane.f - position.z } };
+			ray.direction = ray.direction.normal;
+			float angle = acosf(ray.direction * middleScreen);
+			Light light = world.spawn(ray, 0);
+			Color color = light.irradiance;
+		//	SetPixel(hdc, x, y, color.getColorRef());
+			pixels[y][x] = { x, y, 0 };
+			colors[y][x] = color;
+		});
+	});
 
-void Camera::castRay(int y,float &px, float py){
-	for (int x = 0; x < filmplane.W; ++x){
-		Ray ray = { position, { px - position.x, py - position.y, filmplane.f - position.z } };
-		ray.direction = ray.direction.normal;
-		float angle = acosf(ray.direction * middleScreen);
-		Light light = wrld.spawn(ray, 0);
-		Color color = light.irradiance;
-		SetPixel(hDC, x, y, color.getColorRef());
-		px += pixelW;
+	for (int i = 0; i < filmplane.W; ++i){
+		for (int j = 0; j < filmplane.H; ++j){
+			Point p = pixels[j][i];
+			SetPixel(hdc, p.x, p.y, colors[j][i].getColorRef());
+		}
 	}
+
+	parallel_for(int(0), (int)filmplane.H, [&](int y){
+		delete[] pixels[y];
+		delete[] colors[y];
+	});
+
+	delete[] pixels;
+	delete[] colors;
 }
 
 void Camera::update(Point nP){

@@ -10,6 +10,7 @@ public:
 	pVector normal(Point intersection) override;
 	Triangle(void);
 	~Triangle(void);
+	Triangle(Point a, Point b, Point c);
 	Triangle(Point a, Point b, Point c, UV uv);
 	Triangle(Point a, Point b, Point c, Light l, UV uv);
 	Point intersect(Ray ray);

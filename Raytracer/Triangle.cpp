@@ -29,6 +29,20 @@ Triangle::Triangle(Point a, Point b, Point c, UV uv){
 	k_r = k_t = 0;
 }
 
+Triangle::Triangle(Point a, Point b, Point c){
+	p1 = a, p2 = b, p3 = c;
+	vM = Matrix(4, 4);
+	vM.unit();
+	pVector v1 = { p2 - p1 };
+	pVector v2 = { p3 - p1 };
+	vn = v1.getCross(v2);
+	vn = vn.normal;
+	vn.v.y = abs(vn.v.y);
+	color = black;
+	material = new Phong();
+	k_r = k_t = 0;
+}
+
 /*
  Moller-Trumbore intersection algorithm
  Param: Ray, 

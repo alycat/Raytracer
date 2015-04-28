@@ -41,14 +41,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0\boost;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0\libs;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(LibraryPath)</LibraryPath>
     <ReferencePath>C:\Users\Owner\Documents\Raytracer\Raytracer\Debug;C:\Users\Owner\Documents\Raytracer\Raytracer\Debug\matclpro\include;C:\Users\Owner\Documents\Raytracer\Raytracer;$(ProjectDir);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0\boost;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0\libs;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;$(LibraryPath)</LibraryPath>
     <ReferencePath>C:\Users\Owner\Documents\Raytracer\Raytracer\Debug;C:\Users\Owner\Documents\Raytracer\Raytracer\Debug\matclpro\include;C:\Users\Owner\Documents\Raytracer\Raytracer;$(ProjectDir);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -56,13 +56,14 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Owner\Documents\Raytracer\Debug\matclpro\include;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0;C:\Users\Owner\Documents\Raytracer\Debug\matclpro\include;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -72,15 +73,16 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Owner\Documents\Raytracer\Debug\matclpro\include;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0;C:\Users\Owner\Documents\Raytracer\Debug\matclpro\include;Z:\GI\Raytracer\Raytracer\Debug\matclpro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1;C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -95,6 +97,7 @@
     <ClInclude Include="KDNode.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Phong.h" />
+    <ClInclude Include="ply.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sphere.h" />
@@ -110,6 +113,7 @@
     <ClCompile Include="KDNode.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Phong.cpp" />
+    <ClCompile Include="plyfile.c" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -125,6 +129,9 @@
   <ItemGroup>
     <Image Include="Raytracer.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bun000.ply" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
