@@ -29,22 +29,31 @@ char *elem_names[] = { /* list of the kinds of elements in the user's object */
 	"vertex", "face"
 };
 
-struct indices{
-	int i;
+typedef struct Vertex{
+	float x;
+	float y;
+	float z;
+	float confidence;
+	float intensity;
 };
 
-struct pList{
-	PlyProperty l[];
-}l = { "i", PLY_INT, PLY_INT, offsetof(indices, i), 0, 0, 0, 0 };
+typedef struct Face {
+	unsigned char nverts;    /* number of vertex indices in list */
+	int *verts;              /* vertex index list */
+};
+
 
 PlyProperty vert_props[] = { /* list of property information for a vertex */
-		{ "x", PLY_FLOAT, PLY_FLOAT, offsetof(Point, x), 0, 0, 0, 0 },
-		{ "y", PLY_FLOAT, PLY_FLOAT, offsetof(Point, y), 0, 0, 0, 0 },
-		{ "z", PLY_FLOAT, PLY_FLOAT, offsetof(Point, z), 0, 0, 0, 0 },
+		{ "x", PLY_FLOAT, PLY_FLOAT, offsetof(Vertex, x), 0, 0, 0, 0 },
+		{ "y", PLY_FLOAT, PLY_FLOAT, offsetof(Vertex, y), 0, 0, 0, 0 },
+		{ "z", PLY_FLOAT, PLY_FLOAT, offsetof(Vertex, z), 0, 0, 0, 0 },
+		{ "confidence", PLY_FLOAT, PLY_FLOAT, offsetof(Vertex, confidence), 0, 0, 0, 0 },
+		{ "intensity", PLY_FLOAT, PLY_FLOAT, offsetof(Vertex, intensity), 0, 0, 0, 0 },
 };
 
-PlyProperty face_props[] = {
-		{ "l", PLY_LIST, PLY_LIST, offsetof(pList, l), 0, 0, 0, 0 },
+PlyProperty face_props[] = { /* list of property information for a vertex */
+		{ "vertex_indices", PLY_INT, PLY_INT, offsetof(Face, verts),
+		1, PLY_UCHAR, PLY_UCHAR, offsetof(Face, nverts) },
 };
 
 
@@ -60,10 +69,8 @@ void ReadPlyFile(char* filepath){
 	int nprops;
 	int num_elems;
 	PlyProperty **plist;
-	Point **vlist = NULL;
-	pList **iList = NULL;
-	indices **idxlist = NULL;
-	Triangle **flist;
+	Vertex **vlist = NULL;
+	Face **flist = NULL;
 	char *elem_name;
 	int num_comments;
 	char **comments;
@@ -81,25 +88,31 @@ void ReadPlyFile(char* filepath){
 
 //			vlist = (Point **)malloc(sizeof(Point *) * num_elems);
 			/* create a vertex list to hold all the vertices */
-			vlist = (Point **)malloc(sizeof(Point *) * num_elems);
+			vlist = (Vertex **)malloc(sizeof(Vertex *) * num_elems);
 			/* set up for getting vertex elements */
 			ply_get_property(ply, elem_name, &vert_props[0]);
 			ply_get_property(ply, elem_name, &vert_props[1]);
 			ply_get_property(ply, elem_name, &vert_props[2]);
 			/* grab all the vertex elements */
 			for (j = 0; j < num_elems; j++) {
-				vlist[j] = (Point *)malloc(sizeof(Point));
+				vlist[j] = (Vertex *)malloc(sizeof(Vertex));
 				ply_get_element(ply, (void *)vlist[j]);
 			}
 		}
-		else if (equal_strings("range_grid", elem_name)){
-			iList = (pList **)malloc(sizeof(pList*) * num_elems);
+		else if (equal_strings("face", elem_name)){
+			flist = (Face**)malloc(sizeof(Face*)*num_elems);
 			ply_get_property(ply, elem_name, &face_props[0]);
-			for (k = 0; k < num_elems; k++){
-				iList[k] = (pList *)malloc(sizeof(pList));
-				
+
+			for (k = 0; k < num_elems; ++k){
+				flist[k] = (Face*)malloc(sizeof(Face));
+				ply_get_element(ply, (void*)flist[k]);
+				cout << flist[k] << endl;
+				Point p1 = { vlist[flist[k]->verts[0]]->x, vlist[flist[k]->verts[0]]->y, vlist[flist[k]->verts[0]]->z };
+				Point p2 = { vlist[flist[k]->verts[1]]->x, vlist[flist[k]->verts[1]]->y, vlist[flist[k]->verts[1]]->z };
+				Point p3 = { vlist[flist[k]->verts[2]]->x, vlist[flist[k]->verts[2]]->y, vlist[flist[k]->verts[2]]->z };
+				Point offset = { 0, 0, 5 };
+				bunny.push_back(new Triangle(p1*10 + offset, p2*10 + offset, p3*10 + offset));
 			}
-			
 		}
 	}
 
@@ -127,9 +140,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
 	s1->k_r = 0.3;
 	s2->k_t = 0.2;
-
-	/*ReadPlyFile("bun000");
-	for (int i = 0; i < bunny.size(); ++i){
+	/*
+	ReadPlyFile("bunny");
+	for (int i = 0; i < 100; ++i){
 		wrld->add(bunny[i]);
 	}*/
 

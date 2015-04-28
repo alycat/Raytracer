@@ -122,5 +122,8 @@
     <None Include="bun000.ply">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="bunny.ply">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
