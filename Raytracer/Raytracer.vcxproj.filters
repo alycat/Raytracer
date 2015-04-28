@@ -119,7 +119,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bun000.ply">
+    <None Include="..\..\bunny.ply\bunny.ply">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="bunny.ply">

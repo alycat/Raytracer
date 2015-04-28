@@ -12,9 +12,11 @@ public:
 	KDNode *right;
 	vector<Object*> objects;
 	KDNode* build(vector<Object*> &t, int d) const;
-	KDNode* build(vector<Object*> O, BoundingBox B);
+	void build(KDNode* head);
 	KDNode getNode(vector<Object*> all, BoundingBox B);
 	bool Terminal(vector<Object*> L, BoundingBox B);
 	bool hit(KDNode* node, const Ray& ray) const;
+	void sort();
+	float FindMedian(vector<float>f);
 };
 #endif

@@ -116,8 +116,9 @@ void ReadPlyFile(char* filepath){
 			}
 		}
 	}
-
-	ply_close(ply);
+	if (ply){
+		ply_close(ply);
+	}
 }
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
@@ -144,7 +145,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	node = new KDNode();
 	
 	ReadPlyFile("bunny");
-	for (int i = 0; i < 6000; ++i){
+	for (int i = 0; i < bunny.size(); ++i){
 		wrld->add(bunny[i]);
 	}
 	node->box.box = { -10, 10, 10, -10, 30, -1 };

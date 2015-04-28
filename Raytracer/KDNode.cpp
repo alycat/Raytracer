@@ -111,6 +111,66 @@ KDNode* KDNode::build(vector<Object*>&tris, int depth) const{
 	return node;
 }
 
-KDNode* KDNode::build(vector<Object*> O, BoundingBox B){
-	return NULL;
+void KDNode::build(KDNode* head){
+	if (head->objects.size() < 10){ //if terminated
+		return;
+	}
+	
+	//find optimal split
+	Point midPoint = origin;
+	vector<float> x;
+	vector<float> y;
+	vector<float> z;
+	for (int i = 0; i < head->objects.size(); ++i){
+		Point p = head->objects[i]->getMidPoint();
+		midPoint = midPoint + p;
+		x.push_back(p.x);
+		y.push_back(p.y);
+		z.push_back(p.z);
+	}
+	int axis = midPoint.x > midPoint.y ? (midPoint.x > midPoint.z ? 0 : 2) : (midPoint.y > midPoint.z ? 1 : 2);
+	int median = 0;
+	switch (axis){
+	case 0:
+		median = FindMedian(x);
+		break;
+	case 1:
+		median = FindMedian(y);
+		break;
+	case 2:
+		median = FindMedian(z);
+		break;
+	}
+	head->left = new KDNode();
+	head->right = new KDNode();
+
+	for (int i = 0; i < head->objects.size(); ++i){
+		Point p = head->objects[i]->getMidPoint();
+		switch (axis){
+		case 0:
+			if (p.x < median){ head->left->objects.push_back(objects[i]); }
+			else{ head->right->objects.push_back(objects[i]); }
+			break;
+		case 1:
+			if (p.y < median){ head->left->objects.push_back(objects[i]); }
+			else{ head->right->objects.push_back(objects[i]); }
+			break;
+		case 2:
+			if (p.z < median){ head->left->objects.push_back(objects[i]); }
+			else{ head->right->objects.push_back(objects[i]); }
+			break;
+		}
+	}
+	
+	build(head->left);
+	build(head->right);
+}
+
+void KDNode::sort(){
+}
+
+float KDNode::FindMedian(vector<float> f){
+	size_t n = f.size();
+	nth_element(f.begin(), f.begin() + n, f.end());
+	return f[n];
 }

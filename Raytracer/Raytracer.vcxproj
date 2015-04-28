@@ -131,7 +131,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bun000.ply" />
+    <None Include="..\..\bunny.ply\bunny.ply" />
     <None Include="bunny.ply" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

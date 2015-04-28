@@ -50,11 +50,9 @@ void Camera::render(World world, HDC hdc, KDNode* tree){
 			int p_x = px + pixelW*x;
 			Ray ray = { position, { p_x - position.x, p_y - position.y, filmplane.f - position.z } };
 			ray.direction = ray.direction.normal;
-			if (tree->hit(tree, ray)){
-				float angle = acosf(ray.direction * middleScreen);
-				Light light = world.spawn(ray, 0);
-				color = light.irradiance;
-			}
+			float angle = acosf(ray.direction * middleScreen);
+			Light light = world.spawn(ray, 0);
+			color = light.irradiance;
 		//	SetPixel(hdc, x, y, color.getColorRef());
 			pixels[y][x] = { x, y, 0 };
 			colors[y][x] = color;
