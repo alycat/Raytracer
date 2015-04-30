@@ -31,6 +31,11 @@ struct Point{
 		return sqrt((nx*nx) + (ny * ny) + (nz * nz));
 	}
 
+	float distance2(Point p){
+		float nx = x - p.x, ny = y - p.y, nz = z - p.z;
+		return ((nx*nx) + (ny * ny) + (nz * nz));
+	}
+
 	void transform(Point p){
 		x += p.x;
 		y += p.y;

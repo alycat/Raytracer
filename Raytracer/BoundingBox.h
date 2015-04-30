@@ -18,6 +18,7 @@ public:
 	void expand(BoundingBox b);
 	~BoundingBox();
 	int longestAxis();
+	Point intersect(Ray ray);
 	bool hit(Ray ray);
 };
 #endif

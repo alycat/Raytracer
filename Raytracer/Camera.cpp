@@ -7,6 +7,7 @@ Camera::Camera(){
 	filmplane = { 400, 300, 40000, 30000, 50000 };
 	position = { -1.2, 0.0, 0 };
 	//position = { -1.2, 0.0, -5 };
+	//position = origin;
 	lookat = { { 0.0, 0.0, 1.0 } };
 	up = { { 0.0, 1.0, 0.0 } };
 
@@ -28,7 +29,7 @@ Camera::~Camera(){
 
 }
 
-void Camera::render(World world, HDC hdc, KDNode* tree){
+void Camera::render(World world, HDC hdc){
 	pixelW = filmplane.w / filmplane.W;
 	pixelH = filmplane.h / filmplane.H;
 	Point top_left = {(-filmplane.w + pixelW)/2, (filmplane.h - pixelH)/2, filmplane.f};
@@ -53,7 +54,7 @@ void Camera::render(World world, HDC hdc, KDNode* tree){
 			float angle = acosf(ray.direction * middleScreen);
 			Light light = world.spawn(ray, 0);
 			color = light.irradiance;
-		//	SetPixel(hdc, x, y, color.getColorRef());
+			SetPixel(hdc,x, y, color.getColorRef());
 			pixels[y][x] = { x, y, 0 };
 			colors[y][x] = color;
 		});

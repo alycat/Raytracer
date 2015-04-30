@@ -4,23 +4,92 @@
 
 #include "KDNode.h"
 KDNode::KDNode(){
-
+	right = nullptr;
+	left = nullptr;
 }
 
 KDNode::~KDNode(){
-	if (left){
+	/*if (left){
 		delete left;
 	}
-	left = nullptr;
+	left = NULL;
 	if (right){
 		delete right;
 	}
-	right = nullptr;
-	/*
+	right = NULL;
+	
 	for (int i = 0; i < objects.size(); ++i){
 		delete objects[i];
+	}
+	objects.clear();*/
+}
+vector<KDNode*> KDNode::traverse(KDNode* root){
+	if (root){
+		if (root->right || root->left){
+			vector<KDNode*> l = traverse(root->left);
+			vector<KDNode*> r = traverse(root->right);
+			l.insert(l.end(), r.begin(), r.end());
+			return l;
+		}
+		else{
+			return{ root };
+		}
+	}
+	return{};
+}
+
+KDNode* KDNode::getNode(KDNode* root, Ray ray){
+	if (root){
+		KDNode* current = nullptr;
+		if (root->left || root->right){ //not a 
+			vector<KDNode*> leaf;
+			leaf = traverse(root);
+			int s = leaf.size();
+			KDNode* current = nullptr;
+			for (int i = 0; i < leaf.size(); ++i){
+				
+				//leaf[i]->resizeBox();
+				if (!current){
+					current = leaf[i];
+				}
+				else{
+					//current->resizeBox();
+					if (ray.start.distance2(current->box.intersect(ray)) > ray.start.distance2(leaf[i]->box.intersect(ray))){
+						current = leaf[i];
+					}
+				}
+			}
+			return current;
+		}
+		else{
+			return root;
+		}
+	}
+	return nullptr;
+}
+
+void KDNode::resizeBox(){
+	/*box.box = { 0, 0, 0, 0, 0, 0 };
+	for (int i = 0; i < objects.size(); ++i){
+		if (box.box.left > objects[i]->getBBox().box.left){
+			box.box.left = objects[i]->getBBox().box.left;
+		}
+		if (box.box.right < objects[i]->getBBox().box.right){
+			box.box.right = objects[i]->getBBox().box.right;
+		}
+		if (box.box.top < objects[i]->getBBox().box.top){
+			box.box.top = objects[i]->getBBox().box.top;
+		}
+		if (box.box.bottom > objects[i]->getBBox().box.bottom){
+			box.box.bottom = objects[i]->getBBox().box.bottom;
+		}
+		if (box.box.back < objects[i]->getBBox().box.back){
+			box.box.back = objects[i]->getBBox().box.back;
+		}
+		if (box.box.front > objects[i]->getBBox().box.front){
+			box.box.front = objects[i]->getBBox().box.front;
+		}
 	}*/
-	objects.clear();
 }
 
 bool KDNode::hit(KDNode* node, const Ray& ray) const{
@@ -111,66 +180,83 @@ KDNode* KDNode::build(vector<Object*>&tris, int depth) const{
 	return node;
 }
 
-void KDNode::build(KDNode* head){
-	if (head->objects.size() < 10){ //if terminated
-		return;
-	}
-	
-	//find optimal split
-	Point midPoint = origin;
-	vector<float> x;
-	vector<float> y;
-	vector<float> z;
-	for (int i = 0; i < head->objects.size(); ++i){
-		Point p = head->objects[i]->getMidPoint();
-		midPoint = midPoint + p;
-		x.push_back(p.x);
-		y.push_back(p.y);
-		z.push_back(p.z);
-	}
-	int axis = midPoint.x > midPoint.y ? (midPoint.x > midPoint.z ? 0 : 2) : (midPoint.y > midPoint.z ? 1 : 2);
-	int median = 0;
-	switch (axis){
-	case 0:
-		median = FindMedian(x);
-		break;
-	case 1:
-		median = FindMedian(y);
-		break;
-	case 2:
-		median = FindMedian(z);
-		break;
-	}
-	head->left = new KDNode();
-	head->right = new KDNode();
+void KDNode::build(KDNode* head, int d){
+	if (head){
+		if (head->objects.size() > 2 && d < 20){ //if terminated
+			int size = head->objects.size();
+			//find optimal split
+			Point midPoint = origin;
+			vector<float> x(size);
+			vector<float> y(size);
+			vector<float> z(size);
+			for (int i = 0; i < size; ++i){
+				Point p = head->objects[i]->getMidPoint();
+				midPoint = midPoint + p;
+				x[i] = p.x;
+				y[i] = p.y;
+				z[i] = p.z;
+			}
+			int axis = midPoint.x > midPoint.y ? (midPoint.x > midPoint.z ? 0 : 2) : (midPoint.y > midPoint.z ? 1 : 2);
+			int median = 0;
 
-	for (int i = 0; i < head->objects.size(); ++i){
-		Point p = head->objects[i]->getMidPoint();
-		switch (axis){
-		case 0:
-			if (p.x < median){ head->left->objects.push_back(objects[i]); }
-			else{ head->right->objects.push_back(objects[i]); }
-			break;
-		case 1:
-			if (p.y < median){ head->left->objects.push_back(objects[i]); }
-			else{ head->right->objects.push_back(objects[i]); }
-			break;
-		case 2:
-			if (p.z < median){ head->left->objects.push_back(objects[i]); }
-			else{ head->right->objects.push_back(objects[i]); }
-			break;
+			head->left = new KDNode();
+			head->right = new KDNode();
+			head->left->left = nullptr;
+			head->right->left = nullptr;
+			head->left->right = nullptr;
+			head->right->right = nullptr;
+			head->left->box.box = head->box.box;
+			head->right->box.box = head->box.box;
+			switch (axis){
+			case 0:
+				median = FindMedian(x);
+				head->left->box.box.right = median;
+				head->right->box.box.left = median;
+				break;
+			case 1:
+				median = FindMedian(y);
+				head->left->box.box.top = median;
+				head->right->box.box.bottom = median;
+				break;
+			case 2:
+				median = FindMedian(z);
+				head->left->box.box.back = median;
+				head->right->box.box.front = median;
+				break;
+			}
+			
+			//head->left->objects = vector<Object*>();
+			//head->right->objects = vector<Object*>();
+			for (int i = 0; i < size; ++i){
+				Point p = head->objects[i]->getMidPoint();
+				switch (axis){
+				case 0:
+					if (p.x < median)
+					{ head->left->objects.push_back(head->objects[i]); }
+					else{ head->right->objects.push_back(head->objects[i]); }
+					break;
+				case 1:
+					if (p.y < median){ head->left->objects.push_back(head->objects[i]); }
+					else{ head->right->objects.push_back(head->objects[i]); }
+					break;
+				case 2:
+					if (p.z > median){ head->left->objects.push_back(head->objects[i]); }
+					else{ head->right->objects.push_back(head->objects[i]); }
+					break;
+				}
+			}
+
+			build(head->left, d + 1);
+			build(head->right, d + 1);
 		}
 	}
-	
-	build(head->left);
-	build(head->right);
 }
 
 void KDNode::sort(){
 }
 
-float KDNode::FindMedian(vector<float> f){
-	size_t n = f.size();
+float KDNode::FindMedian(vector<float>& f){
+	size_t n = f.size() > 1? f.size() / 2 : 0;
 	nth_element(f.begin(), f.begin() + n, f.end());
 	return f[n];
 }

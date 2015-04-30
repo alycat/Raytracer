@@ -17,7 +17,6 @@ Camera* cam;
 World* wrld;
 Point position;
 vector<Triangle*> bunny;
-KDNode* node;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -62,21 +61,18 @@ PlyProperty face_props[] = { /* list of property information for a vertex */
 
 void ReadPlyFile(char* filepath){
 	int i, j, k;
-	PlyFile *ply;
+	PlyFile *ply = NULL;
 	int nelems;
-	char **elist;
+	char **elist = NULL;
 	int file_type;
 	float version;
 	int nprops;
 	int num_elems;
-	PlyProperty **plist;
+	PlyProperty **plist = NULL;
 	Vertex **vlist = NULL;
 	Face **flist = NULL;
-	char *elem_name;
-	int num_comments;
-	char **comments;
+	char *elem_name = NULL;
 	int num_obj_info;
-	char **obj_info;
 	
 	ply = ply_open_for_reading(filepath, &nelems, &elist, &file_type, &version);
 
@@ -113,11 +109,28 @@ void ReadPlyFile(char* filepath){
 				Point p3 = { vlist[flist[k]->verts[2]]->x, vlist[flist[k]->verts[2]]->y, vlist[flist[k]->verts[2]]->z };
 				Point offset = { 0, 0, 5 };
 				bunny.push_back(new Triangle(p1*10 + offset, p2*10 + offset, p3*10 + offset));
+				//wrld->add(new Triangle(p1 * 10 + offset, p2 * 10 + offset, p3 * 10 + offset));
 			}
 		}
 	}
 	if (ply){
 		ply_close(ply);
+		//delete ply;
+	}
+	if (plist){
+		delete[] plist;
+	}
+	if (elist){
+		delete[] elist;
+	}
+	if (vlist){
+		delete[] vlist;
+	}
+	if (flist){
+		delete[] flist;
+	}
+	if (elem_name){
+		delete elem_name;
 	}
 }
 
@@ -142,15 +155,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
 	s1->k_r = 0.3;
 	s2->k_t = 0.2;
-	node = new KDNode();
-	
+
 	ReadPlyFile("bunny");
 	for (int i = 0; i < bunny.size(); ++i){
-		wrld->add(bunny[i]);
+		wrld->add((bunny[i]));
 	}
-	node->box.box = { -10, 10, 10, -10, 30, -1 };
-	node->objects = wrld->objectList;
-	node->build(wrld->objectList, 0);
 	
 	/*
 	vector<Sphere*> spheres;
@@ -172,6 +181,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);*/
+
 	//wrld->add(s3);
 
 	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
@@ -319,7 +329,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...
-		cam->render(*wrld, hdc, node);
+		cam->render(*wrld, hdc);
+		delete cam;
+		delete wrld;
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
