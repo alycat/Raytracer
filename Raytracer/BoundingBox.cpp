@@ -8,7 +8,7 @@ BoundingBox::BoundingBox(){
 BoundingBox::~BoundingBox(){
 
 }
-Point BoundingBox::intersect(Ray ray){
+Point BoundingBox::intersect(Ray ray, int type){
 	Point fraction = { 1.0f, 1.0f, 1.0f };
 	fraction = fraction / ray.direction.v;
 	float t_minx = (box.left - ray.start.x) * fraction.x;
@@ -28,7 +28,13 @@ Point BoundingBox::intersect(Ray ray){
 	if (tmin > tmax){
 		return maxPoint;
 	}
-	Point p = ray.start + (ray.direction.v * tmin);
+	Point p = origin;
+	if (type == 0){
+		p = ray.start + (ray.direction.v * tmin);
+	}
+	else{
+		p = ray.start + (ray.direction.v * tmax);
+	}
 	return p;
 }
 /**

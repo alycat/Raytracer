@@ -1,6 +1,6 @@
 #ifndef _BOUNDINGBOX_H
 #define _BOUNDINGBOX_H
-
+#include <cstring>
 #include "Global.h"
 class BoundingBox{
 public:
@@ -18,7 +18,7 @@ public:
 	void expand(BoundingBox b);
 	~BoundingBox();
 	int longestAxis();
-	Point intersect(Ray ray);
+	Point intersect(Ray ray, int type);
 	bool hit(Ray ray);
 };
 #endif

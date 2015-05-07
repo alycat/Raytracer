@@ -9,6 +9,7 @@
 
 #define M_PI 3.1415 /*PI*/
 #define EPSILON 0.000001
+#define new new(1, __FILE__, __LINE__)
 
 using namespace std;
 
@@ -48,6 +49,10 @@ struct Point{
 
 	Point operator-(const Point& in){
 		return{ x - in.x, y - in.y, z - in.z };
+	}
+
+	Point operator*(const Point& in){
+		return{ x*in.x, y * in.y, z*in.z };
 	}
 
 	Point operator*(const float& in){
@@ -290,7 +295,7 @@ static pVector reflect(pVector L, pVector N){
 }
 
 static pVector transmit(pVector I, pVector N){
-	float inc = 1.03;
+	float inc = 1.05;
 	float dot = I*N;
 	if (dot <= 0){
 		N = N*-1;

@@ -21,7 +21,7 @@ public:
 	void add(LightSource* light);
 	void transform(Object obj);
 	void transformAllObjects(Matrix matrix);
-	bool intersection(Ray ray, int index);
+	bool intersection(Ray ray, int index, Object* obj);
 	Light spawn(Ray ray, int depth);
 };
 #endif

@@ -7,6 +7,8 @@
 class IlluminationModel{
 public:
 	Color c;
+	float ka, kd, ks; //ambient, diffuse, & specular constants
+	float ke; //specular exponent
 	IlluminationModel(void){};
 	virtual ~IlluminationModel(void){};
 	virtual Light illuminate(IntersectData id)=0;

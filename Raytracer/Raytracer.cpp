@@ -139,6 +139,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPTSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -152,10 +153,16 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, white);
 	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, {-4.0, 4.0, 0, 22});
 	Triangle * t2 = new Triangle({ 4.0, -3, 0 },{ -4.0, -3, 0 },{ -4.0, 1.5, 22 },   { -4.0, 4.0, 0, 22 });
-	Sphere *s3 = new Sphere({0, -5, 7}, 5, grey);
 	s1->k_r = 0.3;
 	s2->k_t = 0.2;
+	s1->material->kd = 0.0001;
+	s1->material->ks = 0.75;
+	s1->material->ke = 0.9;
 
+	s2->material->kd = 0.0001;
+	s2->material->ks = 0.7;
+	s2->material->ke = 1;
+	
 	ReadPlyFile("bunny");
 	for (int i = 0; i < bunny.size(); ++i){
 		wrld->add((bunny[i]));
@@ -176,25 +183,24 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			wrld->add(spheres2[i + (j * 5)]);
 		}
 	}*/
-	/*
-	wrld->add(s1);
+	
+	/*wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);*/
-
+	
 	//wrld->add(s3);
 
 	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
 	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white/100, { black } });
+/*	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white/100, { black } });
 	wrld->add(l2);
 	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white/100, { white } });
 	wrld->add(l3);
 	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white/100, { white } });
-	wrld->add(l4);
+	wrld->add(l4);*/
 
 	wrld->initTree();
-
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_RAYTRACER, szWindowClass, MAX_LOADSTRING);
@@ -320,6 +326,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
+			_CrtDumpMemoryLeaks();
 			DestroyWindow(hWnd);
 			break;
 		default:
@@ -335,6 +342,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
+		_CrtDumpMemoryLeaks();
 		PostQuitMessage(0);
 		break;
 	default:

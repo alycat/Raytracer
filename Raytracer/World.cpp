@@ -8,7 +8,7 @@ World::World(void){
 }
 
 World::~World(void){
-/*	for (int i = 0; i < objectList.size(); ++i){
+	/*for (int i = 0; i < objectList.size(); ++i){
 		delete objectList[i];
 	}
 	objectList.clear();
@@ -72,60 +72,61 @@ Light World::spawn(Ray ray, int depth)
 	if (tree->box.hit(ray)){
 		float closest = sqrt(myMax) / 3;
 		Point pClosest = maxPoint;
-		KDNode* nearest = nullptr;
-		nearest = tree->getNode(tree, ray);
-		int s = nearest->objects.size();
-		if (nearest){
-			parallel_for(int(0), (int)nearest->objects.size(), [&](int i)
+		vector<KDNode*> nearest;
+		nearest = tree->getNodes(tree, ray);
+		parallel_for(int(0), (int)nearest.size(), [&](int n)
+		{
+			parallel_for(int(0), (int)nearest[n]->objects.size(), [&](int i)
 			{
-				Point temp = nearest->objects[i]->intersect(ray);
-				float distance = temp.distance(ray.start);
-				cout << "Distance: " << distance << endl;
-				if (distance < closest && distance > 0.1){
-					IntersectData id;
-					light = { black };
-					parallel_for(int(0), (int)lightList.size(), [&](int l)
-					{
-						pVector N = nearest->objects[i]->normal(temp);
-						this->intersection(id, temp, N, lightList[l], ray.direction);
-						Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
-						shadow.direction = shadow.direction.normal;
-
-						if (intersection(shadow, i))
+				if (nearest[n]->box.hit(ray)){
+					Point temp = nearest[n]->objects[i]->intersect(ray);
+					float distance = temp.distance(ray.start);
+					cout << "Distance: " << distance << endl;
+					if (distance < closest && distance > 0.1){
+						IntersectData id;
+						light = { black };
+						parallel_for(int(0), (int)lightList.size(), [&](int l)
 						{
-							light = light + nearest->objects[i]->material->illuminate(id);
+							pVector N = nearest[n]->objects[i]->normal(temp);
+							this->intersection(id, temp, N, lightList[l], ray.direction);
+							Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
+							shadow.direction = shadow.direction.normal;
+
+							//if (intersection(shadow, i, nearest[n]->objects[i]))
+							//{
+							light = light + nearest[n]->objects[i]->material->illuminate(id);
 							pVector I = ray.direction.normal;
 
 							if (depth < max_depth)
 							{
-								if (nearest->objects[i]->k_r > 0){
+								if (nearest[n]->objects[i]->k_r > 0){
 									Ray reflection = { temp, reflect(I, N) };
 									reflection.direction.v.z = reflection.direction.v.z * -1;
 									Light r = spawn(reflection, depth + 1);
-									r.irradiance = r.irradiance * nearest->objects[i]->k_r;
+									r.irradiance = r.irradiance * nearest[n]->objects[i]->k_r;
 									light = light + r;
 								}
-								if (nearest->objects[i]->k_t > 0)
+								if (nearest[n]->objects[i]->k_t > 0)
 								{
-									Point c = dynamic_cast<Sphere*>(nearest->objects[i])->center;
+									Point c = dynamic_cast<Sphere*>(nearest[n]->objects[i])->center;
 									c = { 0, 0, c.z };
 									Point p = temp - c;
 									Ray transray = { temp, transmit(I, N) };
 									Light t = spawn(transray, depth + 1);
-									t.irradiance = t.irradiance * nearest->objects[i]->k_t;
+									t.irradiance = t.irradiance * nearest[n]->objects[i]->k_t;
 									light = light + t;
 								}
 							}
-						}
+							//}
 
 
 
-					});
-					closest = distance;
+						});
+						closest = distance;
+					}
 				}
-
 			});
-		}
+		});
 	}
 	return light;
 }
@@ -146,27 +147,26 @@ COLORREF World::trace(Ray ray){
 	return c.getColor;
 }
 
-bool World:: intersection(Ray ray, int index){
+bool World::intersection(Ray ray, int index, Object* obj){
 	float closest = sqrt(myMax) / 3;
-	Point pClosest = objectList[index]->intersect(ray);
+	Point pClosest = obj->intersect(ray);
 	float original = pClosest.distance(ray.start);
-	KDNode* nearest = nullptr;
-	nearest = tree->getNode(tree, ray);
-	if (nearest){
-		parallel_for(int(0), (int)nearest->objects.size(), [&](int i){
-			if (index != i && nearest->objects[i]->k_t <= 0)
-			{
-				Point temp = nearest->objects[i]->intersect(ray);
+	vector<KDNode*> nearest = tree->getNodes(tree, ray);
+	//nearest = tree->traverse(tree);
+	parallel_for(int(0), (int)nearest.size(), [&](int n)
+	{
+		parallel_for(int(0), (int)nearest[n]->objects.size(), [&](int i){
+			if (nearest[n]->box.hit(ray)){
+				Point temp = nearest[n]->objects[i]->intersect(ray);
 				float dis = temp.distance(ray.start);
-				if (dis < original){
+				if (dis < closest && original - dis > 0.1){
 					closest = dis;
-					original = dis;
 				}
 			}
 		});
-		if ((closest < sqrt(myMax) / 3)){
-			return false;
-		}
+	});
+	if ((closest < sqrt(myMax) / 3)){
+		return false;
 	}
 	return true;
 }

@@ -6,6 +6,11 @@
 #include <functional>
 class KDNode{
 public:
+	struct Axis{
+		int axis;
+		float value;
+	};
+	Axis splitAxis;
 	BoundingBox box;
 	KDNode();
 	~KDNode();
@@ -16,7 +21,7 @@ public:
 	KDNode* build(vector<Object*> &t, int d) const;
 	void build(KDNode* head, int d);
 	vector<KDNode*> traverse(KDNode* root);
-	KDNode* getNode(KDNode* root, Ray ray);
+	vector<KDNode*> getNodes(KDNode* root, Ray ray);
 	bool Terminal(vector<Object*> L, BoundingBox B);
 	bool hit(KDNode* node, const Ray& ray) const;
 	void sort();
