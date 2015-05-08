@@ -5,7 +5,8 @@ using namespace Concurrency;
 
 Camera::Camera(){
 	filmplane = { 400, 300, 40000, 30000, 50000 };
-	position = { -1.2, 0.0, 0 };
+	//position = { -1.2, 0.0, 0 };
+	position = {0, 0, 0};
 	//position = { -1.2, 0.0, -5 };
 	//position = origin;
 	lookat = { { 0.0, 0.0, 1.0 } };

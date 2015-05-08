@@ -46,7 +46,7 @@ void World::transformAllObjects(Matrix matrix){
 
 void World::initTree(){
 	BoundingBox box = BoundingBox();
-	box.box = { -100, 100, 100, -100, 100, -100 };
+	box.box = { -10, 0, 0,-10, 0, -10 };
 	tree->box = box;
 	for (int i = 0; i < objectList.size(); ++i){
 		tree->objects.push_back(objectList[i]);
@@ -78,7 +78,6 @@ Light World::spawn(Ray ray, int depth)
 		{
 			parallel_for(int(0), (int)nearest[n]->objects.size(), [&](int i)
 			{
-				if (nearest[n]->box.hit(ray)){
 					Point temp = nearest[n]->objects[i]->intersect(ray);
 					float distance = temp.distance(ray.start);
 					cout << "Distance: " << distance << endl;
@@ -92,39 +91,38 @@ Light World::spawn(Ray ray, int depth)
 							Ray shadow = { lightList[l]->position, { temp - lightList[l]->position } };
 							shadow.direction = shadow.direction.normal;
 
-							//if (intersection(shadow, i, nearest[n]->objects[i]))
-							//{
-							light = light + nearest[n]->objects[i]->material->illuminate(id);
-							pVector I = ray.direction.normal;
-
-							if (depth < max_depth)
+							if (intersection(shadow, i, nearest[n]->objects[i]))
 							{
-								if (nearest[n]->objects[i]->k_r > 0){
-									Ray reflection = { temp, reflect(I, N) };
-									reflection.direction.v.z = reflection.direction.v.z * -1;
-									Light r = spawn(reflection, depth + 1);
-									r.irradiance = r.irradiance * nearest[n]->objects[i]->k_r;
-									light = light + r;
-								}
-								if (nearest[n]->objects[i]->k_t > 0)
+								light = light + nearest[n]->objects[i]->material->illuminate(id);
+								pVector I = ray.direction.normal;
+
+								if (depth < max_depth)
 								{
-									Point c = dynamic_cast<Sphere*>(nearest[n]->objects[i])->center;
-									c = { 0, 0, c.z };
-									Point p = temp - c;
-									Ray transray = { temp, transmit(I, N) };
-									Light t = spawn(transray, depth + 1);
-									t.irradiance = t.irradiance * nearest[n]->objects[i]->k_t;
-									light = light + t;
+									if (nearest[n]->objects[i]->k_r > 0){
+										Ray reflection = { temp, reflect(I, N) };
+										reflection.direction.v.z = reflection.direction.v.z * -1;
+										Light r = spawn(reflection, depth + 1);
+										r.irradiance = r.irradiance * nearest[n]->objects[i]->k_r;
+										light = light + r;
+									}
+									if (nearest[n]->objects[i]->k_t > 0)
+									{
+										Point c = dynamic_cast<Sphere*>(nearest[n]->objects[i])->center;
+										c = { 0, 0, c.z };
+										Point p = temp - c;
+										Ray transray = { temp, transmit(I, N) };
+										Light t = spawn(transray, depth + 1);
+										t.irradiance = t.irradiance * nearest[n]->objects[i]->k_t;
+										light = light + t;
+									}
 								}
 							}
-							//}
 
 
 
 						});
 						closest = distance;
 					}
-				}
 			});
 		});
 	}
@@ -150,19 +148,17 @@ COLORREF World::trace(Ray ray){
 bool World::intersection(Ray ray, int index, Object* obj){
 	float closest = sqrt(myMax) / 3;
 	Point pClosest = obj->intersect(ray);
-	float original = pClosest.distance(ray.start);
+	float original = pClosest.distance2(ray.start);
 	vector<KDNode*> nearest = tree->getNodes(tree, ray);
 	//nearest = tree->traverse(tree);
 	parallel_for(int(0), (int)nearest.size(), [&](int n)
 	{
 		parallel_for(int(0), (int)nearest[n]->objects.size(), [&](int i){
-			if (nearest[n]->box.hit(ray)){
 				Point temp = nearest[n]->objects[i]->intersect(ray);
-				float dis = temp.distance(ray.start);
+				float dis = temp.distance2(ray.start);
 				if (dis < closest && original - dis > 0.1){
 					closest = dis;
 				}
-			}
 		});
 	});
 	if ((closest < sqrt(myMax) / 3)){

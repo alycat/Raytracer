@@ -71,6 +71,12 @@ struct Point{
 		return ((x < in.x) && (y < in.y) && (z < in.z));
 	}
 
+	void abs(){
+		x = std::abs(x);
+		y = std::abs(y);
+		z = std::abs(z);
+	}
+
 };
 
 

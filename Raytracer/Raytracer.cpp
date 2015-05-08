@@ -107,7 +107,7 @@ void ReadPlyFile(char* filepath){
 				Point p1 = { vlist[flist[k]->verts[0]]->x, vlist[flist[k]->verts[0]]->y, vlist[flist[k]->verts[0]]->z };
 				Point p2 = { vlist[flist[k]->verts[1]]->x, vlist[flist[k]->verts[1]]->y, vlist[flist[k]->verts[1]]->z };
 				Point p3 = { vlist[flist[k]->verts[2]]->x, vlist[flist[k]->verts[2]]->y, vlist[flist[k]->verts[2]]->z };
-				Point offset = { 0, 0, 5 };
+				Point offset = { 0, -0.5, 6 };
 				bunny.push_back(new Triangle(p1*10 + offset, p2*10 + offset, p3*10 + offset));
 				//wrld->add(new Triangle(p1 * 10 + offset, p2 * 10 + offset, p3 * 10 + offset));
 			}
@@ -165,9 +165,11 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	
 	ReadPlyFile("bunny");
 	for (int i = 0; i < bunny.size(); ++i){
+		bunny[i]->material->ks = 0.75;
+		bunny[i]->material->ke = 0.9;
+		bunny[i]->material->kd = 0.0001;
 		wrld->add((bunny[i]));
 	}
-	
 	/*
 	vector<Sphere*> spheres;
 	for (int j = 0; j < 3; ++j){
@@ -183,22 +185,20 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			wrld->add(spheres2[i + (j * 5)]);
 		}
 	}*/
-	
-	/*wrld->add(s1);
+	/*
+	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
 	wrld->add(t2);*/
-	
-	//wrld->add(s3);
 
 	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
 	wrld->add(l1);
-/*	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white/100, { black } });
+	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white/100, { black } });
 	wrld->add(l2);
 	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white/100, { white } });
 	wrld->add(l3);
 	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white/100, { white } });
-	wrld->add(l4);*/
+	wrld->add(l4);
 
 	wrld->initTree();
 	// Initialize global strings
