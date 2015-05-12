@@ -32,29 +32,12 @@ Phong::~Phong(){
 }
 
 Light Phong::illuminate(IntersectData id){
-	Color cdiff = black, cspec = { 0, 0, 0 };
 	Light L = {0.0};
-	
-	float ambient;
-	//Color specular = {500, 500, 500};
-	Color diffuse = black;
-	pVector S = id.source;
-	pVector V = id.outgoing;
-	pVector R = id.reflect;
-	id.reflect.v.z = id.reflect.v.z;
-	pVector N = id.normal;
-	Color s = (id.light->color) * (R*V);
-	cdiff = ((c * id.light->color) *  (S*N) * kd);
-	cspec = (s.power(ke) * ks);
-	//diffuse = id.light->light.irradiance * (S * N) * kd;
-	//specular = (id.light->light.irradiance*(R*V)).power(ke) * ks;
+	Color s = (id.light->color) * (id.reflect * id.outgoing);
+	Color cdiff = ((c * id.light->color) *  (id.source*id.normal) * kd);
+	Color cspec = (s.power(ke) * ks);
 	cdiff.forcePositive();
 	cspec.forcePositive();
 	L.irradiance = cdiff + cspec;
-	//return (cdiff + cspec) * (id.light->light.irradiance / m_irr);
-	/*float angle = std::acos(N*id.camera / (sqrt(id.camera * id.camera) * sqrt(N * N)));
-	if (angle < 1.8 && angle > 0){
-		L.irradiance = {0, 0, 255};
-	}*/
 	return L;
 }

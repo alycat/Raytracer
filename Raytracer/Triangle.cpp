@@ -13,7 +13,10 @@ Triangle::Triangle(void){
 }
 
 Triangle::~Triangle(void){
-
+	if (material){
+		delete material;
+	}
+	material = nullptr;
 }
 
 Triangle::Triangle(Point a, Point b, Point c, UV uv){
@@ -38,8 +41,8 @@ Triangle::Triangle(Point a, Point b, Point c){
 	vn = v1.getCross(v2);
 	vn = vn.normal;
 	vn.v.y = abs(vn.v.y);
-	color = black;
-	material = new Phong();
+	color = white;
+	material = new Phong(color);
 	k_r = k_t = 0;
 }
 

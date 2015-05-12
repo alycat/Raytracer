@@ -43,112 +43,116 @@ vector<KDNode*> KDNode::getNodes(KDNode* root, Ray ray){
 		if (root->box.hit(ray)){
 			Point entry = box.intersect(ray, 0);
 			Point exit = box.intersect(ray, 1);
-			Point split = origin;
-			pVector N = { origin };
-			float V = root->splitAxis.axis;
-			float F = -V;
-			float omega = 0;
-			switch (root->splitAxis.axis){
-			case 0:
-				N.v = { 0, 1, 0 };
-				omega = -(V *ray.start.y + F) / (V*ray.direction.v.y);
-				break;
-			case 1:
-				N.v = { 0, 0, 1 };
-				omega = -(V *ray.start.z + F) / (V*ray.direction.v.z);
-				break;
-			case 2:
-				N.v = { 1, 0, 0 };
-				omega = -(V *ray.start.x + F) / (V*ray.direction.v.x);
-				break;
-			}
-			split = ray.start + (ray.direction.v * omega);
 			float a, b, s;
 			a = b = s = 0;
+			s = root->splitAxis.value;
+			int axis = root->splitAxis.axis;
 			switch (root->splitAxis.axis){
 			case 0:
 				a = entry.x;
 				b = exit.x;
-				s = split.x;
 				break;
 			case 1:
 				a = entry.y;
 				b = exit.y;
-				s = split.y;
 				break;
 			case 2:
 				a = entry.z;
 				b = exit.z;
-				s = split.x;
+			//	s = -s;
 				break;
 			}
-			KDNode* Near = nullptr;
-			KDNode* Far = nullptr;
-			if ((a < root->splitAxis.value && root->splitAxis.axis != 2) || (a > root->splitAxis.value && root->splitAxis.axis == 2)){
-				if (root->left){
-					Near = root->left;
+
+			if ((a <= s)){
+				if ((b < s)){	
+					if (root->left){
+						return getNodes(root->left, ray);
+					}
+					else
+					{
+						return{ root };
+					}
 				}
-				if (root->right){
-					Far = root->right;
-				}
-			}
-			else{
-				if (root->right){
-					Near = root->right;
-				}
-				if (root->left){
-					Far = root->left;
-				}
-			}
-			if (Near && Far){
-				if (((s < 0 || s > b) && root->splitAxis.axis != 2)){
-					if (Near->left || Near->right){
-						return getNodes(Near, ray);
+				else if (b == s){
+					float v = rand();
+					if (v < 0.5){
+						if (root->right){
+							getNodes(root->right, ray);
+						}
+						else{
+							return{ root };
+						}
 					}
 					else{
-						return{ Near };
-					}
-				}
-				else if ((s < a && root->splitAxis.axis != 2)){
-					if (Far->left || Far->left){
-						return getNodes(Far, ray);
-					}
-					else{
-						return{ Far };
+						if (root->left){
+							getNodes(root->left, ray);
+						}
+						else{
+							return{ root };
+						}
 					}
 				}
 				else{
-					if ((Near->left || Near->right) && (Far->left || Far->right)){
-						vector<KDNode*> n = getNodes(Near, ray);
-						vector<KDNode*> f = getNodes(Far, ray);
-						n.insert(n.end(), f.begin(), f.end());
-						return n;
-					}
-					else if (Near->left || Near->right){
-						vector<KDNode*> n = getNodes(Near, ray);
-						vector<KDNode*> f = { Far };
-						n.insert(n.end(), f.begin(), f.end());
-						return n;
-					}
-					else if (Far->left || Far->right){
-						vector<KDNode*> n = { Near };
-						vector<KDNode*> f = getNodes(Far, ray);
+					if (root->left && root->right){
+						vector<KDNode*> n = getNodes(root->left, ray);
+						vector<KDNode*> f = getNodes(root->right, ray);
 						n.insert(n.end(), f.begin(), f.end());
 						return n;
 					}
 					else{
-						return{ Near, Far };
+						return{ root };
 					}
 				}
 			}
 			else
 			{
-				return{ root };
+				if ((b > s)){
+					if (root->right){
+						return getNodes(root->right, ray);
+					}
+					else{
+						return{ root };
+					}
+				}
+				else{
+					if (root->left && root->right){
+						vector<KDNode*> n = getNodes(root->left, ray);
+						vector<KDNode*> f = getNodes(root->right, ray);
+						n.insert(n.end(), f.begin(), f.end());
+						return n;
+					}
+					else{
+						return{ root };
+					}
+				}
 			}
 		}
 	}
 	return{};
 }
+
+void KDNode::expandBox(Object* obj){
+	BoundingBox objBox = obj->getBBox();
+	if (objBox.box.right > box.box.right){
+		box.box.right = objBox.box.right;
+	}
+	if (objBox.box.left < box.box.left){
+		box.box.left = objBox.box.left;
+	}
+	if (objBox.box.top > box.box.top){
+		box.box.top = objBox.box.top;
+	}
+	if (objBox.box.bottom < box.box.bottom){
+		box.box.bottom = objBox.box.bottom;
+	}
+	if (objBox.box.front < box.box.front){
+		box.box.front = objBox.box.front;
+	}
+	if (objBox.box.back > box.box.back){
+		box.box.back = objBox.box.back;
+	}
+}
+
 
 void KDNode::expandBoundingBox(){
 	for (int i = 0; i < objects.size(); ++i){
@@ -175,16 +179,14 @@ void KDNode::expandBoundingBox(){
 
 void KDNode::build(KDNode* head, int d){
 	if (head){
-		if (head->objects.size() > 2 && d < 20){ //if terminated
+		if (head->objects.size() > 8 && d < 30){ //if terminated
 			int size = head->objects.size();
-			//find optimal split
-			head->expandBoundingBox();
 			vector<float> x(size);
 			vector<float> y(size);
 			vector<float> z(size);
-			float width = (head->box.box.right - head->box.box.left);
-			float height = (head->box.box.top - head->box.box.bottom);
-			float depth = (head->box.box.back - head->box.box.front);
+			float width = abs(head->box.box.right - head->box.box.left);
+			float height = abs(head->box.box.top - head->box.box.bottom);
+			float depth = abs(head->box.box.back - head->box.box.front);
 
 			for (int i = 0; i < size; ++i){
 				Point p = head->objects[i]->getMidPoint();
@@ -221,10 +223,10 @@ void KDNode::build(KDNode* head, int d){
 			switch (head->splitAxis.axis){
 			case 0:
 				head->splitAxis.value = FindMedian(x);
-				head->left->box.box.right = head->splitAxis.value;
-				head->right->box.box.left = head->splitAxis.value;
-				head->left->box.box.left = head->splitAxis.value;
-				head->right->box.box.right = head->splitAxis.value;
+				head->left->box.box.right = head->splitAxis.value + 0.1;
+				head->right->box.box.left = head->splitAxis.value - 0.1;
+				head->left->box.box.left = head->splitAxis.value - 0.1;
+				head->right->box.box.right = head->splitAxis.value + 0.1;
 				break;
 			case 1:
 				head->splitAxis.value = FindMedian(y);
@@ -236,8 +238,8 @@ void KDNode::build(KDNode* head, int d){
 			case 2:
 				head->splitAxis.value = FindMedian(z);
 				head->left->box.box.back = head->splitAxis.value;
-				head->left->box.box.front = head->splitAxis.value;
 				head->right->box.box.front = head->splitAxis.value;
+				head->left->box.box.front = head->splitAxis.value;
 				head->right->box.box.back = head->splitAxis.value;
 				break;
 			}
@@ -247,20 +249,37 @@ void KDNode::build(KDNode* head, int d){
 				switch (head->splitAxis.axis){
 				case 0:
 					if (p.x < head->splitAxis.value)
-					{ head->left->objects.push_back(head->objects[i]); }
-					else{ head->right->objects.push_back(head->objects[i]); }
+					{ 
+						head->left->objects.push_back(head->objects[i]);
+						head->left->expandBox(head->objects[i]);
+					}
+					else{ 
+						head->right->objects.push_back(head->objects[i]);
+						head->right->expandBox(head->objects[i]);
+					}
 					break;
 				case 1:
-					if (p.y < head->splitAxis.value){ head->left->objects.push_back(head->objects[i]); }
-					else{ head->right->objects.push_back(head->objects[i]); }
+					if (p.y < head->splitAxis.value){
+						head->left->objects.push_back(head->objects[i]); 
+						head->left->expandBox(head->objects[i]);
+					}
+					else{ 
+						head->right->objects.push_back(head->objects[i]); 
+						head->right->expandBox(head->objects[i]);
+					}
 					break;
 				case 2:
-					if (p.z > head->splitAxis.value){ head->left->objects.push_back(head->objects[i]); }
-					else{ head->right->objects.push_back(head->objects[i]); }
+					if (p.z >= head->splitAxis.value){
+						head->right->objects.push_back(head->objects[i]);
+						head->right->expandBox(head->objects[i]);
+					}
+					else{ 
+						head->left->objects.push_back(head->objects[i]);
+						head->left->expandBox(head->objects[i]);
+					}
 					break;
 				}
 			}
-
 			build(head->left, d + 1);
 			build(head->right, d + 1);
 		}

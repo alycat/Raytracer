@@ -1,27 +1,17 @@
-﻿Build started 5/8/2015 1:36:54 AM.
+﻿Build started 5/11/2015 11:48:17 PM.
      1>Project "C:\Users\Owner\Documents\Raytracer\Raytracer\Raytracer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /IC:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _HAS_ITERATOR_DEBUGGING=0 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Raytracer.cpp
-         Raytracer.cpp
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(202): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(206): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(210): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(304): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(313): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(38): warning C4091: 'typedef ' : ignored on left of 'Vertex' when no variable is declared
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(43): warning C4091: 'typedef ' : ignored on left of 'Face' when no variable is declared
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(63): warning C4101: 'i' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(75): warning C4101: 'num_obj_info' : unreferenced local variable
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(152): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(156): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(157): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(158): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(160): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(162): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(163): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(167): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(169): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(170): warning C4305: '=' : truncation from 'double' to 'float'
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /IC:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _HAS_ITERATOR_DEBUGGING=0 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt World.cpp
+         World.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(205): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(209): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(213): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(307): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(316): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(11): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(16): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(40): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\world.cpp(52): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /LIBPATH:C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.lib" /MACHINE:X86 Debug\Raytracer.res
          Debug\BoundingBox.obj
@@ -41,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.11
+Time Elapsed 00:00:03.26

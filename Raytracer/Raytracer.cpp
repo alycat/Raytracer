@@ -107,7 +107,7 @@ void ReadPlyFile(char* filepath){
 				Point p1 = { vlist[flist[k]->verts[0]]->x, vlist[flist[k]->verts[0]]->y, vlist[flist[k]->verts[0]]->z };
 				Point p2 = { vlist[flist[k]->verts[1]]->x, vlist[flist[k]->verts[1]]->y, vlist[flist[k]->verts[1]]->z };
 				Point p3 = { vlist[flist[k]->verts[2]]->x, vlist[flist[k]->verts[2]]->y, vlist[flist[k]->verts[2]]->z };
-				Point offset = { 0, -0.5, 6 };
+				Point offset = { -1, -0.8, 4 };
 				bunny.push_back(new Triangle(p1*10 + offset, p2*10 + offset, p3*10 + offset));
 				//wrld->add(new Triangle(p1 * 10 + offset, p2 * 10 + offset, p3 * 10 + offset));
 			}
@@ -135,15 +135,15 @@ void ReadPlyFile(char* filepath){
 }
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPTSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPTSTR    lpCmdLine,
+	_In_ int       nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: Place code here.
+	// TODO: Place code here.
 	MSG msg;
 	HACCEL hAccelTable;
 	cam = new Camera();
@@ -151,8 +151,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	Color p = { 1, 0, 1 };
 	Sphere *s1 = new Sphere({ 0.0, 0.2, 8 }, 0.85, white);
 	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, white);
-	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, {-4.0, 4.0, 0, 22});
-	Triangle * t2 = new Triangle({ 4.0, -3, 0 },{ -4.0, -3, 0 },{ -4.0, 1.5, 22 },   { -4.0, 4.0, 0, 22 });
+	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, { -4.0, 4.0, 0, 22 });
+	Triangle * t2 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 1.5, 22 }, { -4.0, 4.0, 0, 22 });
 	s1->k_r = 0.3;
 	s2->k_t = 0.2;
 	s1->material->kd = 0.0001;
@@ -162,7 +162,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	s2->material->kd = 0.0001;
 	s2->material->ks = 0.7;
 	s2->material->ke = 1;
-	
+	/*
 	ReadPlyFile("bunny");
 	for (int i = 0; i < bunny.size(); ++i){
 		bunny[i]->material->ks = 0.75;
@@ -170,35 +170,38 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		bunny[i]->material->kd = 0.0001;
 		wrld->add((bunny[i]));
 	}
+	*/
 	/*
 	vector<Sphere*> spheres;
 	for (int j = 0; j < 3; ++j){
-		for (int i = 0; i < 5; ++i){
-			spheres.push_back(new Sphere({ -i, j, 10 }, 0.4, green));
-			wrld->add(spheres[i + (j*5)]);
-		}
+	for (int i = 0; i < 5; ++i){
+	spheres.push_back(new Sphere({ -i, j, 10 }, 0.4, green));
+	wrld->add(spheres[i + (j*5)]);
+	}
 	}
 	vector<Sphere*> spheres2;
 	for (int j = 0; j < 10; ++j){
-		for (int i = 0; i < 5; ++i){
-			spheres2.push_back(new Sphere({ i, j, 2 }, 0.4, green));
-			wrld->add(spheres2[i + (j * 5)]);
-		}
+	for (int i = 0; i < 5; ++i){
+	spheres2.push_back(new Sphere({ i, j, 2 }, 0.4, green));
+	wrld->add(spheres2[i + (j * 5)]);
+	}
 	}*/
-	/*
+	
 	wrld->add(s1);
 	wrld->add(s2);
 	wrld->add(t1);
-	wrld->add(t2);*/
-
+	wrld->add(t2);
+	
 	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
 	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white/100, { black } });
+	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white / 100, { black } });
 	wrld->add(l2);
-	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white/100, { white } });
+	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white / 100, { white } });
 	wrld->add(l3);
-	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white/100, { white } });
+	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white / 100, { white } });
 	wrld->add(l4);
+	/*LightSource* l5 = new LightSource({{0, -0.5, 3}, white/10, { white }});
+	wrld->add(l5);*/
 
 	wrld->initTree();
 	// Initialize global strings

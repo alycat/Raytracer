@@ -2,7 +2,7 @@
 
 
 BoundingBox::BoundingBox(){
-	box = {-100, 100, 100, -100, -100, 100};
+	box = {0, 0, 0, 0, 0, 0};
 }
 
 BoundingBox::~BoundingBox(){
@@ -15,8 +15,8 @@ Point BoundingBox::intersect(Ray ray, int type){
 	float t_maxx = (box.right - ray.start.x) * fraction.x;
 	float t_miny = (box.bottom - ray.start.y) * fraction.y;
 	float t_maxy = (box.top - ray.start.y) * fraction.y;
-	float t_minz = (box.back - ray.start.z) * fraction.z;
-	float t_maxz = (box.front - ray.start.z) * fraction.z;
+	float t_minz = (box.front - ray.start.z) * fraction.z;
+	float t_maxz = (box.back - ray.start.z) * fraction.z;
 
 	float tmin = max(max(min(t_minx, t_maxx), min(t_miny, t_maxy)), min(t_minz, t_maxz));
 	float tmax = min(min(max(t_minx, t_maxx), max(t_miny, t_maxy)), max(t_minz, t_maxz));
@@ -28,14 +28,10 @@ Point BoundingBox::intersect(Ray ray, int type){
 	if (tmin > tmax){
 		return maxPoint;
 	}
-	Point p = origin;
 	if (type == 0){
-		p = ray.start + (ray.direction.v * tmin);
+		return ray.start + (ray.direction.v * tmin);
 	}
-	else{
-		p = ray.start + (ray.direction.v * tmax);
-	}
-	return p;
+	return ray.start + (ray.direction.v * tmax);;
 }
 /**
 	AABB-ray collision test
@@ -48,8 +44,8 @@ bool BoundingBox::hit(Ray ray){
 	float t_maxx = (box.right - ray.start.x) * fraction.x;
 	float t_miny = (box.bottom - ray.start.y) * fraction.y;
 	float t_maxy = (box.top - ray.start.y) * fraction.y;
-	float t_minz = (box.back - ray.start.z) * fraction.z;
-	float t_maxz = (box.front - ray.start.z) * fraction.z;
+	float t_minz = (box.front - ray.start.z) * fraction.z;
+	float t_maxz = (box.back - ray.start.z) * fraction.z;
 
 	float tmin = max(max(min(t_minx, t_maxx), min(t_miny, t_maxy)), min(t_minz, t_maxz));
 	float tmax = min(min(max(t_minx, t_maxx), max(t_miny, t_maxy)), max(t_minz, t_maxz));
@@ -67,17 +63,17 @@ bool BoundingBox::hit(Ray ray){
 int BoundingBox::longestAxis(){
 	float x = abs(box.right - box.left);
 	float y = abs(box.top - box.bottom);
-	float z = abs(box.front - box.back);
+	float z = abs(box.back - box.front);
 
 	int value = (x > y) ? (x > z? 0 : 2) : (y > z? 1 : 2);
 	return value;
 }
 
 void BoundingBox::expand(BoundingBox b){
-	if (box.back < b.box.back){
+	if (box.back > b.box.back){
 		box.back = b.box.back;
 	}
-	if (box.front > b.box.front){
+	if (box.front < b.box.front){
 		box.front = b.box.front;
 	}
 	if (box.left > b.box.left){

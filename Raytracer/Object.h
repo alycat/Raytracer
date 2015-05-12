@@ -19,7 +19,7 @@ public:
 	float k_r, k_t;
 	Object(void);
 	Object(Color c);
-	~Object(void);
+	virtual ~Object(void);
 	virtual Point intersect(Ray ray);
 	virtual void transform(Matrix matrix);
 	virtual pVector normal(Point intersection);

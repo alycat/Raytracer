@@ -20,7 +20,7 @@ typedef std::valarray<float> Vector;
 
 const float myMax= (std::numeric_limits<float>::max)();
 
-const float max_depth = 3;
+const float max_depth = 5;
 
 struct Point{
 	float x;
@@ -83,6 +83,9 @@ struct Point{
 
 const Point origin = { 0, 0, 0 };
 const Point maxPoint = { myMax, myMax, myMax };
+const float infinity = std::numeric_limits<float>::infinity();
+const Point posLim = { infinity, infinity, infinity };
+const Point negLim = { -infinity, -infinity, -infinity };
 
 struct pVector{
 	Point v;

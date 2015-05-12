@@ -8,7 +8,7 @@ World::World(void){
 }
 
 World::~World(void){
-	/*for (int i = 0; i < objectList.size(); ++i){
+	for (int i = 0; i < objectList.size(); ++i){
 		delete objectList[i];
 	}
 	objectList.clear();
@@ -20,7 +20,7 @@ World::~World(void){
 	if (tree){
 		delete tree;
 	}
-	tree = nullptr;*/
+	tree = nullptr;
 }
 
 void World::add(Object* obj){
@@ -46,11 +46,13 @@ void World::transformAllObjects(Matrix matrix){
 
 void World::initTree(){
 	BoundingBox box = BoundingBox();
-	box.box = { -10, 0, 0,-10, 0, -10 };
+	box.box = { -10, 10, 10, -10, 10, -5 };
+//	box.box = { -25, 25, 19, -25, 40, -25};
 	tree->box = box;
 	for (int i = 0; i < objectList.size(); ++i){
 		tree->objects.push_back(objectList[i]);
 	}
+	tree->expandBoundingBox();
 	tree->build(tree, 0);
 }
 
@@ -107,9 +109,6 @@ Light World::spawn(Ray ray, int depth)
 									}
 									if (nearest[n]->objects[i]->k_t > 0)
 									{
-										Point c = dynamic_cast<Sphere*>(nearest[n]->objects[i])->center;
-										c = { 0, 0, c.z };
-										Point p = temp - c;
 										Ray transray = { temp, transmit(I, N) };
 										Light t = spawn(transray, depth + 1);
 										t.irradiance = t.irradiance * nearest[n]->objects[i]->k_t;

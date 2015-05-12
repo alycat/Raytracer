@@ -18,6 +18,7 @@ public:
 	KDNode *right;
 	vector<Object*> objects;
 	void expandBoundingBox();
+	void expandBox(Object* obj);
 	void build(KDNode* head, int d);
 	vector<KDNode*> traverse(KDNode* root);
 	vector<KDNode*> getNodes(KDNode* root, Ray ray);
