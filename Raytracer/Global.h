@@ -71,12 +71,10 @@ struct Point{
 		return ((x < in.x) && (y < in.y) && (z < in.z));
 	}
 
-	void abs(){
-		x = std::abs(x);
-		y = std::abs(y);
-		z = std::abs(z);
+	
+	Point absolute(){
+		return{ abs(x), abs(y), abs(z) };
 	}
-
 };
 
 
@@ -166,24 +164,96 @@ struct Ray{
 	pVector direction;
 };
 
+static const float L_max = 10000;
+static const float L_dmax = 255;
+
 struct Color{
-	int r;
-	int g;
-	int b;
+	float r;
+	float g;
+	float b;
+
+	void cap(float maxV, float minV){
+		r = max(min(r, maxV), minV);
+		g = max(min(g, maxV), minV);
+		b = max(min(b, maxV), minV);
+	}
 
 	void forcePositive(){
-		r = std::max(r, 0);
-		g = std::max(g, 0);
-		b = std::max(b, 0);
+		r = std::max(r, 0.0f);
+		g = std::max(g, 0.0f);
+		b = std::max(b, 0.0f);
+	}
+
+	COLORREF ward(float L_average){
+		float L = L_average;
+		
+		r *= L_max/L_dmax;
+		g *= L_max/L_dmax;
+		b *= L_max/L_dmax;
+
+		float sf =(1.219f + pow((L_dmax / 2), 0.4f)) / (1.219f + pow(L, 0.4f));
+		sf = pow(sf, 2.5f);
+		sf /= L_dmax;
+		r = (r *sf);
+		g = (g *sf);
+		b = (b *sf);
+
+		r = min(max(r, 0.0f), L_dmax);
+		g = min(max(g, 0.0f), L_dmax);
+		b = min(max(b, 0.0f), L_dmax);
+		return RGB(r, g, b);
+	}
+
+	COLORREF reinhard(float L_average){
+		float a = 0.18;
+		
+		r *= L_max / L_dmax;
+		g *= L_max / L_dmax;
+		b *= L_max / L_dmax;
+		
+		float L = L_average;
+		float f = a / L; 
+		float r_s = f * r;
+		float g_s = f * g;
+		float b_s = f * b;
+
+		float r_r = r_s / (1 + r_s);
+		float g_r = g_s / (1 + g_s);
+		float b_r = b_s / (1 + b_s);
+		
+		r_r = std::max(std::min(r_r, 1.0f), 0.0f);
+		g_r = std::max(std::min(g_r, 1.0f), 0.0f);
+		b_r = std::max(std::min(b_r, 1.0f), 0.0f);
+		
+		r = (r_r * L_dmax);
+		g = (g_r * L_dmax);
+		b = (b_r * L_dmax);
+
+		return RGB(r, g, b);
 	}
 
 	COLORREF getColorRef(){
-		if (r < 0){
-			r = 0;
-		}
-		r = std::min(r, 255);
+		/*r = std::min(r, 255);
 		g = std::min(g, 255);
-		b = std::min(b, 255);
+		b = std::min(b, 255);*/
+		float a = 0.18;
+		float L = 1000;
+		float r_s = a / L * r;
+		float g_s = a / L * g;
+		float b_s = a / L * b;
+
+		float r_r = r_s / (1 + r_s);
+		float g_r = g_s / (1 + g_s);
+		float b_r = b_s / (1 + b_s);
+
+		r_r = std::max(std::min(r_r, 1.0f), 0.0f);
+		g_r = std::max(std::min(g_r, 1.0f), 0.0f);
+		b_r = std::max(std::min(b_r, 1.0f), 0.0f);
+
+		r = r_r * L_dmax;
+		g = g_r * L_dmax;
+		b = b_r * L_dmax;
+
 		return RGB(r, g, b);
 	}
 
@@ -272,6 +342,15 @@ static Matrix RotateZ(float angle){
 	return rot;
 }
 
+struct Photon{
+	Point position;
+	float p_red;
+	float p_green;
+	float p_blue;
+	float phi, theta;
+	int flag;
+};
+
 struct Light{
 	Color irradiance;
 
@@ -285,6 +364,24 @@ struct LightSource{
 	Point position;
 	Color color;
 	Light light;
+	int numPhotons;
+
+	void emitPhotonsFromDiffuseLight(){
+		int emitted = 0;
+		float x = 1, y = 1, z = 1;
+		while (emitted < numPhotons){
+			do{
+				x = rand() % 2 + (-1);
+				y = rand() % 2 + (-1);
+				z = rand() % 2 + (-1);
+			} while (((x*x) + (y*y) + (z*z)) > 1);
+			pVector d = { x, y, z };
+			d = d.normal;
+			Point p = position; 
+			Ray ray = { p, d };
+			emitted++;
+		}
+	}
 };
 
 //struct for intersection of object with ray
@@ -301,6 +398,12 @@ struct IntersectData{
 static pVector reflect(pVector L, pVector N){
 	pVector R = N - L * ((L*N) * 2);
 	return R.normal;
+}
+
+static float FindMedian(vector<float>& f){
+	size_t n = f.size() > 1 ? f.size() / 2 : 0;
+	nth_element(f.begin(), f.begin() + n, f.end());
+	return f[n];
 }
 
 static pVector transmit(pVector I, pVector N){

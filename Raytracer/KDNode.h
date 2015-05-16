@@ -22,9 +22,9 @@ public:
 	void build(KDNode* head, int d);
 	vector<KDNode*> traverse(KDNode* root);
 	vector<KDNode*> getNodes(KDNode* root, Ray ray);
+	KDNode* getNearest(KDNode* root, Ray ray);
 	bool Terminal(vector<Object*> L, BoundingBox B);
 	bool hit(KDNode* node, const Ray& ray) const;
 	void sort();
-	float FindMedian(vector<float>&f);
 };
 #endif

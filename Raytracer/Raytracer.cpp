@@ -192,18 +192,19 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	wrld->add(t1);
 	wrld->add(t2);
 	
-	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey } }); //position, color, light
+	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey }, 10000 }); //position, color, light
 	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white / 100, { black } });
+	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white / 100, { black }, 10000 });
 	wrld->add(l2);
-	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white / 100, { white } });
+	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white / 100, { grey }, 10000 });
 	wrld->add(l3);
-	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white / 100, { white } });
+	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white / 100, { grey }, 10000 });
 	wrld->add(l4);
 	/*LightSource* l5 = new LightSource({{0, -0.5, 3}, white/10, { white }});
 	wrld->add(l5);*/
 
 	wrld->initTree();
+	wrld->emitPhotons();
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_RAYTRACER, szWindowClass, MAX_LOADSTRING);

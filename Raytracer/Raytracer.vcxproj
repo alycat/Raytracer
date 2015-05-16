@@ -97,6 +97,7 @@
     <ClInclude Include="KDNode.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Phong.h" />
+    <ClInclude Include="PhotonMap.h" />
     <ClInclude Include="ply.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Resource.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="KDNode.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Phong.cpp" />
+    <ClCompile Include="PhotonMap.cpp" />
     <ClCompile Include="plyfile.c" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="Sphere.cpp" />

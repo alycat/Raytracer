@@ -38,6 +38,25 @@ vector<KDNode*> KDNode::traverse(KDNode* root){
 	return{};
 }
 
+KDNode* KDNode::getNearest(KDNode* root, Ray ray){
+	if (root){
+		vector<KDNode*> leaves = traverse(root);
+		if (leaves.size() > 0){
+			KDNode* closest = leaves[0];
+			for (int l = 0; l < leaves.size(); ++l){
+				if (closest->box.intersect(ray, 0).distance2(ray.start) > leaves[l]->box.intersect(ray, 0).distance2(ray.start)){
+					closest = leaves[l];
+				}
+			}
+			return closest;
+		}
+		else{
+			return root;
+		}
+	}
+	return nullptr;
+}
+
 vector<KDNode*> KDNode::getNodes(KDNode* root, Ray ray){
 	if (root){
 		if (root->box.hit(ray)){
@@ -289,8 +308,3 @@ void KDNode::build(KDNode* head, int d){
 void KDNode::sort(){
 }
 
-float KDNode::FindMedian(vector<float>& f){
-	size_t n = f.size() > 1? f.size() / 2 : 0;
-	nth_element(f.begin(), f.begin() + n, f.end());
-	return f[n];
-}

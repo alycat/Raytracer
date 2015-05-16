@@ -42,6 +42,8 @@ void Camera::render(World world, HDC hdc){
 	//Point **pixels = Point[filmplane.H][filmplane.W];
 	Point **pixels = new Point*[filmplane.H];
 	Color **colors = new Color*[filmplane.H];
+	int N = filmplane.H * filmplane.W;
+	float logL = 0;
 	parallel_for(int(0), (int)filmplane.H, [&](int y){
 		int p_y = py - (pixelH*y);
 		pixels[y] = new Point[filmplane.W];
@@ -53,17 +55,31 @@ void Camera::render(World world, HDC hdc){
 			ray.direction = ray.direction.normal;
 			float angle = acosf(ray.direction * middleScreen);
 			Light light = world.spawn(ray, 0);
+			//Light light = world.spawnPhoton(ray, 0);
 			color = light.irradiance;
-			SetPixel(hdc,x, y, color.getColorRef());
 			pixels[y][x] = { x, y, 0 };
 			colors[y][x] = color;
+			//SetPixel(hdc,x, y, color.ward());
 		});
 	});
+
+	
+	for (int i = 0; i < filmplane.W; ++i){
+		for (int j = 0; j < filmplane.H; ++j){
+			Point p = pixels[j][i];
+
+			float colorL = 0.27*colors[j][i].r + 0.67*colors[j][i].g + 0.06*colors[j][i].b;
+			//colorL = max(0.0f, min(colorL, L_max));
+			logL += min(max(0.0f, (float)log(0.000001 + colorL)), L_max);
+		}
+	}
+	logL /= N;
+	logL = max(min(logL, L_max), 0.0f);
 
 	for (int i = 0; i < filmplane.W; ++i){
 		for (int j = 0; j < filmplane.H; ++j){
 			Point p = pixels[j][i];
-			SetPixel(hdc, p.x, p.y, colors[j][i].getColorRef());
+			SetPixel(hdc, p.x, p.y, colors[j][i].ward(logL));
 		}
 	}
 
