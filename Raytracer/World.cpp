@@ -103,7 +103,7 @@ void World::tracePhoton(Ray ray, Color power, int depth){
 			p->flag = 0;
 			p->phi = 0;
 			p->theta = 0;
-			if (Xi < d){
+			if (Xi < 0.5){
 				//diffuse reflection
 				float x = 0, y = 0, z = 0;
 				x = rand() % 2 + (-1); //random float between -1 and 1
@@ -115,7 +115,7 @@ void World::tracePhoton(Ray ray, Color power, int depth){
 				pMap->store(p);
 				this->tracePhoton(diffuseray, power, depth + 1);
 			}
-			else if (Xi < d + s){
+			else if (Xi < 0.75){
 				//specular reflection
 				pVector specularVector;
 				if (object->k_t > 0){

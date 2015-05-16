@@ -71,9 +71,14 @@ struct Point{
 		return ((x < in.x) && (y < in.y) && (z < in.z));
 	}
 
+	void abs(){
+		x = std::abs(x);
+		y = std::abs(y);
+		z = std::abs(z);
+	}
 	
 	Point absolute(){
-		return{ abs(x), abs(y), abs(z) };
+		return{ std::abs(x), std::abs(y), std::abs(z) };
 	}
 };
 
@@ -168,25 +173,25 @@ static const float L_max = 10000;
 static const float L_dmax = 255;
 
 struct Color{
-	float r;
-	float g;
-	float b;
+	int r;
+	int g;
+	int b;
 
 	void cap(float maxV, float minV){
-		r = max(min(r, maxV), minV);
-		g = max(min(g, maxV), minV);
-		b = max(min(b, maxV), minV);
+		r = max(min((float)r, maxV), minV);
+		g = max(min((float)g, maxV), minV);
+		b = max(min((float)b, maxV), minV);
 	}
 
 	void forcePositive(){
-		r = std::max(r, 0.0f);
-		g = std::max(g, 0.0f);
-		b = std::max(b, 0.0f);
+		r = std::max(r, 0);
+		g = std::max(g, 0);
+		b = std::max(b, 0);
 	}
 
 	COLORREF ward(float L_average){
 		float L = L_average;
-		
+
 		r *= L_max/L_dmax;
 		g *= L_max/L_dmax;
 		b *= L_max/L_dmax;
@@ -198,9 +203,9 @@ struct Color{
 		g = (g *sf);
 		b = (b *sf);
 
-		r = min(max(r, 0.0f), L_dmax);
-		g = min(max(g, 0.0f), L_dmax);
-		b = min(max(b, 0.0f), L_dmax);
+		r = min(max((float)r, 0.0f), L_dmax);
+		g = min(max((float)g, 0.0f), L_dmax);
+		b = min(max((float)b, 0.0f), L_dmax);
 		return RGB(r, g, b);
 	}
 
@@ -233,26 +238,9 @@ struct Color{
 	}
 
 	COLORREF getColorRef(){
-		/*r = std::min(r, 255);
-		g = std::min(g, 255);
-		b = std::min(b, 255);*/
-		float a = 0.18;
-		float L = 1000;
-		float r_s = a / L * r;
-		float g_s = a / L * g;
-		float b_s = a / L * b;
-
-		float r_r = r_s / (1 + r_s);
-		float g_r = g_s / (1 + g_s);
-		float b_r = b_s / (1 + b_s);
-
-		r_r = std::max(std::min(r_r, 1.0f), 0.0f);
-		g_r = std::max(std::min(g_r, 1.0f), 0.0f);
-		b_r = std::max(std::min(b_r, 1.0f), 0.0f);
-
-		r = r_r * L_dmax;
-		g = g_r * L_dmax;
-		b = b_r * L_dmax;
+		r = std::max(std::min(r, 255), 0);
+		g = std::max(std::min(g, 255), 0);
+		b = std::max(std::min(b, 255), 0);
 
 		return RGB(r, g, b);
 	}

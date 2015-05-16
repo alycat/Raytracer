@@ -57,9 +57,10 @@ void Camera::render(World world, HDC hdc){
 			Light light = world.spawn(ray, 0);
 			//Light light = world.spawnPhoton(ray, 0);
 			color = light.irradiance;
+			//SetPixel(hdc, x, y, color.getColorRef());
 			pixels[y][x] = { x, y, 0 };
 			colors[y][x] = color;
-			//SetPixel(hdc,x, y, color.ward());
+			SetPixel(hdc,x, y, color.getColorRef());
 		});
 	});
 
@@ -80,6 +81,7 @@ void Camera::render(World world, HDC hdc){
 		for (int j = 0; j < filmplane.H; ++j){
 			Point p = pixels[j][i];
 			SetPixel(hdc, p.x, p.y, colors[j][i].ward(logL));
+		//	SetPixel(hdc, p.x, p.y, colors[j][i].getColorRef());
 		}
 	}
 

@@ -36,8 +36,8 @@ Light Phong::illuminate(IntersectData id){
 	Color s = (id.light->color) * (id.reflect * id.outgoing);
 	Color cdiff = ((c * id.light->color) *  (id.source*id.normal) * kd);
 	Color cspec = (s.power(ke) * ks);
-	//cdiff.forcePositive();
-	//cspec.forcePositive();
+	cdiff.forcePositive();
+	cspec.forcePositive();
 	L.irradiance = cdiff + cspec;
 	//L.irradiance.cap(L_max, 0.0f);
 	return L;
