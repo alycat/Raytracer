@@ -33,6 +33,16 @@ Sphere::Sphere(Point cen, float r){
 	material = new Phong();
 }
 
+Sphere::Sphere(Point cen, float r, int rayleigh){
+	center = cen;
+	radius = r;
+	color = white;
+	vM = Matrix(4, 4);
+	vM.unit();
+	material = new Rayleigh();
+	material->c = white;
+}
+
 Sphere::Sphere(Point cen, float r, Color c){
 	center = cen;
 	radius = r;

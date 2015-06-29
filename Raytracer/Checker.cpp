@@ -30,7 +30,7 @@ Checker::Checker(UV uv, Color c1, Color c2){
 
 Light Checker::illuminate(IntersectData id){
 	float u = 0.0, v = 0.0;
-	Color c = {100, 25, 25};
+	Color c = b;
 	u = (id.point.x - u_v.left) / (u_v.right - u_v.left);
 	v = (id.point.z - u_v.up) / (u_v.up - u_v.down);
 	bool row = false, col = false;
@@ -41,8 +41,7 @@ Light Checker::illuminate(IntersectData id){
 		col = true;
 	}
 	if (row == col){
-		//return a;
-		c = {100, 100, 25};
+		c = a;
 	}
 	c = (c * id.light->color) * (id.source * id.normal) * 0.005;
 	return{ c};

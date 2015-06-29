@@ -99,6 +99,7 @@
     <ClInclude Include="Phong.h" />
     <ClInclude Include="PhotonMap.h" />
     <ClInclude Include="ply.h" />
+    <ClInclude Include="Rayleigh.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sphere.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="Phong.cpp" />
     <ClCompile Include="PhotonMap.cpp" />
     <ClCompile Include="plyfile.c" />
+    <ClCompile Include="Rayleigh.cpp" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="stdafx.cpp">

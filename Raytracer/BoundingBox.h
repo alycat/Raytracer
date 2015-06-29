@@ -20,5 +20,6 @@ public:
 	int longestAxis();
 	Point intersect(Ray ray, int type);
 	bool hit(Ray ray);
+	bool inside(Point p);
 };
 #endif

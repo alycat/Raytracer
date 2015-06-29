@@ -1,41 +1,65 @@
-﻿Build started 5/16/2015 2:50:03 PM.
+﻿Build started 6/29/2015 12:24:23 AM.
      1>Project "C:\Users\Owner\Documents\Raytracer\Raytracer\Raytracer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /IC:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _HAS_ITERATOR_DEBUGGING=0 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp
-         Camera.cpp
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(181): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(182): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(183): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(195): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(196): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(197): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(202): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(203): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(204): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(206): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(207): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(208): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(213): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(215): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(216): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(217): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(233): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(234): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(235): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(263): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(267): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(271): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(362): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(363): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(364): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(398): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\owner\documents\raytracer\raytracer\global.h(407): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(40): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(48): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(53): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(61): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(72): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\owner\documents\raytracer\raytracer\camera.cpp(83): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /IC:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 /IC:\Users\Owner\Documents\Raytracer\Debug\matclpro\include /IZ:\GI\Raytracer\Raytracer\Debug\matclpro\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _HAS_ITERATOR_DEBUGGING=0 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Raytracer.cpp
+         Raytracer.cpp
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(187): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(188): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(189): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(201): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(202): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(203): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(208): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(209): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(210): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(212): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(213): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(214): warning C4244: '=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(219): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(221): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(222): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(223): warning C4244: '*=' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(239): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(240): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(241): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(269): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(277): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(281): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(401): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(402): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(403): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(438): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(447): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(473): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(473): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\global.h(480): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\owner\documents\raytracer\raytracer\photonmap.h(54): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(42): warning C4091: 'typedef ' : ignored on left of 'Vertex' when no variable is declared
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(47): warning C4091: 'typedef ' : ignored on left of 'Face' when no variable is declared
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(114): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(67): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(79): warning C4101: 'num_obj_info' : unreferenced local variable
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(145): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(146): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(152): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(154): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(156): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(277): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(283): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(285): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(287): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(288): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(318): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(320): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(321): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(340): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(341): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(346): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(347): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(353): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(355): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(357): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\owner\documents\raytracer\raytracer\raytracer.cpp(358): warning C4305: '=' : truncation from 'double' to 'float'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Owner\Documents\Raytracer\Debug\ply-0.1" /LIBPATH:C:\Users\Owner\Documents\Raytracer\Debug\boost_1_58_0 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Owner\Documents\Raytracer\Debug\Raytracer.lib" /MACHINE:X86 Debug\Raytracer.res
          Debug\BoundingBox.obj
@@ -46,6 +70,7 @@
          Debug\Phong.obj
          Debug\PhotonMap.obj
          Debug\plyfile.obj
+         Debug\Rayleigh.obj
          Debug\Raytracer.obj
          Debug\Sphere.obj
          Debug\stdafx.obj
@@ -56,4 +81,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.17
+Time Elapsed 00:00:02.28

@@ -14,6 +14,7 @@ public:
 	Sphere(Point cen, float r);
 	Sphere(Point cen, float r, Color c);
 	Sphere(Point cen, float r, Light l);
+	Sphere(Point cen, float r, int rayleigh);
 	Point intersect(Ray ray);
 	void transform(Matrix matrix);
 	Point getMidPoint() override;

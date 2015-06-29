@@ -8,6 +8,12 @@
 #include <vector>
 
 #define M_PI 3.1415 /*PI*/
+#define RED .152587890625
+#define GREEN .075969140625
+#define BLUE 0.04100625
+/*#define RED 0.62
+#define GREEN 0.525
+#define BLUE 0.42*/
 #define EPSILON 0.000001
 #define new new(1, __FILE__, __LINE__)
 
@@ -169,7 +175,7 @@ struct Ray{
 	pVector direction;
 };
 
-static const float L_max = 10000;
+static const float L_max = 5000;
 static const float L_dmax = 255;
 
 struct Color{
@@ -263,6 +269,10 @@ struct Color{
 		return{ r / in, g / in, b / in };
 	}
 
+	Color operator/(const Color& in){
+		return{ r / in.r, g / in.g, b / in.b };
+	}
+
 	Color operator*(const float& in){
 		return{r* in, g* in, b * in};
 	}
@@ -273,6 +283,7 @@ struct Color{
 };
 
 static Color background = {100, 149, 237}; //cornflower blue
+static Color cornflowerblue = { 100, 149, 237 };
 static Color white = {255, 255, 255};
 static Color black = { 0, 0, 0 };
 static Color red = { 255, 0, 0 };
@@ -284,6 +295,26 @@ static Color yellow = {255, 255, 0};
 static Color grey = {127, 127, 127};
 static Color orange = {255, 127, 0};
 static float m_irr = 1.0f;
+
+struct BackgroundColor{
+	Color background_color;
+
+	BackgroundColor(){
+		background_color = cornflowerblue;
+	}
+
+	void setBackgroundColor(Color color){
+		background_color = color;
+	}
+
+	Color getBackgroundColor(){
+		return background_color;
+	}
+
+	_declspec(property(get = getBackgroundColor, put = setBackgroundColor)) Color backgroundColor;
+};
+
+static BackgroundColor backColor;
 
 //both row & column major scale matrix
 static Matrix Scale(Point s){
@@ -345,6 +376,14 @@ struct Light{
 	Light operator+(const Light& in){
 		return{irradiance + in.irradiance};
 	}
+
+	Light operator*(const float &in){
+		return{ irradiance * in };
+	}
+
+	Light operator*(const Light& in){
+		return{ irradiance * in.irradiance };
+	}
 };
 
 //Light Source information struct
@@ -381,6 +420,7 @@ struct IntersectData{
 	pVector reflect;
 	LightSource* light;
 	pVector camera;
+	Point center;
 };
 
 static pVector reflect(pVector L, pVector N){
@@ -422,4 +462,20 @@ struct ShadeRect{
 	pVector Normal;
 	Point intersection;
 };
+
+
+
+static float cosineTheta(float x){
+	return ((pow((-4 * x + 4 * (4 + (x * x))), 1 / 3)) / 2) - (2 / pow((-4 * x + 4 * (4 + (x * x))), 1 / 3));
+}
+
+static Color cosineThetaColor(Color c){
+	return{ cosineTheta(c.r), cosineTheta(c.g), cosineTheta(c.b) };
+}
+
+static Light cosineThetaLight(Light l){
+	return{ cosineThetaColor(l.irradiance) };
+}
+
+static Color wavelength = { 0.62, .525, .42 };
 #endif

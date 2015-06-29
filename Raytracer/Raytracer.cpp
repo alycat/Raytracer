@@ -24,6 +24,10 @@ BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 VOID				ReadPlyFile(char* filepath);
+VOID				SetupCornellBox();
+VOID				SetupWhittedScene();
+VOID				SetupStanfordRabbit();
+VOID				SetupScatter();
 
 char *elem_names[] = { /* list of the kinds of elements in the user's object */
 	"vertex", "face"
@@ -134,6 +138,343 @@ void ReadPlyFile(char* filepath){
 	}
 }
 
+void SetupCornellBox(){
+	wrld->setBackgroundColor(black);
+	cam->position = origin;
+
+	Sphere *s3 = new Sphere({ -2, 0.5, 12 }, 1.8, white);
+	Sphere *s4 = new Sphere({ 2, 1.5, 19.5 }, 1.8, white);
+
+	s3->k_t = 0.75;
+	s4->k_t = 0;
+	s4->k_r = 0.75;
+
+	s3->material->kd = 0.0001;
+	s3->material->ks = 0.75;
+	s3->material->ke = 0.9;
+
+	s4->material->kd = 0.0001;
+	s4->material->ks = 0.75;
+	s4->material->ke = 1;
+
+	Triangle * t3 = new Triangle({ 4.0, -3, 0 }, { -4.0, 0, 22 }, { 4.0, 0, 22 });
+	Triangle * t4 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 0, 22 });
+	t3->material->c = white;
+	t4->material->c = white;
+
+	Triangle *t5 = new Triangle({ 4.0, 0, 22 }, { -4.0, 0, 22 }, { 4, 5, 22 });
+	Triangle *t6 = new Triangle({ 4.0, 5, 22 }, { -4, 0, 22 }, { -4.0, 5, 22 });
+
+	Triangle *t7 = new Triangle({ 4.0, 2, 0 }, { 4.0, -3, 0 }, { 4, 5, 22 });
+	Triangle *t8 = new Triangle({ 4.0, -3, 0 }, { 4, 0, 22 }, { 4.0, 5, 22 });
+	t7->material->c = blue;
+	t8->material->c = blue;
+
+	Triangle *t9 = new Triangle({ -4.0, -3, 0 }, { -4.0, 2, 0 }, { -4, 5, 22 });
+	Triangle *t10 = new Triangle({ -4.0, -3, 0 }, { -4.0, 5, 22 }, { -4, 0, 22 });
+	t9->material->c = red;
+	t10->material->c = red;
+
+	Triangle * t11 = new Triangle({ 4.0, 3.36, 10 }, { -4.0, 3.36, 10 }, { 4.0, 2, 0 });
+	Triangle * t12 = new Triangle({ -4.0, 3.36, 10 }, { -4.0, 2, 0 }, { 4.0, 2, 0 });
+	t11->material->c = white;
+	t12->material->c = white;
+
+	Triangle * t13 = new Triangle({ 4.0, 5, 22 }, { 4.0, 4.32, 17 }, { -4.0, 5, 22 });
+	Triangle * t14 = new Triangle({ -4.0, 5, 22 }, { -4.0, 4.32, 17 }, { 4.0, 4.32, 17 });
+	t13->material->c = white;
+	t14->material->c = white;
+
+	Triangle * t15 = new Triangle({ 1.0, 5, 17 }, { 1.0, 4.32, 17 }, { -1.0, 5, 17 });
+	Triangle * t16 = new Triangle({ -1.0, 5, 17 }, { 1.0, 4.32, 17 }, { -1.0, 4.32, 17 });
+	t15->material->c = white;
+	t16->material->c = white;
+	t15->k_r = 0.5;
+	t16->k_r = 0.5;
+
+	Triangle * t17 = new Triangle({ 1.0, 5, 17 }, { 1.0, 3.36, 10 }, { 1.0, 4.32, 17 });
+	Triangle * t18 = new Triangle({ 1.0, 3.36, 10 }, { 1.0, 4.04, 10 }, { 1.0, 5, 17 });
+	t17->material->c = white;
+	t18->material->c = white;
+	t17->k_r = 0.5;
+	t18->k_r = 0.5;
+
+	Triangle * t19 = new Triangle({ -1.0, 5, 17 }, { -1.0, 4.32, 17 }, { -1.0, 3.36, 10 });
+	Triangle * t20 = new Triangle({ -1.0, 3.36, 10 }, { -1.0, 5, 17 }, { -1.0, 4.04, 10 });
+	t19->material->c = white;
+	t20->material->c = white;
+	t19->k_r = 0.5;
+	t20->k_r = 0.5;
+
+	Triangle * t21 = new Triangle({ -1.0, 5, 17 }, { -1.0, 4.04, 10 }, { 1.0, 5, 17 });
+	Triangle * t22 = new Triangle({ 1.0, 4.04, 10 }, { -1.0, 4.04, 10 }, { 1.0, 5, 17 });
+	t21->material->c = white;
+	t22->material->c = white;
+
+	Triangle * t23 = new Triangle({ -4.0, 4.32, 17 }, { -4.0, 3.36, 10 }, { -1.0, 4.32, 17 });
+	Triangle * t24 = new Triangle({ -4.0, 3.36, 10 }, { -1.0, 3.36, 10 }, { -1.0, 4.32, 17 });
+	t23->material->c = white;
+	t24->material->c = white;
+
+
+	Triangle * t25 = new Triangle({ 4.0, 4.32, 17 }, { 1.0, 4.32, 17 }, { 4.0, 3.36, 10 });
+	Triangle * t26 = new Triangle({ 4.0, 3.36, 10 }, { 1.0, 4.32, 17 }, { 1.0, 3.36, 10 });
+	t25->material->c = white;
+	t26->material->c = white;
+
+	Triangle * t27 = new Triangle({ -1.0, 4.32, 17 }, { -1.0, 3.36, 10 }, { 1.0, 4.32, 17 });
+	Triangle * t28 = new Triangle({ 1.0, 3.36, 10 }, { 1.0, 4.32, 17 }, { -1.0, 3.36, 10 });
+	t27->material->c = white;
+	t28->material->c = white;
+	t27->k_t = 0.5;
+	t28->k_t = 0.5;
+
+	wrld->add(s3);
+	wrld->add(s4);
+	wrld->add(t3);
+	wrld->add(t4);
+	wrld->add(t5);
+	wrld->add(t6);
+	wrld->add(t7);
+	wrld->add(t8);
+	wrld->add(t9);
+	wrld->add(t10);
+	wrld->add(t11);
+	wrld->add(t12);
+	wrld->add(t13);
+	wrld->add(t14);
+	wrld->add(t15);
+	wrld->add(t16);
+	wrld->add(t17);
+	wrld->add(t18);
+	wrld->add(t19);
+	wrld->add(t20);
+
+	//wrld->add(t21);
+	//wrld->add(t22);
+
+	wrld->add(t23);
+	wrld->add(t24);
+	wrld->add(t25);
+	wrld->add(t26);
+
+	//wrld->add(t27);
+	//wrld->add(t28);
+
+	/*
+	LightSource* l5 = new LightSource({ { 0.25, 4, 15 }, white, { white * 1000 }, 100000 });
+	wrld->add(l5);*/
+	LightSource* l6 = new LightSource({ {0, 4, 15.75 }, white, { white * 1000 }, 10000 });
+	wrld->add(l6);
+
+	wrld->initTree();
+	wrld->emitPhotons();
+	wrld->emitCaustic();
+}
+
+void SetupWhittedScene(){
+	cam->position = { -1.2, 0.0, 0 };
+	Sphere *s1 = new Sphere({ 0.0, 0.2, 8 }, 0.85, white);
+	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, white);
+	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, { -4.0, 4.0, 0, 22 });
+	Triangle * t2 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 1.5, 22 }, { -4.0, 4.0, 0, 22 });
+	s1->k_r = 0.5;
+	s2->k_t = 0.5;
+	s1->material->kd = 0.0001;
+	s1->material->ks = 0.75;
+	s1->material->ke = 0.9;
+
+	s2->material->kd = 0.0001;
+	s2->material->ks = 0.7;
+	s2->material->ke = 1;
+
+	t1->material->ks = 0.0;
+	t1->material->kd = 0.5;
+
+	t2->material->ks = 0.0;
+	t2->material->kd = 0.5;
+
+	wrld->add(s1);
+	wrld->add(s2);
+	wrld->add(t1);
+	wrld->add(t2);
+
+	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { white }, 500000 }); //position, color, light
+	wrld->add(l1);
+	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white / 100, { black }, 1000 });
+	wrld->add(l2);
+	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white / 100, { grey }, 1000 });
+	wrld->add(l3);
+	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white / 100, { grey }, 1000 });
+	wrld->add(l4);
+
+	wrld->initTree();
+	wrld->emitPhotons();
+}
+
+void SetupStanfordRabbit(){
+	cam->position = { -1.2, 0.0, 0 };
+	ReadPlyFile("bunny");
+	for (int i = 0; i < bunny.size(); ++i){
+		bunny[i]->material->ks = 0.75;
+		bunny[i]->material->ke = 0.9;
+		bunny[i]->material->kd = 0.0001;
+		wrld->add((bunny[i]));
+	}
+	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { white }, 0 }); //position, color, light
+	wrld->add(l1);
+	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white / 100, { black }, 0 });
+	wrld->add(l2);
+	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white / 100, { grey }, 0 });
+	wrld->add(l3);
+	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white / 100, { grey }, 0 });
+	wrld->add(l4);
+	
+	wrld->initTree();
+}
+
+void SetupScatter(){
+	wrld->setBackgroundColor(black);
+	cam->position = origin;
+
+	Sphere *s3 = new Sphere({ -2, 0.5, 12 }, 1.8, white);
+	Sphere *s4 = new Sphere({ 0, 1.5, 19.5 }, 1.8, white);
+	s3->material = new Rayleigh();
+	s4->material = new Rayleigh();
+	s3->k_t = 0;
+	s3->k_r = 0;
+	s4->k_t = 0.3;
+	s4->k_r = 0.3;
+	//s4->color = purple;
+	//s3->k_t = 0.75;
+	//s4->k_t = 0;
+	//s4->k_r = 0.75;
+
+	s3->material->kd = 0.0001;
+	s3->material->ks = 0.75;
+	s3->material->ke = 0.9;
+
+	s4->material->kd = 0.001;
+	s4->material->ks = 0.1;
+	s4->material->ke = 1;
+
+	Triangle * t3 = new Triangle({ 4.0, -3, 0 }, { -4.0, 0, 22 }, { 4.0, 0, 22 });
+	Triangle * t4 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 0, 22 });
+	t3->material->c = white;
+	t4->material->c = white;
+
+	Triangle *t5 = new Triangle({ 4.0, 0, 22 }, { -4.0, 0, 22 }, { 4, 5, 22 });
+	Triangle *t6 = new Triangle({ 4.0, 5, 22 }, { -4, 0, 22 }, { -4.0, 5, 22 });
+	t5->material->c = white;
+	t6->material->c = white;
+
+	Triangle *t7 = new Triangle({ 4.0, 2, 0 }, { 4.0, -3, 0 }, { 4, 5, 22 });
+	Triangle *t8 = new Triangle({ 4.0, -3, 0 }, { 4, 0, 22 }, { 4.0, 5, 22 });
+	t7->material->c = white;
+	t8->material->c = white;
+
+	Triangle *t9 = new Triangle({ -4.0, -3, 0 }, { -4.0, 2, 0 }, { -4, 5, 22 });
+	Triangle *t10 = new Triangle({ -4.0, -3, 0 }, { -4.0, 5, 22 }, { -4, 0, 22 });
+	t9->material->c = white;
+	t10->material->c = white;
+
+	Triangle * t11 = new Triangle({ 4.0, 3.36, 10 }, { -4.0, 3.36, 10 }, { 4.0, 2, 0 });
+	Triangle * t12 = new Triangle({ -4.0, 3.36, 10 }, { -4.0, 2, 0 }, { 4.0, 2, 0 });
+	t11->material->c = white;
+	t12->material->c = white;
+
+	Triangle * t13 = new Triangle({ 4.0, 5, 22 }, { 4.0, 4.32, 17 }, { -4.0, 5, 22 });
+	Triangle * t14 = new Triangle({ -4.0, 5, 22 }, { -4.0, 4.32, 17 }, { 4.0, 4.32, 17 });
+	t13->material->c = white;
+	t14->material->c = white;
+
+	Triangle * t15 = new Triangle({ 1.0, 5, 17 }, { 1.0, 4.32, 17 }, { -1.0, 5, 17 });
+	Triangle * t16 = new Triangle({ -1.0, 5, 17 }, { 1.0, 4.32, 17 }, { -1.0, 4.32, 17 });
+	t15->material->c = white;
+	t16->material->c = white;
+	t15->k_r = 0.5;
+	t16->k_r = 0.5;
+
+	Triangle * t17 = new Triangle({ 1.0, 5, 17 }, { 1.0, 3.36, 10 }, { 1.0, 4.32, 17 });
+	Triangle * t18 = new Triangle({ 1.0, 3.36, 10 }, { 1.0, 4.04, 10 }, { 1.0, 5, 17 });
+	t17->material->c = white;
+	t18->material->c = white;
+	t17->k_r = 0.5;
+	t18->k_r = 0.5;
+
+	Triangle * t19 = new Triangle({ -1.0, 5, 17 }, { -1.0, 4.32, 17 }, { -1.0, 3.36, 10 });
+	Triangle * t20 = new Triangle({ -1.0, 3.36, 10 }, { -1.0, 5, 17 }, { -1.0, 4.04, 10 });
+	t19->material->c = white;
+	t20->material->c = white;
+	t19->k_r = 0.5;
+	t20->k_r = 0.5;
+
+	Triangle * t21 = new Triangle({ -1.0, 5, 17 }, { -1.0, 4.04, 10 }, { 1.0, 5, 17 });
+	Triangle * t22 = new Triangle({ 1.0, 4.04, 10 }, { -1.0, 4.04, 10 }, { 1.0, 5, 17 });
+	t21->material->c = white;
+	t22->material->c = white;
+
+	Triangle * t23 = new Triangle({ -4.0, 4.32, 17 }, { -4.0, 3.36, 10 }, { -1.0, 4.32, 17 });
+	Triangle * t24 = new Triangle({ -4.0, 3.36, 10 }, { -1.0, 3.36, 10 }, { -1.0, 4.32, 17 });
+	t23->material->c = white;
+	t24->material->c = white;
+
+
+	Triangle * t25 = new Triangle({ 4.0, 4.32, 17 }, { 1.0, 4.32, 17 }, { 4.0, 3.36, 10 });
+	Triangle * t26 = new Triangle({ 4.0, 3.36, 10 }, { 1.0, 4.32, 17 }, { 1.0, 3.36, 10 });
+	t25->material->c = white;
+	t26->material->c = white;
+
+	Triangle * t27 = new Triangle({ -1.0, 4.32, 17 }, { -1.0, 3.36, 10 }, { 1.0, 4.32, 17 });
+	Triangle * t28 = new Triangle({ 1.0, 3.36, 10 }, { 1.0, 4.32, 17 }, { -1.0, 3.36, 10 });
+	t27->material->c = white;
+	t28->material->c = white;
+	t27->k_t = 0.5;
+	t28->k_t = 0.5;
+
+	//wrld->add(s3);
+	wrld->add(s4);
+	wrld->add(t3);
+	wrld->add(t4);
+	wrld->add(t5);
+	wrld->add(t6);
+	wrld->add(t7);
+	wrld->add(t8);
+	wrld->add(t9);
+	wrld->add(t10);
+	wrld->add(t11);
+	wrld->add(t12);
+	wrld->add(t13);
+	wrld->add(t14);
+	wrld->add(t15);
+	wrld->add(t16);
+	wrld->add(t17);
+	wrld->add(t18);
+	wrld->add(t19);
+	wrld->add(t20);
+
+	//wrld->add(t21);
+	//wrld->add(t22);
+
+	wrld->add(t23);
+	wrld->add(t24);
+	wrld->add(t25);
+	wrld->add(t26);
+
+	//wrld->add(t27);
+	//wrld->add(t28);
+
+	/*
+	LightSource* l5 = new LightSource({ { 0.25, 4, 15 }, white, { white * 1000 }, 100000 });
+	wrld->add(l5);*/
+	LightSource* l6 = new LightSource({ { 0, 2, 16 }, white, { white * 1000 }, 100000 });
+	wrld->add(l6);
+
+	wrld->initTree();
+	wrld->emitScatter();
+	//wrld->emitCaustic();
+}
+
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPTSTR    lpCmdLine,
@@ -149,62 +490,51 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	cam = new Camera();
 	wrld = new World();
 	Color p = { 1, 0, 1 };
-	Sphere *s1 = new Sphere({ 0.0, 0.2, 8 }, 0.85, white);
-	Sphere *s2 = new Sphere({ -1.3, 0.7, 6 }, 1, white);
-	Triangle * t1 = new Triangle({ 4.0, -3, 0 }, { -4.0, 1.5, 22 }, { 4.0, 1.5, 22 }, { -4.0, 4.0, 0, 22 });
-	Triangle * t2 = new Triangle({ 4.0, -3, 0 }, { -4.0, -3, 0 }, { -4.0, 1.5, 22 }, { -4.0, 4.0, 0, 22 });
-	s1->k_r = 0.3;
-	s2->k_t = 0.2;
-	s1->material->kd = 0.0001;
-	s1->material->ks = 0.75;
-	s1->material->ke = 0.9;
 
-	s2->material->kd = 0.0001;
-	s2->material->ks = 0.7;
-	s2->material->ke = 1;
+
+	//SetupCornellBox();
+	SetupCornellBox();
 	/*
-	ReadPlyFile("bunny");
-	for (int i = 0; i < bunny.size(); ++i){
-		bunny[i]->material->ks = 0.75;
-		bunny[i]->material->ke = 0.9;
-		bunny[i]->material->kd = 0.0001;
-		wrld->add((bunny[i]));
-	}
+	Sphere *rayleigh = new Sphere({ 0.0, 0.5, 10 }, 2, 0);
+	rayleigh->k_r = 0.5;
+	rayleigh->k_t = 0.5;
+	wrld->add(rayleigh);
+	Sphere *rayleigh2 = new Sphere({ 1, 0.5, 12 }, 1, 0);
+	rayleigh2->k_r = 0.5;
+	rayleigh2->k_t = 0.5;
+	wrld->add(rayleigh2);
+	Sphere *rayleigh3 = new Sphere({ -1, 0.5, 14 }, 1, 0);
+	rayleigh3->k_r = 0.5;
+	rayleigh3->k_t = 0.5;
+	wrld->add(rayleigh3);
+	Sphere *rayleigh4 = new Sphere({ 0, 0.5, 16 }, 1, 0);
+	rayleigh4->k_r = 0.5;
+	rayleigh4->k_t = 0.5;
+	wrld->add(rayleigh4);
 	*/
-	/*
-	vector<Sphere*> spheres;
-	for (int j = 0; j < 3; ++j){
-	for (int i = 0; i < 5; ++i){
-	spheres.push_back(new Sphere({ -i, j, 10 }, 0.4, green));
-	wrld->add(spheres[i + (j*5)]);
-	}
-	}
-	vector<Sphere*> spheres2;
-	for (int j = 0; j < 10; ++j){
-	for (int i = 0; i < 5; ++i){
-	spheres2.push_back(new Sphere({ i, j, 2 }, 0.4, green));
-	wrld->add(spheres2[i + (j * 5)]);
-	}
-	}*/
-	
-	wrld->add(s1);
-	wrld->add(s2);
-	wrld->add(t1);
-	wrld->add(t2);
-	
-	LightSource* l1 = new LightSource({ { -1, 12.0f, -5 }, white, { grey }, 10000 }); //position, color, light
-	wrld->add(l1);
-	LightSource* l2 = new LightSource({ { -1.7, 1, 5 }, white / 100, { black }, 10000 });
-	wrld->add(l2);
-	LightSource* l3 = new LightSource({ { 0, 2.6, 6 }, white / 100, { grey }, 10000 });
-	wrld->add(l3);
-	LightSource* l4 = new LightSource({ { 0, -5, -2 }, white / 100, { grey }, 10000 });
-	wrld->add(l4);
-	/*LightSource* l5 = new LightSource({{0, -0.5, 3}, white/10, { white }});
-	wrld->add(l5);*/
 
-	wrld->initTree();
-	wrld->emitPhotons();
+/*
+	LightSource* light = new LightSource({ {1, 1.0f, 0 }, white*1000, { white }, 1000 }); //position, color, light
+	wrld->add(light);*/
+/*	LightSource* light2 = new LightSource({ { 0.5, 3.0f, 5 }, orange * 100, { white }, 0 }); //position, color, light
+	wrld->add(light2);
+	Color test = { 255, 100, 100 };*/
+	/*LightSource* light3 = new LightSource({ { 0, 0.0f, 0 },  white*100, { white }, 0 }); //position, color, light
+	wrld->add(light3*/
+	
+/*
+
+*/
+
+
+	/*LightSource* l6 = new LightSource({ { 0, 2, 15 }, white/2, { white }, 4000 });
+	wrld->add(l6);*/
+	/*
+	LightSource* l7 = new LightSource({ { 0, 0, 0 }, white, { white }, 1000 });
+	wrld->add(l7);
+	*/
+	
+	//wrld->emitScatter();
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_RAYTRACER, szWindowClass, MAX_LOADSTRING);

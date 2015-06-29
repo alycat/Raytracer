@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Phong.h"
 #include "Checker.h"
+#include "Rayleigh.h"
 #include "BoundingBox.h"
 
 using namespace std;

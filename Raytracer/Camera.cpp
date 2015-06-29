@@ -5,7 +5,7 @@ using namespace Concurrency;
 
 Camera::Camera(){
 	filmplane = { 400, 300, 40000, 30000, 50000 };
-	position = { -1.2, 0.0, 0 };
+	position = { 0, 0.0, 0 };
 	//position = { -1.2, 0.0, -5 };
 	//position = origin;
 	lookat = { { 0.0, 0.0, 1.0 } };
@@ -55,7 +55,8 @@ void Camera::render(World world, HDC hdc){
 			ray.direction = ray.direction.normal;
 			float angle = acosf(ray.direction * middleScreen);
 			Light light = world.spawn(ray, 0);
-			//Light light = world.spawnPhoton(ray, 0);
+			//Light light = { world.spawnPhoton(ray, 0).irradiance * world.spawn(ray, 0).irradiance};
+		//	Light light = world.spawnPhoton(ray, 0);
 			color = light.irradiance;
 			//SetPixel(hdc, x, y, color.getColorRef());
 			pixels[y][x] = { x, y, 0 };

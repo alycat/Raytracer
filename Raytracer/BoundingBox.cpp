@@ -8,6 +8,29 @@ BoundingBox::BoundingBox(){
 BoundingBox::~BoundingBox(){
 
 }
+
+bool BoundingBox::inside(Point p){
+		if (p.x < box.left){
+			return false;
+		}
+		if (p.x > box.right){
+			return false;
+		}
+		if (p.y < box.bottom){
+			return false;
+		}
+		if (p.y > box.top){
+			return false;
+		}
+		if (p.z < box.front){
+			return false;
+		}
+		if (p.z > box.back){
+			return false;
+		}
+		return true;
+}
+
 Point BoundingBox::intersect(Ray ray, int type){
 	Point fraction = { 1.0f, 1.0f, 1.0f };
 	fraction = fraction / ray.direction.v;

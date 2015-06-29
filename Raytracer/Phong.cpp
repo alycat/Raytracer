@@ -2,7 +2,7 @@
 
 Phong::Phong(Color color){
 	ka = 0.0;
-	kd = 0.0009;
+	kd = 0.001;
 	ks = 0.5;
 	ke = 0.9;
 	c = color;
